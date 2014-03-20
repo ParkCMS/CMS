@@ -13,5 +13,13 @@
 
 Route::get('/', function()
 {
-	return View::make('hello');
+	$startPage = DB::table('pages')->where('left', 1)->first();
+	
+	if($startPage !== null) {
+		// $startPage->route();
+		
+		return Redirect::to('/' . $startPage->alias);
+	}
 });
+
+Route::get('/{page}', 'PageController@showPage');

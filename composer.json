@@ -11,6 +11,7 @@
 	"license": "MIT",
 	"require": {
 		"laravel/framework": "4.1.*",
+		"baum/baum": "~1.0",
 		"parkcms/template": "master@dev"
 	},
 	"autoload": {
