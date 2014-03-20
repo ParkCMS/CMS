@@ -13,7 +13,7 @@
 
 Route::get('/', function()
 {
-	$startPage = DB::table('pages')->where('left', 1)->first();
+	$startPage = Page::roots();
 	
 	if($startPage !== null) {
 		// $startPage->route();
