@@ -31,14 +31,23 @@ class Manager {
             }
             
             return $program;
-        } catch(ReflectionException $e) { }
+        } catch(ReflectionException $e) { 
+            echo $e->getMessage();
+        }
         
         return null;
     }
     
     protected function name($type) {
-        return implode('\\', array_map(function($str) {
+        $tmp = array_map(function($str) {
             return ucfirst($str);
-        }, explode('-', $type)));
+        }, explode('-', $type));
+
+        if(count($tmp) == 1) {
+            echo $tmp[0] . '\\' . $tmp[0];
+            return $tmp[0] . '\\' . $tmp[0];
+        }
+
+        return implode('\\', $tmp);
     }
 }
