@@ -13,7 +13,9 @@ class PageController extends BaseController {
     
     protected $parser;
     protected $manager;
-    
+
+    protected $page;
+
     /**
      * 
      * @param Parser  $parser
@@ -45,27 +47,31 @@ class PageController extends BaseController {
         $root = Page::roots()->where('title', $lang)->first();
         
         // look up 
-        $page = $root->descendants()->where('alias', $route)->first();
+        $this->page = $root->descendants()->where('alias', $route)->first();
         
         // Register objects to the IoC
-        App::instance('Parkcms\Models\Page', $page);
-        App::instance('Parkcms\Context', new Context($route, $page));
+        App::instance('Parkcms\Models\Page', $this->page);
+        App::instance('Parkcms\Context', new Context($route, $this->page));
         
 
-        if($page !== null) {
-            $view = View::make('layout')->nest('body', 'page_templates.' . $page->template)->render();
-            
-            $this->parser->setSource($view);
-            
-            $that = $this;
-            $this->parser->pushHandler(function($type, $identifier, $data, $nodeValue) use($that) {
-                if($program = $that->manager->lookup($type, $identifier, $data)) {
-                    return $program->render();
-                }
-                return null;
-            });
-            
-            return $this->parser->parse();
+        if($this->page !== null) {
+            return $this->renderTemplate();
         }
+    }
+
+    protected function renderTemplate() {
+        $view = View::make('layout')->nest('body', 'page_templates.' . $this->page->template)->render();
+
+        $this->parser->setSource($view);
+
+        $that = $this;
+        $this->parser->pushHandler(function($type, $identifier, $data, $nodeValue) use($that) {
+            if($program = $that->manager->lookup($type, $identifier, $data)) {
+                return $program->render();
+            }
+            return null;
+        });
+
+        return $this->parser->parse();
     }
 }
