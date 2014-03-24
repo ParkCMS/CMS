@@ -20,9 +20,7 @@ class Manager {
      */
     public function lookup($type, $identifier, array $params) {
         try {
-
-
-            $program = App::make('Parkcms\Programs\\' . ucfirst($type));
+            $program = App::make('Parkcms\Programs\\' . $this->name($type));
             
             if(!($program instanceof ProgramInterface)) {
                 return null;
@@ -39,6 +37,8 @@ class Manager {
     }
     
     protected function name($type) {
-        
+        return implode('\\', array_map(function($str) {
+            return ucfirst($str);
+        }, explode('-', $type)));
     }
 }
