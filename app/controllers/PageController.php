@@ -66,7 +66,8 @@ class PageController extends BaseController {
      * @return string
      */
     protected function renderPage() {
-        $view = View::make('layout')->nest('body', 'page_templates.' . $this->page->template)->render();
+        
+        $view = View::make('page_templates.' . $this->page->template)->render();
 
         $this->parser->setSource($view);
 

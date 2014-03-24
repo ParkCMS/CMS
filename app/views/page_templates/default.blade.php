@@ -1,4 +1,6 @@
+@extends('layout')
 
+@section('body')
 <h1>Default</h1>
 
 <div pcms-text="global">
@@ -12,3 +14,4 @@
 <div pcms-cool-ns-program="p2">
     Cooles Programm p2
 </div>
+@stop
