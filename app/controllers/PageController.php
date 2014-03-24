@@ -1,8 +1,10 @@
 <?php
 
-use Hardcore\Models\Page;
+use Parkcms\Models\Page;
 
 use Parkcms\Template\AttributeParser as Parser;
+
+use App;
 
 class PageController extends BaseController {
 	
@@ -16,7 +18,9 @@ class PageController extends BaseController {
 	{
 		$lang = 'de'; // magic to get lang
 		
-		$root = Parkcms\Models\Page::roots()->where('title', $lang)->first();
+		$root = Page::roots()->where('title', $lang)->first();
+		
+		App::instance('Parkcms\Models\Page', $root);
 		
 		$page = $root->children()->where('alias', $route)->first();
 		
