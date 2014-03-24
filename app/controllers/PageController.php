@@ -49,17 +49,23 @@ class PageController extends BaseController {
         // look up 
         $this->page = $root->descendants()->where('alias', $route)->first();
         
+        // if $this->page is null, page doesn't exists in database
+        if($this->page === null) {
+            App::abort(404);
+        }
+
         // Register objects to the IoC
         App::instance('Parkcms\Models\Page', $this->page);
         App::instance('Parkcms\Context', new Context($route, $this->page));
         
-
-        if($this->page !== null) {
-            return $this->renderTemplate();
-        }
+        return $this->renderPage();
     }
 
-    protected function renderTemplate() {
+    /**
+     * renders the current page template
+     * @return string
+     */
+    protected function renderPage() {
         $view = View::make('layout')->nest('body', 'page_templates.' . $this->page->template)->render();
 
         $this->parser->setSource($view);
