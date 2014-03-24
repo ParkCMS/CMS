@@ -13,15 +13,14 @@
 
 Route::get('/', function()
 {
-    $lang = 'de'; // magic to get lang
+    // @TODO: determine real user language
+    $lang = 'de';
     
     $root = Parkcms\Models\Page::roots()->where('title', $lang)->first();
     
     $startPage = $root->children()->first();
     
     if($startPage !== null) {
-        // $startPage->route();
-        
         return Redirect::to('/' . $startPage->alias);
     }
 });
