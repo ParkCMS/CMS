@@ -12,7 +12,8 @@
 	"require": {
 		"laravel/framework": "4.1.*",
 		"baum/baum": "~1.0",
-		"parkcms/template": "master@dev"
+		"parkcms/template": "master@dev",
+		"cartalyst/sentry": "2.1.*"
 	},
 	"autoload": {
 		"classmap": [
