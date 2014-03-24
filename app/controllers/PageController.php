@@ -2,45 +2,70 @@
 
 use Parkcms\Models\Page;
 
+use Parkcms\Context;
 use Parkcms\Template\AttributeParser as Parser;
+use Parkcms\Programs\Manager;
 
-use App;
-
+/**
+ * 
+ */
 class PageController extends BaseController {
-	
-	protected $parser;
-	
-	public function __construct(Parser $parser) {
-		$this->parser = $parser;
-	}
-	
-	public function showPage($route)
-	{
-		$lang = 'de'; // magic to get lang
-		
-		$root = Page::roots()->where('title', $lang)->first();
-		
-		App::instance('Parkcms\Models\Page', $root);
-		
-		$page = $root->children()->where('alias', $route)->first();
-		
-		if($page !== null) {
-			// var_dump($this->_route->page->route);
-			
-			// var_dump($this->_route->params());
-			
-			$view = View::make('layout')->nest('body', 'page_templates.' . $page->template)->render();
-			
-			$this->parser->setSource($view);
-			
-			$this->parser->pushHandler(function($type, $identifier, $data, $nodeValue) {
-				if($program = ProgramManager::load($type, $identifier, $data)) {
-					return $program->content();
-				}
-				return null;
-			});
-			
-			return $this->parser->parse();
-		}
-	}
+    
+    protected $parser;
+    protected $manager;
+    
+    /**
+     * 
+     * @param Parser  $parser
+     * @param Manager $manager
+     */
+    public function __construct(Parser $parser, Manager $manager) {
+        $this->parser = $parser;
+        $this->manager = $manager;
+        
+        $this->parser->setPrefix('pcms-');
+    }
+    
+    /**
+     * display the page, found by given route
+     * @param  string $route page route (e.g. home)
+     * @param  string $attributes atributes slash imploded (e.g. year/2014)
+     * @return string rendered page
+     */
+    public function showPage($route, $attributes = null)
+    {
+        if($attributes !== null) {
+            $attributes = explode('/', $attributes);
+        }
+        
+        // @TODO: determine real user language
+        $lang = 'de';
+        
+        // look up page tree root determined by user language
+        $root = Page::roots()->where('title', $lang)->first();
+        
+        // look up 
+        $page = $root->descendants()->where('alias', $route)->first();
+        
+        // Register objects to the IoC
+        App::instance('Parkcms\Models\Page', $page);
+        App::instance('Parkcms\Context', new Context($route, $page));
+        
+
+        if($page !== null) {
+            $view = View::make('layout')->nest('body', 'page_templates.' . $page->template)->render();
+            
+            $this->parser->setSource($view);
+            
+            $that = $this;
+            $this->parser->pushHandler(function($type, $identifier, $data, $nodeValue) use($that) {
+                if($program = $that->manager->lookup($type, $identifier, $data)) {
+                    return $program->render();
+                }
+                return null;
+            });
+            
+            return $this->parser->parse();
+        }
+    }
 }

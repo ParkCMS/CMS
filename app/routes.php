@@ -13,17 +13,18 @@
 
 Route::get('/', function()
 {
-	$lang = 'de'; // magic to get lang
-	
-	$root = Parkcms\Models\Page::roots()->where('title', $lang)->first();
-	
-	$startPage = $root->children()->first();
-	
-	if($startPage !== null) {
-		// $startPage->route();
-		
-		return Redirect::to('/' . $startPage->alias);
-	}
+    $lang = 'de'; // magic to get lang
+    
+    $root = Parkcms\Models\Page::roots()->where('title', $lang)->first();
+    
+    $startPage = $root->children()->first();
+    
+    if($startPage !== null) {
+        // $startPage->route();
+        
+        return Redirect::to('/' . $startPage->alias);
+    }
 });
 
-Route::get('/{page}', 'PageController@showPage');
+Route::get('/{page}/{attributes?}', 'PageController@showPage')
+    ->where(array('attributes' => '[A-Za-z0-9\./]+'));
