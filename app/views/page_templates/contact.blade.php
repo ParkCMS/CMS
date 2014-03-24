@@ -3,7 +3,10 @@
 @section('body')
 <h1>Contact</h1>
 
-<div hcms-form="contact">
-	
+<div pcms-text="content">
+	<p>Here comes your text</p>
+</div>
+<div pcms-form="contact">
+    
 </div>
 @stop
