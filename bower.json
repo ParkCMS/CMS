@@ -1,9 +1,10 @@
 {
-    "name": "Parkcms",
-    "dependencies": {
-        "jquery": "2.1.*",
-        "bootstrap": "3.1.*",
-        "angular": "*",
-        "angular-bootstrap": "*"
-    }
+  "name": "Parkcms",
+  "dependencies": {
+    "jquery": "2.1.*",
+    "bootstrap": "3.1.*",
+    "angular": "*",
+    "angular-bootstrap": "*",
+    "angular-route": "~1.2.15"
+  }
 }

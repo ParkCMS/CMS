@@ -4,7 +4,7 @@ namespace Parkcms\Admin\Dashboard;
 
 use View;
 
-class Controller extends \BaseController
+class Controller extends \Controller
 {
     public function index()
     {

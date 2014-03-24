@@ -19,7 +19,8 @@ gulp.task('less', function() {
 var third_party = [
     'frontend_src/bower_components/angular/angular.min.js',
     'frontend_src/bower_components/angular-bootstrap/ui-bootstrap.min.js',
-    'frontend_src/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'
+    'frontend_src/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
+    'frontend_src/bower_components/angular-route/angular-route.min.js'
 ]
 
 gulp.task('js', function() {

@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="de">
+<html lang="de" ng-app="parkAdmin">
 <head>
     <meta charset="UTF-8">
     <title>Parkcms Administration</title>
     <link rel="stylesheet" href="{{ asset('admin_assets/css/main.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body ng-app="parkAdmin">
+<body check-auth>
     <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -49,9 +49,14 @@
         </div><!-- /.container-fluid -->
     </nav>
     <div class="container">
+        @section('name')
         <h1>ParkCMS</h1>
+        @show
     </div>
     <!-- Scripts -->
     <script src="admin_assets/js/admin.js"></script>
+    <script>
+    angular.module('parkAdmin').constant('BASE_URL', '{{ url() }}');
+    </script>
 </body>
 </html>
