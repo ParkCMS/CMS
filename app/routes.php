@@ -13,7 +13,11 @@
 
 Route::get('/', function()
 {
-	$startPage = Page::roots();
+	$lang = 'de'; // magic to get lang
+	
+	$root = Parkcms\Models\Page::roots()->where('title', $lang)->first();
+	
+	$startPage = $root->children()->first();
 	
 	if($startPage !== null) {
 		// $startPage->route();
