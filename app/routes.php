@@ -11,6 +11,8 @@
 |
 */
 
+include_once __DIR__ . "/routes_admin.php";
+
 Route::get('/', function()
 {
 	$lang = 'de'; // magic to get lang

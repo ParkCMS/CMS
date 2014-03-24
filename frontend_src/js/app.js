@@ -1,0 +1,1 @@
+var parkAdmin = angular.module('parkAdmin', ['ui.bootstrap']);

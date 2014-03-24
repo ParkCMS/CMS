@@ -4,7 +4,7 @@ use Parkcms\Models\Page;
 
 use Parkcms\Template\AttributeParser as Parser;
 
-use App;
+//use App;
 
 class PageController extends BaseController {
 	

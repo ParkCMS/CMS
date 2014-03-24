@@ -1,2 +1,4 @@
 /vendor
 /composer.lock
+/frontend_src/bower_components
+/node_modules
