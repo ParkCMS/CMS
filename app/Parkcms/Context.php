@@ -8,9 +8,11 @@ use Request;
 
 class Context {
     
-    protected $lang;
     protected $route;
     protected $page;
+    protected $attributes;
+    
+    protected $lang;
     protected $ajax;
     
     /**
@@ -18,9 +20,10 @@ class Context {
      * @param string $route
      * @param Page   $page
      */
-    public function __construct($route, Page $page) {
+    public function __construct($route, Page $page, array $attributes) {
         $this->route = $route;
         $this->page = $page;
+        $this->attributes = $attributes;
         
         $this->lang = $page->getRoot()->title;
         $this->ajax = Request::ajax();

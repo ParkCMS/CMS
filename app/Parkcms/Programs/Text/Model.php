@@ -1,6 +1,6 @@
 <?php
 
-namespace Parkcms\Programs\Default\Text;
+namespace Parkcms\Programs\Text;
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 

@@ -38,6 +38,8 @@ class PageController extends Controller {
     {
         if($attributes !== null) {
             $attributes = explode('/', $attributes);
+        } else {
+            $attributes = array();
         }
         
         // @TODO: determine real user language
@@ -56,7 +58,7 @@ class PageController extends Controller {
 
         // Register objects to the IoC
         App::instance('Parkcms\Models\Page', $this->page);
-        App::instance('Parkcms\Context', new Context($route, $this->page));
+        App::instance('Parkcms\Context', new Context($route, $this->page, $attributes));
         
         return $this->renderPage();
     }

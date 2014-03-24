@@ -25,15 +25,13 @@ class Manager {
             if(!($program instanceof ProgramInterface)) {
                 return null;
             }
-            
+
             if(!$program->initialize($identifier, $params)) {
                 return null;
             }
             
             return $program;
-        } catch(ReflectionException $e) { 
-            echo $e->getMessage();
-        }
+        } catch(ReflectionException $e) { }
         
         return null;
     }
@@ -44,7 +42,6 @@ class Manager {
         }, explode('-', $type));
 
         if(count($tmp) == 1) {
-            echo $tmp[0] . '\\' . $tmp[0];
             return $tmp[0] . '\\' . $tmp[0];
         }
 
