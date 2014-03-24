@@ -9,7 +9,7 @@ use Parkcms\Programs\Manager;
 /**
  * 
  */
-class PageController extends BaseController {
+class PageController extends Controller {
     
     protected $parser;
     protected $manager;
