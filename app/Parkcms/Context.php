@@ -8,6 +8,7 @@ use Request;
 
 class Context {
     
+    protected $lang;
     protected $route;
     protected $page;
     protected $ajax;
@@ -21,9 +22,14 @@ class Context {
         $this->route = $route;
         $this->page = $page;
         
+        $this->lang = $page->getRoot()->title;
         $this->ajax = Request::ajax();
     }
     
+    public function lang() {
+        return $this->lang;
+    }
+
     /**
      * returns the route from the given context
      * @return string
