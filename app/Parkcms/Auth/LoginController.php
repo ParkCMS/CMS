@@ -35,7 +35,7 @@ class LoginController extends Controller
         $remember = (Input::get('remember-me') === 'remember-me');
 
         try {
-            $user = Sentry::authenticateAndRemember($credentials, $remember);
+            $user = Sentry::authenticate($credentials, $remember);
 
             return Redirect::intended('/');
         } catch (LoginRequiredException $e) {
@@ -53,8 +53,6 @@ class LoginController extends Controller
         } catch (UserBannedException $e) {
             return Redirect::to('login')->with('auth_error', 'user_banned');
         }
-
-        var_dump(Input::get('remember-me'));
     }
 
     public function logout()
