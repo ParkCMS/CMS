@@ -6,6 +6,7 @@
 <div pcms-text="content">
 	<p>Here comes your text</p>
 </div>
+
 <div pcms-form="contact">
     
 </div>
