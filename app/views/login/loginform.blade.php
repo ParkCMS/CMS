@@ -75,6 +75,9 @@
         @if (Session::has('auth_error'))
             <div class="alert alert-danger">{{ trans('auth.'.Session::get('auth_error')) }}</div>
         @endif
+        @if (Session::has('auth_msg'))
+            <div class="alert alert-success">{{ trans('auth.'.Session::get('auth_msg')) }}</div>
+        @endif
         <input type="text" name="username" class="form-control" placeholder="Benutzername" required autofocus>
         <input type="password" name="password" class="form-control" placeholder="Passwort" required>
         <label class="checkbox">

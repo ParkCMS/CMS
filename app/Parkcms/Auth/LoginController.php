@@ -62,5 +62,7 @@ class LoginController extends Controller
         if (Sentry::check()) {
             Sentry::logout();
         }
+
+        return Redirect::to('login')->with('auth_msg', 'logout_success');
     }
 }
