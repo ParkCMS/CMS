@@ -22,6 +22,7 @@ class AuthSeeder extends Seeder {
 
         $user = Sentry::createUser(array(
             'email'     => 'parkcms.team@gmail.com',
+            'username'  => 'admin',
             'password'  => 'parkcms',
             'activated' => true,
             'first_name'=> 'ParkCMS',
@@ -30,6 +31,7 @@ class AuthSeeder extends Seeder {
 
         $snduser = Sentry::createUser(array(
             'email'     => 'test@example.com',
+            'username'  => 'test',
             'password'  => 'parkcms',
             'activated' => true,
             'first_name'=> 'Test',

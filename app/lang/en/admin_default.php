@@ -2,7 +2,8 @@
 
 return array(
     'dashboard' => 'Dashboard',
-    'pages' => 'Pages',
-    'files' => 'Files',
-    'toggleNav' => 'Toggle navigation'
+    'pages'     => 'Pages',
+    'files'     => 'Files',
+    'toggleNav' => 'Toggle navigation',
+    'logout'    => 'Logout'
 );

@@ -38,10 +38,15 @@ Route::filter('auth', function()
 	if (Auth::guest()) return Redirect::guest('login');
 });
 
-
 Route::filter('auth.basic', function()
 {
 	return Auth::basic();
+});
+
+Route::filter('pcms_auth', function()
+{
+    if (Request::ajax() && !Sentry::check()) App::abort(401);
+    if (!Sentry::check()) return Redirect::guest('login');
 });
 
 /*

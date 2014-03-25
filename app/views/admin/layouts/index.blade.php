@@ -41,7 +41,7 @@
                             <li><a href="#">Another action</a></li>
                             <li><a href="#">Something else here</a></li>
                             <li class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
+                            <li><a href="{{ route('logout') }}">{{ trans('admin_default.logout') }}</a></li>
                         </ul>
                     </li>
                 </ul>
