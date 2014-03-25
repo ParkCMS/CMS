@@ -38,12 +38,12 @@ class PageSeeder extends Seeder {
 		
 		$en->children()->create(array(
 			'alias'		=> 'contact',
-			'template'	=> 'default',
+			'template'	=> 'contact',
 			'title'		=> 'Contact',
 		));
 		$de->children()->create(array(
 			'alias'		=> 'contact',
-			'template'	=> 'default',
+			'template'	=> 'contact',
 			'title'		=> 'Kontakt',
 		));
 		
