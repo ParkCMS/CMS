@@ -49,4 +49,12 @@ body.signin {
         text-align: center;
         color: @gray;
     }
+
+    .thumbnail:hover {
+        box-shadow: 0 0 5px @gray-light;
+    }
+}
+
+.file.active .thumbnail {
+    box-shadow: 0 0 5px lighten(@brand-primary, 10%);
 }

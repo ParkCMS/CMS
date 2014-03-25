@@ -13,6 +13,9 @@ Route::group(array('prefix' => 'admin', 'before' => 'pcms_auth'), function() {
     Route::get('/', 'Parkcms\Admin\Dashboard\Controller@index');
     Route::get('partials/{name}', 'Parkcms\Admin\Dashboard\Partials@show')
         ->where('name', '[A-Za-z0-9.]+');
+
+    Route::get('files/list/{path?}', 'Parkcms\Admin\Files\Controller@getFolder')
+        ->where('name', '[A-Za-z0-9/]+(.+(?!./))?');
 });
 
 Route::get('login', array('as' => 'login', 'uses' => 'Parkcms\Auth\LoginController@loginForm'));
