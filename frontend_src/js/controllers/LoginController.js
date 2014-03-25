@@ -1,4 +1,3 @@
-var parkAdmin = angular.module('parkAdmin');
 parkAdmin.controller('loginViewController', 
 	['$rootScope', '$modal', '$http', '$location', 'BASE_URL', 'UserService', 'TempStorage', function($rootScope, $modal, $http, $location, BASE_URL, User, store) {
 	var openModal = function() {

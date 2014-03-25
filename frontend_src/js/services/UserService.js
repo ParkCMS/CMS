@@ -1,4 +1,4 @@
-angular.module('parkAdmin').factory('UserService', [function() {
+parkAdmin.factory('UserService', [function() {
     return {
         isLoggedIn: false,
         username: '',

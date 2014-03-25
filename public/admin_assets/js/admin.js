@@ -244,17 +244,13 @@ var parkAdmin = angular.module('parkAdmin', ['ngRoute','ui.bootstrap']);
 parkAdmin.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
     $routeProvider.when('/', {
         controller: 'overviewController',
-        templateUrl: 'admin/partials/dashboard',
-        access: {
-            isFree: false
-        }
-    }).when('/login', {
-        controller: 'loginViewController',
-        templateUrl: 'admin/partials/loginform',
-        access: {
-            isFree: true
-        }
-    }).otherwise({redirectTo: '/'});
+        templateUrl: 'admin/partials/dashboard'
+    })
+    .when('/files', {
+        controller: 'filesController',
+        templateUrl: 'admin/partials/files'
+    })
+    .otherwise({redirectTo: '/'});
     
     $httpProvider.interceptors.push(['$q', '$rootScope', '$location', 'UserService', 'TempStorage', function($q, $rootScope, $location, User, store) {
         return {
@@ -283,7 +279,6 @@ parkAdmin.config(['$routeProvider', '$httpProvider', function($routeProvider, $h
         };
     }]);
 }]);
-var parkAdmin = angular.module('parkAdmin');
 parkAdmin.controller('loginViewController', 
 	['$rootScope', '$modal', '$http', '$location', 'BASE_URL', 'UserService', 'TempStorage', function($rootScope, $modal, $http, $location, BASE_URL, User, store) {
 	var openModal = function() {
@@ -351,15 +346,18 @@ parkAdmin.controller('loginController', ['$scope', '$rootScope', '$modalInstance
 		});
 	};
 }]);
-angular.module('parkAdmin').controller('overviewController',['$scope', function($scope) {
+parkAdmin.controller('filesController',['$scope', function($scope) {
 }]);
 
-angular.module('parkAdmin').directive('checkAuth', ['$rootScope', '$location', 'UserService', 'TempStorage', function($root, $location, User, store) {
+parkAdmin.controller('overviewController',['$scope', function($scope) {
+}]);
+
+parkAdmin.directive('checkAuth', ['$rootScope', '$location', 'UserService', 'TempStorage', function($root, $location, User, store) {
 	return {
 		link: function (scope, elem, attrs, ctrl) {
 			$root.$on('$routeChangeStart', function(event, next, curr) {
 				if (typeof next.$$route.redirectTo === "undefined") {
-					if (!next.$$route.access.isFree && !User.isLoggedIn) {
+					if (!User.isLoggedIn) {
 						if (!(typeof next.$$route.originalPath === "undefined")) {
 							store.set('preLoginRoute', next.$$route.originalPath);
 						} else {
@@ -380,7 +378,26 @@ angular.module('parkAdmin').directive('checkAuth', ['$rootScope', '$location', '
 		}
 	};
 }])
-angular.module('parkAdmin').service("TempStorage", [function() {
+parkAdmin.directive("highlightActive", ['$location', function($location) {
+	return {
+		restrict: "A",
+		link: function(scope, element, attrs) {
+			var pattern = attrs.highlightActive;
+			if ((new RegExp(pattern)).test($location.path())) {
+				element.addClass('active');
+			}
+
+			scope.$on('$routeChangeSuccess', function(e, current, prev) {
+				element.removeClass('active');
+				var pattern = attrs.highlightActive;
+				if ((new RegExp(pattern)).test($location.path())) {
+					element.addClass('active');
+				}
+			});
+		}
+	};
+}]);
+parkAdmin.service("TempStorage", [function() {
 	var storage = {};
 
 	this.set = function(key, value) {
@@ -411,7 +428,7 @@ angular.module('parkAdmin').service("TempStorage", [function() {
 		return !(typeof storage[key] === "undefined");
 	}
 }]);
-angular.module('parkAdmin').factory('UserService', [function() {
+parkAdmin.factory('UserService', [function() {
     return {
         isLoggedIn: false,
         username: '',

@@ -1,4 +1,4 @@
-angular.module('parkAdmin').service("TempStorage", [function() {
+parkAdmin.service("TempStorage", [function() {
 	var storage = {};
 
 	this.set = function(key, value) {

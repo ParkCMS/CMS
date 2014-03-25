@@ -1,2 +1,2 @@
-angular.module('parkAdmin').controller('overviewController',['$scope', function($scope) {
+parkAdmin.controller('overviewController',['$scope', function($scope) {
 }]);

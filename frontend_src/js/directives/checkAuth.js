@@ -1,9 +1,9 @@
-angular.module('parkAdmin').directive('checkAuth', ['$rootScope', '$location', 'UserService', 'TempStorage', function($root, $location, User, store) {
+parkAdmin.directive('checkAuth', ['$rootScope', '$location', 'UserService', 'TempStorage', function($root, $location, User, store) {
 	return {
 		link: function (scope, elem, attrs, ctrl) {
 			$root.$on('$routeChangeStart', function(event, next, curr) {
 				if (typeof next.$$route.redirectTo === "undefined") {
-					if (!next.$$route.access.isFree && !User.isLoggedIn) {
+					if (!User.isLoggedIn) {
 						if (!(typeof next.$$route.originalPath === "undefined")) {
 							store.set('preLoginRoute', next.$$route.originalPath);
 						} else {

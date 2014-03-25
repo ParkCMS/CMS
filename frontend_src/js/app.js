@@ -3,17 +3,13 @@ var parkAdmin = angular.module('parkAdmin', ['ngRoute','ui.bootstrap']);
 parkAdmin.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
     $routeProvider.when('/', {
         controller: 'overviewController',
-        templateUrl: 'admin/partials/dashboard',
-        access: {
-            isFree: false
-        }
-    }).when('/login', {
-        controller: 'loginViewController',
-        templateUrl: 'admin/partials/loginform',
-        access: {
-            isFree: true
-        }
-    }).otherwise({redirectTo: '/'});
+        templateUrl: 'admin/partials/dashboard'
+    })
+    .when('/files', {
+        controller: 'filesController',
+        templateUrl: 'admin/partials/files'
+    })
+    .otherwise({redirectTo: '/'});
     
     $httpProvider.interceptors.push(['$q', '$rootScope', '$location', 'UserService', 'TempStorage', function($q, $rootScope, $location, User, store) {
         return {

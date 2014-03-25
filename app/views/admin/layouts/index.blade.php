@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ asset('admin_assets/css/main.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body check-auth>
+<body>
     <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -23,9 +23,9 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">{{ trans('admin_default.dashboard') }}</a></li>
-                    <li><a href="#">{{ trans('admin_default.pages') }}</a></li>
-                    <li><a href="#">{{ trans('admin_default.files') }}</a></li>
+                    <li highlight-active="(.*)\/$"><a href="#">{{ trans('admin_default.dashboard') }}</a></li>
+                    <li highlight-active="(.*)\/pages$"><a href="#/pages">{{ trans('admin_default.pages') }}</a></li>
+                    <li highlight-active="(.*)\/files$"><a href="#/files">{{ trans('admin_default.files') }}</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -46,7 +46,7 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-    <div class="container">
+    <div class="container" ng-view>
         @section('name')
         <h1>ParkCMS</h1>
         @show
