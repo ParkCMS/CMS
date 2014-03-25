@@ -5,5 +5,6 @@ return array(
     'pages'     => 'Pages',
     'files'     => 'Files',
     'toggleNav' => 'Toggle navigation',
-    'logout'    => 'Logout'
+    'logout'    => 'Logout',
+    'account_settings' => 'Account settings'
 );

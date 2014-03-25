@@ -95,7 +95,7 @@ return array(
 		|
 		*/
 
-		'model' => 'Cartalyst\Sentry\Groups\Eloquent\Group',
+		'model' => 'Parkcms\Auth\Models\Group',
 
 	),
 
@@ -120,7 +120,7 @@ return array(
 		|
 		*/
 
-		'model' => 'Cartalyst\Sentry\Users\Eloquent\User',
+		'model' => 'Parkcms\Auth\Models\User',
 
 		/*
 		|--------------------------------------------------------------------------

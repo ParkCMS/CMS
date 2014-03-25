@@ -35,11 +35,9 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">You <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ $user->fullName() }} <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
+                            <li><a href="#">{{ trans('admin_default.account_settings') }}</a></li>
                             <li class="divider"></li>
                             <li><a href="{{ route('logout') }}">{{ trans('admin_default.logout') }}</a></li>
                         </ul>
