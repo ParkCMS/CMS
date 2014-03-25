@@ -40,10 +40,19 @@
             </div>
         </nav>
 
+        <div class="container">
+    		@section('body')
+    		  <h1>Body</h1>
+    		@show
+        </div>
 
-		@section('body')
-		  <h1>Body</h1>
-		@show
+        <footer class="footer">
+            <div class="container">
+                <div pcms-text="global-footer">
+                    Footer...
+                </div>
+            </div>
+        </footer>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
