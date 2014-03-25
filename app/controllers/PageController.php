@@ -1,14 +1,10 @@
 <?php
 
 use Parkcms\Models\Page;
-
 use Parkcms\Context;
 use Parkcms\Template\AttributeParser as Parser;
 use Parkcms\Programs\Manager;
 
-/**
- * 
- */
 class PageController extends Controller {
     
     protected $parser;
@@ -28,24 +24,6 @@ class PageController extends Controller {
         $this->parser->setPrefix('pcms-');
     }
 
-    protected function getPageRoot($lang) {
-        $select = Page::roots()->where('title', $lang);
-
-        if(strlen($lang) == 5) {
-            $select->orWhere('title', substr($lang, 0, 2));
-        }
-
-        $select->reOrderBy(DB::raw('LENGTH(title)'), 'desc')->orderBy('lft');
-
-        $root = $select->first();
-
-        if($root === null) {
-            App::abort(404);
-        }
-
-        return $root;
-    }
-
     public function index($lang = null) {
         
         // @TODO: get user language
@@ -53,7 +31,7 @@ class PageController extends Controller {
             $lang = 'de';
         }
 
-        $root = $this->getPageRoot($lang);
+        $root = $this->lookupRoot($lang);
 
         $startPage = $root->children()->first();
         
@@ -77,7 +55,7 @@ class PageController extends Controller {
         }
         
         // look up page tree root determined by user language
-        $root = $this->getPageRoot($lang);
+        $root = $this->lookupRoot($lang);
         
         // look up 
         $this->page = $root->descendants()->where('alias', $route)->first();
@@ -113,5 +91,23 @@ class PageController extends Controller {
         });
 
         return $this->parser->parse();
+    }
+    
+    protected function lookupRoot($lang) {
+        $select = Page::roots()->where('title', $lang);
+
+        if(strlen($lang) == 5) {
+            $select->orWhere('title', substr($lang, 0, 2));
+        }
+
+        $select->reOrderBy(DB::raw('LENGTH(title)'), 'desc')->orderBy('lft');
+
+        $root = $select->first();
+
+        if($root === null) {
+            App::abort(404);
+        }
+
+        return $root;
     }
 }

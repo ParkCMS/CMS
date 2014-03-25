@@ -11,13 +11,19 @@
 |
 */
 
-Route::get('/{lang?}', 'PageController@index')
+Route::any('/api/program/{lang}/{page}/{type}/{identifier}/{attributes?}', 'ProgramController@render')
+    ->where(array(
+        'attributes' => '[A-Za-z0-9\./]+'
+    ));
+
+Route::any('/{lang?}', 'PageController@index')
    ->where(array(
         'lang' => '[a-z]{2}(_[A-Z]{2})?'
     ));
 
-Route::get('/{lang}/{page}/{attributes?}', 'PageController@showPage')
+Route::any('/{lang}/{page}/{attributes?}', 'PageController@showPage')
     ->where(array(
         'lang' => '[a-z]{2}(_[A-Z]{2})?',
         'attributes' => '[A-Za-z0-9\./]+'
     ));
+

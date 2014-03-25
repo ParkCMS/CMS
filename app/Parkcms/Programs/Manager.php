@@ -9,8 +9,6 @@ use App;
 
 class Manager {
     
-    protected $context;
-    
     /**
      * look up for a program an return it at success else null
      * @param  string $type program type (e.g. text)
