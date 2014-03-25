@@ -45,7 +45,7 @@ class Nav implements ProgramInterface {
             $this->closeLIUL($depth, $descendant->depth);
 
             $this->content.= '<li' . $this->classes($descendant) . '>';
-            $this->content.= '<a href="' . URL::to($descendant->alias) . '"';
+            $this->content.= '<a href="' . URL::to($this->context->lang() . '/' . $descendant->alias) . '"';
 
             if($this->hasChildren($descendant)) {
                 $this->content.= ' class="dropdown-toggle" data-toggle="dropdown"';

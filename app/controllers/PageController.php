@@ -27,6 +27,40 @@ class PageController extends Controller {
         
         $this->parser->setPrefix('pcms-');
     }
+
+    protected function getPageRoot($lang) {
+        $select = Page::roots()->where('title', $lang);
+
+        if(strlen($lang) == 5) {
+            $select->orWhere('title', substr($lang, 0, 2));
+        }
+
+        $select->reOrderBy(DB::raw('LENGTH(title)'), 'desc')->orderBy('lft');
+
+        $root = $select->first();
+
+        if($root === null) {
+            App::abort(404);
+        }
+
+        return $root;
+    }
+
+    public function index($lang = null) {
+        
+        // @TODO: get user language
+        if(is_null($lang)) {
+            $lang = 'de';
+        }
+
+        $root = $this->getPageRoot($lang);
+
+        $startPage = $root->children()->first();
+        
+        if($startPage !== null) {
+            return Redirect::to('/' . $lang . '/' . $startPage->alias);
+        }
+    }
     
     /**
      * display the page, found by given route
@@ -34,7 +68,7 @@ class PageController extends Controller {
      * @param  string $attributes atributes slash imploded (e.g. year/2014)
      * @return string rendered page
      */
-    public function showPage($route, $attributes = null)
+    public function showPage($lang, $route, $attributes = null)
     {
         if($attributes !== null) {
             $attributes = explode('/', $attributes);
@@ -42,11 +76,8 @@ class PageController extends Controller {
             $attributes = array();
         }
         
-        // @TODO: determine real user language
-        $lang = 'de';
-        
         // look up page tree root determined by user language
-        $root = Page::roots()->where('title', $lang)->first();
+        $root = $this->getPageRoot($lang);
         
         // look up 
         $this->page = $root->descendants()->where('alias', $route)->first();

@@ -11,19 +11,13 @@
 |
 */
 
-Route::get('/', function()
-{
-    // @TODO: determine real user language
-    $lang = 'de';
-    
-    $root = Parkcms\Models\Page::roots()->where('title', $lang)->first();
-    
-    $startPage = $root->children()->first();
-    
-    if($startPage !== null) {
-        return Redirect::to('/' . $startPage->alias);
-    }
-});
+Route::get('/{lang?}', 'PageController@index')
+   ->where(array(
+        'lang' => '[a-z]{2}(_[A-Z]{2})?'
+    ));
 
-Route::get('/{page}/{attributes?}', 'PageController@showPage')
-    ->where(array('attributes' => '[A-Za-z0-9\./]+'));
+Route::get('/{lang}/{page}/{attributes?}', 'PageController@showPage')
+    ->where(array(
+        'lang' => '[a-z]{2}(_[A-Z]{2})?',
+        'attributes' => '[A-Za-z0-9\./]+'
+    ));
