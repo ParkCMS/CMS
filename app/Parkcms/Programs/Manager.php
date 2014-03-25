@@ -21,19 +21,19 @@ class Manager {
     public function lookup($type, $identifier, array $params) {
         try {
             $program = App::make('Parkcms\Programs\\' . $this->name($type));
-            
-            if(!($program instanceof ProgramInterface)) {
-                return null;
-            }
-
-            if(!$program->initialize($identifier, $params)) {
-                return null;
-            }
-            
-            return $program;
-        } catch(ReflectionException $e) { }
+        } catch(ReflectionException $e) {
+            return null;
+        }
         
-        return null;
+        if(!($program instanceof ProgramInterface)) {
+            return null;
+        }
+
+        if(!$program->initialize($identifier, $params)) {
+            return null;
+        }
+        
+        return $program;
     }
     
     protected function name($type) {
