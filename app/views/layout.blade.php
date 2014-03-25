@@ -8,7 +8,7 @@
     	<title>ParkCMS</title>
 	</head>
 	<body>
-        <nav class="navbar navbar-default" role="navigation" pcms-nav="main">
+        <nav class="navbar navbar-default" role="navigation">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
@@ -22,7 +22,7 @@
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" pcms-nav="main" pcms-nav-class="nav navbar-nav">
                     <ul class="nav navbar-nav">
                         <li><a href="#">Link</a></li>
                         <li><a href="#">Link</a></li>
