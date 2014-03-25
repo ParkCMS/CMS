@@ -33,6 +33,6 @@ class Text implements ProgramInterface {
      * @return string
      */
     public function render() {
-        return $this->content->text;
+        return $this->context->ajax() ? $this->content->toJson() : $this->content->text;
     }
 }
