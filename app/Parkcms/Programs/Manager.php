@@ -19,11 +19,11 @@ class Manager {
      * @return null|Parkcms\Programs\ProgramInterface
      */
     public function lookup($type, $identifier, array $params) {
-        try {
-            $program = App::make('Parkcms\Programs\\' . $this->name($type));
-        } catch(ReflectionException $e) {
+        if(!class_exists('Parkcms\Programs\\' . $this->name($type))) {
             return null;
         }
+        
+        $program = App::make('Parkcms\Programs\\' . $this->name($type));
         
         if(!($program instanceof ProgramInterface)) {
             return null;
