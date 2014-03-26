@@ -30,11 +30,11 @@
         </div>
     </div>
     <div class="col-md-10" browser-breadcrumb>
-        
+
     </div>
 </div>
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-8 filelist">
         <div class="row">
             <div class="col-sm-6 col-md-4 file" ng-repeat="file in files">
                 <div class="thumbnail" ng-if="file.isDir" ng-click="cd(file.path)">
@@ -50,9 +50,13 @@
                     <p>@{{ file.filename }}</p>
                 </div>
             </div>
+            <div class="no-files" ng-if="files.length === 0">
+                <h3>No files available!</h3>
+                <p>Drag files from your computer here or click the Upload button!</p>
+            </div>
         </div>
     </div>
     <div class="col-md-4" browser-sidebar>
-        
+
     </div>
 </div>

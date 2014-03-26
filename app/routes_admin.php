@@ -21,4 +21,4 @@ Route::get('login', array('as' => 'login', 'uses' => 'Parkcms\Auth\LoginControll
 Route::post('login/auth', 'Parkcms\Auth\LoginController@authenticate');
 Route::get('logout', array('as' => 'logout', 'uses' => 'Parkcms\Auth\LoginController@logout'));
 
-Route::get('files/{path}', 'MediaController@resolveFile')->where('path', '[A-Za-z0-9/.]+');
+Route::get('files/{path}', 'MediaController@resolveFile')->where('path', '[A-Za-z0-9/.\% ]+');

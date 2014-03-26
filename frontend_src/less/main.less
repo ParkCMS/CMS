@@ -44,11 +44,37 @@ body.signin {
     border-top-right-radius: 0;
 }
 
+.filelist {
+    background: lighten(@gray-lighter,5%);
+    border: 1px solid @gray-lighter;
+    border-radius: 3px;
+    min-height: 300px;
+    padding-top: 5px;
+}
+
+.no-files {
+    padding-top: 6em;
+    h3 {
+        color: @gray;
+        text-align: center;
+    }
+
+    p {
+        color: @gray;
+        text-align: center;
+    }
+}
+
 .file, .directory {
     cursor: pointer;
     p {
         text-align: center;
         color: @gray;
+        text-overflow: ellipsis;
+        width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        // word-wrap: break-word;
     }
 
     .thumbnail:hover {
