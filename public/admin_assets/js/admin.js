@@ -351,14 +351,38 @@ parkAdmin.controller('loginController', ['$scope', '$rootScope', '$modalInstance
 	};
 }]);
 parkAdmin.controller('filesController',['$scope', 'FileBrowser', function($scope, browser) {
+    $scope.files = [];
     browser.getFilesInFolder('/').success(function(data) {
-        console.log(data);
+        $scope.files = data;
     });
+
+    browser.cd('/piep/piep');
+
+    $scope.testCd = function(ev) {
+        browser.cd('folder1/subfolder');
+
+        return false;
+    }
 }]);
 
 parkAdmin.controller('overviewController',['$scope', function($scope) {
 }]);
 
+parkAdmin.directive("browserBreadcrumb", ['FileBrowser', function(browser) {
+    return {
+        restrict: "A",
+        templateUrl: 'admin/partials/browserBreadcrumb',
+        link: function(scope, element, attrs) {
+            scope.cwd = [];
+            scope.$watch(function() {
+                return browser.cwd(true);
+            }, function(newVal) {
+                newVal.splice(0,1);
+                scope.cwd = newVal;
+            });
+        }
+    };
+}]);
 parkAdmin.directive('checkAuth', ['$rootScope', '$location', 'UserService', 'TempStorage', function($root, $location, User, store) {
 	return {
 		link: function (scope, elem, attrs, ctrl) {
@@ -407,12 +431,71 @@ parkAdmin.directive("highlightActive", ['$location', function($location) {
 parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL) {
     var serviceBackend = BASE_URL + '/admin/files/';
 
+    var currentPath = [''];
+
     this.getFilesInFolder = function(folder) {
         return $http.get(serviceBackend + 'list/', {
             params: {
                 'path': folder
             }
         });
+    };
+
+    /**
+     * Changes into the subdir
+     * @param  {[type]} subdir [description]
+     * @return {[type]}        [description]
+     */
+    this.cd = function(subdir) {
+        var newPath = this.makeAbsolute(subdir);
+
+        currentPath = newPath;
+    };
+
+    this.makeAbsolute = function(path) {
+        if (path == '/') {
+            return [''];
+        }
+
+        if (path[0] == '/') {
+            // Absolute path
+            return path.split('/');
+        } else {
+            // Relative path
+            var components = path.split('/');
+
+            // Copy current path array
+            var workingPath = currentPath.slice();
+
+            for (var i = 0; i < components.length; i++) {
+                if (components[i] == '..') {
+                    workingPath.pop();
+                } else if(components[i] != '.') {
+                    workingPath.push(components[i]);
+                }
+            }
+
+            return workingPath;
+        }
+    }
+
+    /**
+     * Returns the currently loaded path
+     * The root level is always '/'
+     * @return {string} The path
+     */
+    this.cwd = function(stacked) {
+        stacked = (typeof stacked == 'undefined' ? false : stacked);
+
+        if (stacked) {
+            return currentPath;
+        }
+
+        var path = currentPath.join('/');
+        if (path === '') {
+            return '/';
+        }
+        return path;
     }
 }]);
 parkAdmin.service("TempStorage", [function() {

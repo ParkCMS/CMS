@@ -2,3 +2,4 @@
 /composer.lock
 /frontend_src/bower_components
 /node_modules
+/public/admin_assets/css

@@ -5,6 +5,8 @@ namespace Parkcms\Admin\Files;
 use URL;
 use Input;
 use Response;
+use App;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
 class Controller extends \Controller
 {
@@ -33,7 +35,11 @@ class Controller extends \Controller
 
         $this->store->setBaseUrl(URL::to('files'));
 
-        $files = $this->store->filesInFolder($path);
-        return Response::json($files);
+        try {
+            $files = $this->store->filesInFolder($path);
+            return Response::json($files);
+        } catch (FileNotFoundException $e) {
+            return Response::json(array("error" => 404, "message" => $e->getMessage()), 404);
+        }
     }
 }
