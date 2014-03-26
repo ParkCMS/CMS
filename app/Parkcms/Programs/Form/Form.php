@@ -36,10 +36,21 @@ class Form implements ProgramInterface {
         $this->identifier = $identifier;
 
         if(strpos($identifier, "global") === 0) {
-            return (bool)($this->form = Model::where('identifier', $this->context->lang() . '-' . $identifier)->first());
+            $this->form = Model::where('identifier', $this->context->lang() . '-' . $identifier)->first();
+        } else {
+            $this->form = Model::where('identifier', $this->context->lang() . '-' . $this->context->route() . '-' . $identifier)->first();
         }
-        
-        return (bool)($this->form = Model::where('identifier', $this->context->lang() . '-' . $this->context->route() . '-' . $identifier)->first());
+
+        if(is_null($this->form)) {
+            return false;
+        }
+
+        try {
+            View::getFinder()->find('forms::' . $this->form->identifier);
+            return true;
+        } catch(\InvalidArgumentException $e) {
+            return false;
+        }
     }
     
     /**
