@@ -1,2 +1,5 @@
-parkAdmin.controller('filesController',['$scope', function($scope) {
+parkAdmin.controller('filesController',['$scope', 'FileBrowser', function($scope, browser) {
+    browser.getFilesInFolder('/').success(function(data) {
+        console.log(data);
+    });
 }]);

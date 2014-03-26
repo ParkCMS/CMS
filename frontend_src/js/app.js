@@ -11,7 +11,7 @@ parkAdmin.config(['$routeProvider', '$httpProvider', function($routeProvider, $h
     })
     .otherwise({redirectTo: '/'});
     
-    $httpProvider.interceptors.push(['$q', '$rootScope', '$location', 'UserService', 'TempStorage', function($q, $rootScope, $location, User, store) {
+    $httpProvider.interceptors.push(['$q', '$rootScope', '$location', 'UserService', 'TempStorage', 'BASE_URL', function($q, $rootScope, $location, User, store, BASE_URL) {
         return {
             'request': function(config) {
                 $rootScope.$broadcast('loading-started');
@@ -30,11 +30,15 @@ parkAdmin.config(['$routeProvider', '$httpProvider', function($routeProvider, $h
                     User.reset();
                     $rootScope.$broadcast('auth-error');
                     store.set('preLoginRoute', $location.path());
-                    $location.path("/login");
+                    window.location.href = BASE_URL + "/login";
                     return;
                 }
                 return $q.reject(rejection);
             }
         };
     }]);
+}]);
+
+parkAdmin.run(['$http', function($http) {
+  $http.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 }]);

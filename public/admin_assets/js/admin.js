@@ -252,7 +252,7 @@ parkAdmin.config(['$routeProvider', '$httpProvider', function($routeProvider, $h
     })
     .otherwise({redirectTo: '/'});
     
-    $httpProvider.interceptors.push(['$q', '$rootScope', '$location', 'UserService', 'TempStorage', function($q, $rootScope, $location, User, store) {
+    $httpProvider.interceptors.push(['$q', '$rootScope', '$location', 'UserService', 'TempStorage', 'BASE_URL', function($q, $rootScope, $location, User, store, BASE_URL) {
         return {
             'request': function(config) {
                 $rootScope.$broadcast('loading-started');
@@ -271,13 +271,17 @@ parkAdmin.config(['$routeProvider', '$httpProvider', function($routeProvider, $h
                     User.reset();
                     $rootScope.$broadcast('auth-error');
                     store.set('preLoginRoute', $location.path());
-                    $location.path("/login");
+                    window.location.href = BASE_URL + "/login";
                     return;
                 }
                 return $q.reject(rejection);
             }
         };
     }]);
+}]);
+
+parkAdmin.run(['$http', function($http) {
+  $http.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 }]);
 parkAdmin.controller('loginViewController', 
 	['$rootScope', '$modal', '$http', '$location', 'BASE_URL', 'UserService', 'TempStorage', function($rootScope, $modal, $http, $location, BASE_URL, User, store) {
@@ -346,7 +350,10 @@ parkAdmin.controller('loginController', ['$scope', '$rootScope', '$modalInstance
 		});
 	};
 }]);
-parkAdmin.controller('filesController',['$scope', function($scope) {
+parkAdmin.controller('filesController',['$scope', 'FileBrowser', function($scope, browser) {
+    browser.getFilesInFolder('/').success(function(data) {
+        console.log(data);
+    });
 }]);
 
 parkAdmin.controller('overviewController',['$scope', function($scope) {
@@ -396,6 +403,17 @@ parkAdmin.directive("highlightActive", ['$location', function($location) {
 			});
 		}
 	};
+}]);
+parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL) {
+    var serviceBackend = BASE_URL + '/admin/files/';
+
+    this.getFilesInFolder = function(folder) {
+        return $http.get(serviceBackend + 'list/', {
+            params: {
+                'path': folder
+            }
+        });
+    }
 }]);
 parkAdmin.service("TempStorage", [function() {
 	var storage = {};
