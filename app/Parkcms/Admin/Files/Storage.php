@@ -51,17 +51,36 @@ class Storage
         $files = $this->finder->in($path)->depth('<1');
 
         $finf = array();
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
         foreach($files as $file) {
+            $type = "directory";
+            if ($file->isFile()) {
+                $type = finfo_file($finfo, $file->getRealPath());
+            }
             $finf[] = array(
                 'filename'  => $file->getFilename(),
                 'path'      => $folder . '/' . $file->getFilename(),
                 'url'       => $this->buildUrl($folder . '/' . $file->getFilename()),
                 'isFile'    => $file->isFile(),
-                'isDir'     => $file->isDir()
+                'isDir'     => $file->isDir(),
+                'size'      => $file->getSize(),
+                'type'      => $type
             );
         }
+        finfo_close($finfo);
         
         return $finf;
+    }
+
+    public function lookupFile($file)
+    {
+        $path = $this->buildPath($file);
+
+        if ($path === false) {
+            throw new FileNotFoundException(sprintf('Folder "%s" could not be found.', $file));
+        }
+
+        return $this->buildUrl($file);
     }
 
     public function buildPath($file)

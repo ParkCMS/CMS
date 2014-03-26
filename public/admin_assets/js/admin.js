@@ -352,9 +352,6 @@ parkAdmin.controller('loginController', ['$scope', '$rootScope', '$modalInstance
 }]);
 parkAdmin.controller('filesController',['$scope', 'FileBrowser', function($scope, browser) {
     $scope.files = [];
-    // browser.getFilesInFolder('/').success(function(data) {
-    //     $scope.files = data;
-    // });
     
     $scope.cd = function(path, ev) {
         browser.cd(path).success(function(data) {
@@ -364,6 +361,10 @@ parkAdmin.controller('filesController',['$scope', 'FileBrowser', function($scope
         if (typeof ev !== 'undefined') {
             ev.preventDefault();
         }
+    }
+
+    $scope.preview = function(file) {
+        $scope.$broadcast('file-clicked', file);
     }
 
     $scope.cd('/');
@@ -393,6 +394,18 @@ parkAdmin.directive("browserBreadcrumb", ['FileBrowser', function(browser) {
                 var copy = newVal.slice()
                 copy.splice(0,1);
                 scope.cwd = copy;
+            });
+        }
+    };
+}]);
+parkAdmin.directive("browserSidebar", ['FileBrowser', function(browser) {
+    return {
+        restrict: "A",
+        templateUrl: 'admin/partials/browserSidebar',
+        link: function(scope, element, attrs) {
+            scope.file = [];
+            scope.$on('file-clicked', function(ev, file) {
+                scope.file = file;
             });
         }
     };
@@ -447,14 +460,6 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
 
     var currentPath = [''];
 
-    _getFilesInFolder = function(folder) {
-        return $http.get(serviceBackend + 'list/', {
-            params: {
-                'path': folder
-            }
-        });
-    };
-
     /**
      * Changes into the subdir
      * @param  {[type]} subdir [description]
@@ -462,7 +467,6 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
      */
     this.cd = function(subdir) {
         var newPath = this.makeAbsolute(subdir);
-        // console.log(_merge(newPath));
 
         return _getFilesInFolder(_merge(newPath)).success(function() {
             currentPath = newPath;
@@ -486,6 +490,7 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
 
             for (var i = 0; i < components.length; i++) {
                 if (components[i] == '..') {
+                    // Don't pop out of the root level!
                     if (workingPath.length > 1) {
                         workingPath.pop();
                     }
@@ -509,7 +514,7 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
         if (stacked) {
             return currentPath;
         }
-        
+
         return _merge(currentPath);
     }
 
@@ -520,6 +525,14 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
         }
         return path;
     }
+
+    var _getFilesInFolder = function(folder) {
+        return $http.get(serviceBackend + 'list/', {
+            params: {
+                'path': folder
+            }
+        });
+    };
 }]);
 parkAdmin.service("TempStorage", [function() {
 	var storage = {};

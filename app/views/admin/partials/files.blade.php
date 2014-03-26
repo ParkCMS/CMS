@@ -43,7 +43,7 @@
                     </p>
                     <p>@{{ file.filename }}</p>
                 </div>
-                <div class="thumbnail" ng-if="file.isFile">
+                <div class="thumbnail" ng-if="file.isFile" ng-click="preview(file)">
                     <p>
                         <i style="font-size: 780%" class="glyphicon glyphicon-picture"></i>
                     </p>
@@ -52,13 +52,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <h3>File: img3.jpg</h3>
-        <img src="http://placehold.it/350x200">
-        <div class="btn-group">
-            <button type="button" class="btn btn-default">Download</button>
-            <button type="button" class="btn btn-default">Delete</button>
-            <button type="button" class="btn btn-default">Move</button>
-        </div>
+    <div class="col-md-4" browser-sidebar>
+        
     </div>
 </div>

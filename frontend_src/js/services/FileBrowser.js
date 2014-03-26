@@ -3,14 +3,6 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
 
     var currentPath = [''];
 
-    _getFilesInFolder = function(folder) {
-        return $http.get(serviceBackend + 'list/', {
-            params: {
-                'path': folder
-            }
-        });
-    };
-
     /**
      * Changes into the subdir
      * @param  {[type]} subdir [description]
@@ -18,7 +10,6 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
      */
     this.cd = function(subdir) {
         var newPath = this.makeAbsolute(subdir);
-        // console.log(_merge(newPath));
 
         return _getFilesInFolder(_merge(newPath)).success(function() {
             currentPath = newPath;
@@ -42,6 +33,7 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
 
             for (var i = 0; i < components.length; i++) {
                 if (components[i] == '..') {
+                    // Don't pop out of the root level!
                     if (workingPath.length > 1) {
                         workingPath.pop();
                     }
@@ -65,7 +57,7 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
         if (stacked) {
             return currentPath;
         }
-        
+
         return _merge(currentPath);
     }
 
@@ -76,4 +68,12 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
         }
         return path;
     }
+
+    var _getFilesInFolder = function(folder) {
+        return $http.get(serviceBackend + 'list/', {
+            params: {
+                'path': folder
+            }
+        });
+    };
 }]);
