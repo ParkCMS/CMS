@@ -3,7 +3,7 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
 
     var currentPath = [''];
 
-    this.getFilesInFolder = function(folder) {
+    _getFilesInFolder = function(folder) {
         return $http.get(serviceBackend + 'list/', {
             params: {
                 'path': folder
@@ -20,7 +20,7 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
         var newPath = this.makeAbsolute(subdir);
         // console.log(_merge(newPath));
 
-        return this.getFilesInFolder(_merge(newPath)).success(function() {
+        return _getFilesInFolder(_merge(newPath)).success(function() {
             currentPath = newPath;
         });
     };
@@ -65,12 +65,7 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
         if (stacked) {
             return currentPath;
         }
-
-        // var path = currentPath.join('/');
-        // if (path === '') {
-        //     return '/';
-        // }
-        // return path;
+        
         return _merge(currentPath);
     }
 

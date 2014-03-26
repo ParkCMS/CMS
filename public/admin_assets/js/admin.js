@@ -356,10 +356,14 @@ parkAdmin.controller('filesController',['$scope', 'FileBrowser', function($scope
     //     $scope.files = data;
     // });
     
-    $scope.cd = function(path) {
+    $scope.cd = function(path, ev) {
         browser.cd(path).success(function(data) {
            $scope.files = data; 
         });
+
+        if (typeof ev !== 'undefined') {
+            ev.preventDefault();
+        }
     }
 
     $scope.cd('/');
@@ -374,6 +378,15 @@ parkAdmin.directive("browserBreadcrumb", ['FileBrowser', function(browser) {
         templateUrl: 'admin/partials/browserBreadcrumb',
         link: function(scope, element, attrs) {
             scope.cwd = [];
+            scope.up = function(event, level) {
+                var tmp = [];
+                for (var i = 0; i <= level; i++) {
+                    tmp.push(scope.cwd[i]);
+                }
+                scope.cd('/' + tmp.join('/'));
+
+                event.preventDefault();
+            }
             scope.$watch(function() {
                 return browser.cwd(true);
             }, function(newVal) {
@@ -434,7 +447,7 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
 
     var currentPath = [''];
 
-    this.getFilesInFolder = function(folder) {
+    _getFilesInFolder = function(folder) {
         return $http.get(serviceBackend + 'list/', {
             params: {
                 'path': folder
@@ -451,7 +464,7 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
         var newPath = this.makeAbsolute(subdir);
         // console.log(_merge(newPath));
 
-        return this.getFilesInFolder(_merge(newPath)).success(function() {
+        return _getFilesInFolder(_merge(newPath)).success(function() {
             currentPath = newPath;
         });
     };
@@ -496,12 +509,7 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
         if (stacked) {
             return currentPath;
         }
-
-        // var path = currentPath.join('/');
-        // if (path === '') {
-        //     return '/';
-        // }
-        // return path;
+        
         return _merge(currentPath);
     }
 
