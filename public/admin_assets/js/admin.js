@@ -352,17 +352,17 @@ parkAdmin.controller('loginController', ['$scope', '$rootScope', '$modalInstance
 }]);
 parkAdmin.controller('filesController',['$scope', 'FileBrowser', function($scope, browser) {
     $scope.files = [];
-    browser.getFilesInFolder('/').success(function(data) {
-        $scope.files = data;
-    });
-
-    browser.cd('/piep/piep');
-
-    $scope.testCd = function(ev) {
-        browser.cd('folder1/subfolder');
-
-        return false;
+    // browser.getFilesInFolder('/').success(function(data) {
+    //     $scope.files = data;
+    // });
+    
+    $scope.cd = function(path) {
+        browser.cd(path).success(function(data) {
+           $scope.files = data; 
+        });
     }
+
+    $scope.cd('/');
 }]);
 
 parkAdmin.controller('overviewController',['$scope', function($scope) {
@@ -377,8 +377,9 @@ parkAdmin.directive("browserBreadcrumb", ['FileBrowser', function(browser) {
             scope.$watch(function() {
                 return browser.cwd(true);
             }, function(newVal) {
-                newVal.splice(0,1);
-                scope.cwd = newVal;
+                var copy = newVal.slice()
+                copy.splice(0,1);
+                scope.cwd = copy;
             });
         }
     };
@@ -448,8 +449,11 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
      */
     this.cd = function(subdir) {
         var newPath = this.makeAbsolute(subdir);
+        // console.log(_merge(newPath));
 
-        currentPath = newPath;
+        return this.getFilesInFolder(_merge(newPath)).success(function() {
+            currentPath = newPath;
+        });
     };
 
     this.makeAbsolute = function(path) {
@@ -469,7 +473,9 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
 
             for (var i = 0; i < components.length; i++) {
                 if (components[i] == '..') {
-                    workingPath.pop();
+                    if (workingPath.length > 1) {
+                        workingPath.pop();
+                    }
                 } else if(components[i] != '.') {
                     workingPath.push(components[i]);
                 }
@@ -491,7 +497,16 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
             return currentPath;
         }
 
-        var path = currentPath.join('/');
+        // var path = currentPath.join('/');
+        // if (path === '') {
+        //     return '/';
+        // }
+        // return path;
+        return _merge(currentPath);
+    }
+
+    var _merge = function(pathArray) {
+        var path = pathArray.join('/');
         if (path === '') {
             return '/';
         }

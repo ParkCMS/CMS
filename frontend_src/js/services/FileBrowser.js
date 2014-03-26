@@ -18,8 +18,11 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
      */
     this.cd = function(subdir) {
         var newPath = this.makeAbsolute(subdir);
+        // console.log(_merge(newPath));
 
-        currentPath = newPath;
+        return this.getFilesInFolder(_merge(newPath)).success(function() {
+            currentPath = newPath;
+        });
     };
 
     this.makeAbsolute = function(path) {
@@ -39,7 +42,9 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
 
             for (var i = 0; i < components.length; i++) {
                 if (components[i] == '..') {
-                    workingPath.pop();
+                    if (workingPath.length > 1) {
+                        workingPath.pop();
+                    }
                 } else if(components[i] != '.') {
                     workingPath.push(components[i]);
                 }
@@ -61,7 +66,16 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
             return currentPath;
         }
 
-        var path = currentPath.join('/');
+        // var path = currentPath.join('/');
+        // if (path === '') {
+        //     return '/';
+        // }
+        // return path;
+        return _merge(currentPath);
+    }
+
+    var _merge = function(pathArray) {
+        var path = pathArray.join('/');
         if (path === '') {
             return '/';
         }

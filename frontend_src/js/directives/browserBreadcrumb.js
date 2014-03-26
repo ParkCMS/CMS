@@ -7,8 +7,9 @@ parkAdmin.directive("browserBreadcrumb", ['FileBrowser', function(browser) {
             scope.$watch(function() {
                 return browser.cwd(true);
             }, function(newVal) {
-                newVal.splice(0,1);
-                scope.cwd = newVal;
+                var copy = newVal.slice()
+                copy.splice(0,1);
+                scope.cwd = copy;
             });
         }
     };
