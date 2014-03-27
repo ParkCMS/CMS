@@ -11,7 +11,7 @@
             <div class="checkbox">
                 <label>
                     {{ $part->title }}
-                    <input type="checkbox" name="" value="" />
+                    <input type="checkbox" name="parts[{{ $part->id }}]" value="1" {{ $p->get('parts.' . $part->id) }} />
                 </label>
             </div>
         @endforeach

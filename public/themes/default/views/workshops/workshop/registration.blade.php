@@ -7,7 +7,10 @@
     <div class="modal-body">
         <p>{{ $workshop->description }}</p>
 
-        <input type="name" name="name" value="" placeholder="Name" />
+        <input type="text" name="name" value="{{ $p->get('name') }}" placeholder="Name" />
+        <input type="email" name="email" value="{{ $p->get('email') }}" placeholder="E-Mail" />
+        <input type="name" name="address" value="{{ $p->get('address') }}" placeholder="Adresse" />
+        <input type="name" name="institution" value="{{ $p->get('institution') }}" placeholder="Institution" />
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
