@@ -9,6 +9,7 @@ use Parkcms\Programs\Workshop\Models\Workshop as Model;
 
 use View;
 use Input;
+use Asset;
 
 class Workshop extends ProgramAbstract {
 
@@ -36,6 +37,8 @@ class Workshop extends ProgramAbstract {
         if(is_null($this->workshop)) {
             return false;
         }
+
+        Asset::script('data-async', 'themes/default/js/data-async.js');
 
         return true;
     }
