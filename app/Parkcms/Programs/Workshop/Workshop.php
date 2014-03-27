@@ -6,9 +6,12 @@ use Parkcms\Context;
 use Parkcms\Programs\ProgramAbstract;
 
 use Parkcms\Programs\Workshop\Models\Workshop as Model;
+use Parkcms\Programs\Workshop\Models\Part as Part;
 
 use View;
 use Input;
+use Session;
+use Request;
 use Asset;
 
 class Workshop extends ProgramAbstract {
@@ -38,7 +41,7 @@ class Workshop extends ProgramAbstract {
             return false;
         }
 
-        Asset::script('data-async', 'themes/default/js/data-async.js');
+        Asset::script('data-async', 'themes/default/js/data-async.js', array('jquery', 'bootstrap'));
 
         return true;
     }
@@ -55,17 +58,24 @@ class Workshop extends ProgramAbstract {
             case 'register':
                 return $this->renderRegisterForm();
 
-            case 'check':
-                return $this->renderRegisterCheck();
-
             case 'parts':
+                if(!$this->checkRegistrationData()) {
+                    return $this->renderRegisterForm();
+                }
                 return $this->renderPartsForm();
+
+            case 'check':
+                if(!$this->checkPartsData()) {
+                    return $this->renderPartsForm();
+                }
+                return $this->renderRegisterCheck();
 
             case 'pay':
                 return $this->renderPayment();
 
             case 'index':
             default:
+                $this->clear();
                 return $this->renderIndex();
         }
     }
@@ -98,6 +108,63 @@ class Workshop extends ProgramAbstract {
         if($tmp = Input::get('workshop')) {
             if(isset($tmp[$this->workshop->identifier])) {
                 $this->input = $tmp[$this->workshop->identifier];
+            }
+        }
+    }
+
+    protected function checkRegistrationData() {
+        if(Request::isMethod('get')) {
+            return true;
+        }
+        
+        if(Request::isMethod('post')) {
+            foreach(Input::only('name', 'email', 'address', 'institution') as $key=>$value) {
+                $this->store($key, $value);
+            }
+        }
+
+        return true;
+    }
+
+    protected function checkPartsData() {
+        if(Request::isMethod('get')) {
+            return true;
+        }
+
+        $checkedParts = array_keys(Input::get('parts', array()));
+
+        foreach ($this->workshop->parts as $part) {
+            if(in_array($part->id, $checkedParts)) {
+                $this->arrayRemove($part->id, $checkedParts);
+                $this->store('parts.' . $part->id, ' checked="checked"');
+            } else {
+                $this->delete('parts.' . $part->id);
+            }
+        }
+
+        return count($checkedParts) == 0;
+    }
+
+    protected function clear() {
+        Session::forget('workshops.' . $this->workshop->identifier . '.data');
+    }
+
+    protected function store($key, $value) {
+        return Session::put('workshops.' . $this->workshop->identifier . '.data.' . $key, $value);
+    }
+
+    public function get($key, $default = '') {
+        return Session::get('workshops.' . $this->workshop->identifier . '.data.' . $key, $default);
+    }
+
+    protected function delete($key) {
+        Session::forget('workshops.' . $this->workshop->identifier . '.data.' . $key);
+    }
+
+    public function arrayRemove($value, &$array) {
+        foreach($array as $k=>$v) {
+            if($value == $v) {
+                unset($array[$k]);
             }
         }
     }
