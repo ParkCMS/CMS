@@ -26,9 +26,9 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="inputFirstname" class="col-sm-3 control-label">First Name</label>
+			<label for="inputFirstname" class="col-sm-3 control-label">Address</label>
 			<div class="col-sm-9">
-				<input type="text" class="form-control" id="inputFirstname" placeholder="First Name" name="firstname" value="{{ $p->get('firstname') }}">
+				<input type="text" class="form-control" id="inputFirstname" placeholder="Address" name="address" value="{{ $p->get('address') }}">
 			</div>
 		</div>
 		<div class="form-group">
@@ -40,7 +40,7 @@
 		
         <input type="text" name="name" value="{{ $p->get('name') }}" placeholder="Name" />
         <input type="email" name="email" value="{{ $p->get('email') }}" placeholder="E-Mail" />
-        <input type="name" name="address" value="{{ $p->get('address') }}" placeholder="Adresse" />
+        <input type="name" name="address" value="{{ $p->get('') }}" placeholder="" />
         <input type="name" name="institution" value="{{ $p->get('institution') }}" placeholder="Institution" />
     </div>
     <div class="modal-footer">
