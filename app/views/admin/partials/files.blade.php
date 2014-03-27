@@ -1,6 +1,7 @@
 <div flow-init="{target:'/admin/files/uploader', 'query':queryBuild}"
      flow-name="upload.flow"
      flow-file-added="fileAdded($event, $file)"
+     flow-files-submitted="startUpload($event, $files)"
      flow-upload-started="console.log('Upload')">
     <div class="row toolbar">
         <div class="col-md-2">
@@ -73,12 +74,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="file in upload.flow.files">
+                    <tr ng-repeat="file in upload.flow.files" ng-class="{'error': file.error}">
                         <td>@{{file.name}}</td>
                         <td>@{{ file.virtualPath }}</td>
                         <td>@{{file.size | bytes }}</td>
                         <td>@{{file.getType()}}</td>
-                        <td><progressbar max="100" value="90" type="warning">@{{ file.timeRemaining() }}</progressbar></td>
+                        <td><progressbar max="100" value="file.progress()" type="warning">@{{ file.timeRemaining() }}</progressbar></td>
                     </tr>
                 </tbody>
             </table>

@@ -14,14 +14,12 @@ parkAdmin.controller('filesController',['$scope', 'FileBrowser', function($scope
     }
 
     $scope.fileAdded = function (event, flowFile) {
-        //event.preventDefault();//prevent file from uploading
         flowFile.virtualPath = browser.cwd();
-        //$scope.upload.flow.upload();
-        flowFile.flowObj.upload();
-        console.log(flowFile.flowObj.files);
-        //console.log($scope.upload.flow.files);
-        //console.log($scope);
     };
+
+    $scope.startUpload = function(event, files) {
+        $scope.upload.flow.upload();
+    }
 
     $scope.queryBuild = function(flowFile, flowChunk) {
         return {'virtualPath': flowFile.virtualPath};
