@@ -18,6 +18,8 @@ Route::group(array('prefix' => 'admin', 'before' => 'pcms_auth'), function() {
 
     Route::get('files/upload', 'Parkcms\Admin\Files\Controller@uploadGet');
     Route::post('files/upload', 'Parkcms\Admin\Files\Controller@uploadPost');
+
+    Route::get('files/mkdir', 'Parkcms\Admin\Files\Controller@mkdir');
 });
 
 Route::get('login', array('as' => 'login', 'uses' => 'Parkcms\Auth\LoginController@loginForm'));

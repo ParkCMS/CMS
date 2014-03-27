@@ -43,7 +43,23 @@ class Controller extends \Controller
         }
     }
 
-    public function uploadGet() {
+    public function mkdir()
+    {
+        $basepath = urldecode(Input::get('basepath'));
+        $name = urldecode(Input::get('name'));
+        $path = $this->path->clean($basepath) . DIRECTORY_SEPARATOR . $name;
+
+        try {
+            $this->store->mkdir($path);
+
+            return Response::make('Ok', 200);
+        } catch(Exception $e) {
+            return Response::make($e->getMessage(), 401);
+        }
+    }
+
+    public function uploadGet()
+    {
         $file = $this->initUploadFile();
         if ($file->checkChunk()) {
             return $this->checkUploadStatus($file);
@@ -52,7 +68,8 @@ class Controller extends \Controller
         }
     }
 
-    public function uploadPost() {
+    public function uploadPost()
+    {
         $file = $this->initUploadFile();
         if ($file->validateChunk()) {
             $file->saveChunk();
@@ -63,7 +80,8 @@ class Controller extends \Controller
         }
     }
 
-    private function initUploadFile() {
+    private function initUploadFile()
+    {
         $config = new \Flow\Config();
         $config->setTempDir(storage_path() . '/upload_tmp');
         $file = new \Flow\File($config);
@@ -71,7 +89,8 @@ class Controller extends \Controller
         return $file;
     }
 
-    private function checkUploadStatus($file) {
+    private function checkUploadStatus($file)
+    {
         $vp = Input::get('virtualPath');
         $filename = Input::get('flowRelativePath');
 

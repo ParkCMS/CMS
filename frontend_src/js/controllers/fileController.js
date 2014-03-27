@@ -1,4 +1,4 @@
-parkAdmin.controller('filesController',['$scope', 'FileBrowser', function($scope, browser) {
+parkAdmin.controller('filesController',['$scope', '$modal', 'FileBrowser', function($scope, $modal, browser) {
     $scope.files = [];
     $scope.upload = {};
     $scope.upload.flow = null;
@@ -11,6 +11,24 @@ parkAdmin.controller('filesController',['$scope', 'FileBrowser', function($scope
         if (typeof ev !== 'undefined') {
             ev.preventDefault();
         }
+    }
+
+    $scope.open_mkdir = function() {
+        var modalInstance = $modal.open({
+            templateUrl: 'admin/partials/mkdir_modal',
+            controller: 'MkdirController',
+            resolve: {
+                cwd: function() {
+                    return browser.cwd();
+                }
+            }
+        });
+
+        modalInstance.result.then(function (dirname) {
+            browser.mkdir(browser.cwd(), dirname).success(function() {
+                $scope.refresh();
+            });
+        })
     }
 
     $scope.refresh = function(ev) {
@@ -46,4 +64,17 @@ parkAdmin.controller('filesController',['$scope', 'FileBrowser', function($scope
     }
 
     $scope.cd('/');
+}]);
+
+parkAdmin.controller('MkdirController',['$scope', '$modalInstance', function($scope, $modalInstance) {
+    $scope.fields = {};
+    $scope.fields.dirname = "";
+    $scope.ok = function() {
+        console.log($scope.dirname);
+        $modalInstance.close($scope.dirname);
+    };
+
+    $scope.cancel = function() {
+        $modalInstance.dismiss('cancel');
+    }
 }]);

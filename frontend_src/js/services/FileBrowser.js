@@ -46,6 +46,15 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
         }
     }
 
+    this.mkdir = function(basepath, name) {
+        return $http.get(serviceBackend + 'mkdir/', {
+            params: {
+                'basepath': basepath,
+                'name': name
+            }
+        });
+    }
+
     /**
      * Returns the currently loaded path
      * The root level is always '/'

@@ -83,6 +83,13 @@ class Storage
         return $this->buildUrl($file);
     }
 
+    public function mkdir($path)
+    {
+        if (!mkdir($path)) {
+            throw new Exception("No Permissions to create directory!");
+        }
+    }
+
     public function buildPath($file)
     {
         return $this->path->resolveFilesystemPath($this->basePath, $file);

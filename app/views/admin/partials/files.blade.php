@@ -3,21 +3,33 @@
      flow-file-added="fileAdded($event, $file)"
      flow-files-submitted="startUpload($event, $files)"
      flow-complete="refresh()">
+    <script type="text/ng-template" id="admin/partials/mkdir_modal">
+        <div class="modal-header">
+            <h3>Create folder</h3>
+        </div>
+        <div class="modal-body">
+            <input type="text" class="input" ng-model="fields.dirname" />
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
     <div class="row toolbar">
         <div class="col-md-2">
             <div class="btn-group">
-                <button class="btn btn-default" title="Upload" flow-btn>
+                <button class="btn btn-default" title="{{ trans('admin_default.upload_action') }}" flow-btn>
                     <span class="glyphicon glyphicon-arrow-up"></span>
                 </button>
-                <button class="btn btn-default" title="New Directory">
+                <button class="btn btn-default" title="{{ trans('admin_default.new_dir_action') }}" ng-click="open_mkdir()">
                     <span class="glyphicon glyphicon-folder-close"></span>
                 </button>
-                <button class="btn btn-default" title="Archive">
+                <button class="btn btn-default" title="{{ trans('admin_default.archive_action') }}">
                     <span class="glyphicon glyphicon-envelope"></span>
                 </button>
             </div>
             <div class="btn-group pull-right">
-                <button type="button" class="btn btn-default" title="Up" ng-click="cd('..')">
+                <button type="button" class="btn btn-default" title="{{ trans('admin_default.up') }}" ng-click="cd('..')">
                     <span class="glyphicon glyphicon-arrow-left"></span>
                 </button>
             </div>
@@ -44,8 +56,8 @@
                     </div>
                 </div>
                 <div class="no-files" ng-if="files.length === 0">
-                    <h3>No files available!</h3>
-                    <p>Drag files from your computer here or click the Upload button!</p>
+                    <h3>{{ trans('admin_default.no_files') }}</h3>
+                    <p>{{ trans('admin_default.no_files_desc') }}</p>
                 </div>
             </div>
         </div>
@@ -55,32 +67,32 @@
     </div>
     <div class="row uploads">
         <div class="col-md-12">
-            <h3>Uploads</h3>
+            <h3>{{ trans('admin_default.uploads') }}</h3>
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Path</th>
-                        <th>Size</th>
-                        <th>Type</th>
-                        <th>Progress</th>
+                        <th>{{ trans('admin_default.tbl_filename') }}</th>
+                        <th>{{ trans('admin_default.tbl_path') }}</th>
+                        <th>{{ trans('admin_default.tbl_filesize') }}</th>
+                        <th>{{ trans('admin_default.tbl_filetype') }}</th>
+                        <th>{{ trans('admin_default.tbl_upload_status') }}</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="file in upload.flow.files | filter:hideComplete" ng-class="{'error': file.error, 'completed': file.isComplete()}">
+                    <tr ng-repeat="file in upload.flow.files" ng-class="{'error': file.error, 'completed': file.isComplete()}">
                         <td>@{{file.name}}</td>
                         <td>@{{ file.virtualPath }}</td>
                         <td>@{{file.size | bytes }}</td>
                         <td>@{{file.getType()}}</td>
                         <td ng-switch="file.isComplete()">
                             <span ng-switch-when="false">
-                                <progressbar max="100" value="file.progress() * 100" type="warning">@{{ file.timeRemaining() }}</progressbar>
+                                <progressbar max="100" value="file.progress() * 100" type="warning">@{{ file.progress() * 100 }} %</progressbar>
                             </span>
-                            <span ng-switch-default>Done</span>
+                            <span ng-switch-default>{{ trans('admin_default.done') }}</span>
                         </td>
                     </tr>
                     <tr ng-if="upload.flow.files.length === 0">
-                        <td colspan="5" class="no-files">No files uploaded yet</td>
+                        <td colspan="5" class="no-files">{{ trans('admin_default.no_uploads') }}</td>
                     </tr>
                 </tbody>
             </table>
