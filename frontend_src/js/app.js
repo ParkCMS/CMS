@@ -1,4 +1,4 @@
-var parkAdmin = angular.module('parkAdmin', ['ngRoute','ui.bootstrap']);
+var parkAdmin = angular.module('parkAdmin', ['ngRoute','ui.bootstrap', 'flow']);
 
 parkAdmin.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
     $routeProvider.when('/', {

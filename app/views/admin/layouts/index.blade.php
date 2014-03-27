@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ asset('admin_assets/css/main.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body>
+<body flow-prevent-drop>
     <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
