@@ -107,6 +107,7 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 
+		'Parkcms\Assets\AssetServiceProvider',
 	),
 
 	/*
@@ -173,6 +174,7 @@ return array(
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
 
+		'Asset'			  => 'Parkcms\Assets\AssetFacade',
 	),
 
 );

@@ -3,6 +3,7 @@
 use Parkcms\Models\Page;
 use Parkcms\Context;
 use Parkcms\Template\AttributeParser as Parser;
+use Parkcms\Template\ArgumentConverter as Converter;
 use Parkcms\Programs\Manager;
 
 class PageController extends Controller {
@@ -17,8 +18,8 @@ class PageController extends Controller {
      * @param Parser  $parser
      * @param Manager $manager
      */
-    public function __construct(Parser $parser, Manager $manager) {
-        $this->parser = $parser;
+    public function __construct(Manager $manager) {
+        $this->parser = new Parser(new Converter(), App::make('events'));
         $this->manager = $manager;
         
         $this->parser->setPrefix('pcms-');
