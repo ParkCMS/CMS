@@ -67,6 +67,21 @@ App::down(function()
 	return Response::make("Be right back!", 503);
 });
 
+
+/*
+|--------------------------------------------------------------------------
+| Required global assets
+|--------------------------------------------------------------------------
+|
+| All global required assets here
+|
+*/
+
+Asset::add('bootstrap', 'https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css');
+
+Asset::add('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js');
+Asset::add('bootstrap', 'https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js', array('jquery'));
+
 /*
 |--------------------------------------------------------------------------
 | Require The Filters File
