@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder {
 		$this->call('PageSeeder');
 		$this->call('TextSeeder');
 		$this->call('FormSeeder');
+		$this->call('WorkshopSeeder');
 		
 		// $this->call('UserTableSeeder');
 	}
