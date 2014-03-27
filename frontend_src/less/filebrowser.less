@@ -62,7 +62,15 @@
 
 .uploads {
     .error td {
-        background: @brand-danger !important;
+        background: lighten(@brand-danger, 10%) !important;
+    }
+
+    .completed td {
+        background: lighten(@brand-success, 10%) !important;
+    }
+
+    .no-files {
+        text-align: center;
     }
 
     .progress {

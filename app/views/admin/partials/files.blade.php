@@ -1,12 +1,12 @@
-<div flow-init="{target:'/admin/files/uploader', 'query':queryBuild}"
+<div flow-init="{target:'/admin/files/upload', 'query':queryBuild}"
      flow-name="upload.flow"
      flow-file-added="fileAdded($event, $file)"
      flow-files-submitted="startUpload($event, $files)"
-     flow-upload-started="console.log('Upload')">
+     flow-complete="refresh()">
     <div class="row toolbar">
         <div class="col-md-2">
             <div class="btn-group">
-                <button class="btn btn-default" title="Upload">
+                <button class="btn btn-default" title="Upload" flow-btn>
                     <span class="glyphicon glyphicon-arrow-up"></span>
                 </button>
                 <button class="btn btn-default" title="New Directory">
@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="col-md-10" browser-breadcrumb>
-    
+
         </div>
     </div>
     <div class="row">
@@ -50,19 +50,12 @@
             </div>
         </div>
         <div class="col-md-4" browser-sidebar>
-    
+
         </div>
     </div>
     <div class="row uploads">
         <div class="col-md-12">
-            <div class="row">
-                <div class="col-md-11">
-                    <h3>Uploads</h3>
-                </div>
-                <div class="col-md-1">
-                    <button class="btn btn-default" flow-btn>Upload</button>
-                </div>
-            </div>
+            <h3>Uploads</h3>
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -74,12 +67,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="file in upload.flow.files" ng-class="{'error': file.error}">
+                    <tr ng-repeat="file in upload.flow.files | filter:hideComplete" ng-class="{'error': file.error, 'completed': file.isComplete()}">
                         <td>@{{file.name}}</td>
                         <td>@{{ file.virtualPath }}</td>
                         <td>@{{file.size | bytes }}</td>
                         <td>@{{file.getType()}}</td>
-                        <td><progressbar max="100" value="file.progress()" type="warning">@{{ file.timeRemaining() }}</progressbar></td>
+                        <td ng-switch="file.isComplete()">
+                            <span ng-switch-when="false">
+                                <progressbar max="100" value="file.progress() * 100" type="warning">@{{ file.timeRemaining() }}</progressbar>
+                            </span>
+                            <span ng-switch-default>Done</span>
+                        </td>
+                    </tr>
+                    <tr ng-if="upload.flow.files.length === 0">
+                        <td colspan="5" class="no-files">No files uploaded yet</td>
                     </tr>
                 </tbody>
             </table>

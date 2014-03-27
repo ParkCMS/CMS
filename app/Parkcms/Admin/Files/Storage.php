@@ -68,7 +68,7 @@ class Storage
             );
         }
         finfo_close($finfo);
-        
+
         return $finf;
     }
 
@@ -90,6 +90,6 @@ class Storage
 
     public function buildUrl($path)
     {
-        return $this->baseUrl . $path;
+        return $this->baseUrl . str_replace(" ", "%20",$path);
     }
 }

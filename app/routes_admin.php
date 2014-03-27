@@ -15,10 +15,13 @@ Route::group(array('prefix' => 'admin', 'before' => 'pcms_auth'), function() {
         ->where('name', '[A-Za-z0-9.]+');
 
     Route::get('files/list', 'Parkcms\Admin\Files\Controller@getFolder');
+
+    Route::get('files/upload', 'Parkcms\Admin\Files\Controller@uploadGet');
+    Route::post('files/upload', 'Parkcms\Admin\Files\Controller@uploadPost');
 });
 
 Route::get('login', array('as' => 'login', 'uses' => 'Parkcms\Auth\LoginController@loginForm'));
 Route::post('login/auth', 'Parkcms\Auth\LoginController@authenticate');
 Route::get('logout', array('as' => 'logout', 'uses' => 'Parkcms\Auth\LoginController@logout'));
 
-Route::get('files/{path}', 'MediaController@resolveFile')->where('path', '[A-Za-z0-9/.\% ]+');
+Route::get('files/{path}', 'MediaController@resolveFile')->where('path', '(?:[^<>]*)');
