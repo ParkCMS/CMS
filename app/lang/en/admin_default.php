@@ -15,7 +15,7 @@ return array(
     'up_action'		=> 'Up',
     'download_action'	=> 'Download',
     'delete_action'	=> 'Delete',
-    'move_action'	=> 'Move',
+    'rename_action'	=> 'Rename',
     'no_files'		=> 'No files available!',
     'no_files_desc'	=> 'Drag files from your computer here or click the Upload button!',
     'uploads'		=> 'Uploads',
@@ -24,5 +24,8 @@ return array(
     'tbl_filesize'	=> 'Size',
     'tbl_filetype'	=> 'Type',
     'tbl_upload_status'	=> 'Progress',
-    'breadcrumb_root'	=> 'Path'
+    'breadcrumb_root'	=> 'Path',
+    'delete_file_text'  => 'Do you really want to delete <code>{0}</code> irrevocably?',
+    'delete_directory_text' => 'Do you really want to delete <code>{0}</code> and all it\'s contents?',
+    'are_you_sure'      => 'Are you sure?'
 );

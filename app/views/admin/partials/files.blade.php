@@ -62,7 +62,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4" browser-sidebar>
+        <div class="col-md-4" browser-sidebar
+            delete-modal-title="{{ trans('admin_default.are_you_sure') }}"
+            delete-file-text="{{ trans('admin_default.delete_file_text') }}"
+            delete-directory-text="{{ trans('admin_default.delete_directory_text') }}">
 
         </div>
     </div>

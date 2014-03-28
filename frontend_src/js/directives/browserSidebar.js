@@ -5,7 +5,7 @@ parkAdmin.directive("browserSidebar", ['FileBrowser', '$rootScope', '$dialogs', 
         link: function(scope, element, attrs) {
             scope.file = [];
             scope.deleteFile = function($event, path) {
-                var dlg = $dialogs.confirm("Are you sure?","Do you really want to delete " + path + "?");
+                var dlg = $dialogs.confirm(attrs.deleteModalTitle, _format(attrs.deleteFileText, path));
                 dlg.result.then(function() {
                     browser.deleteFile(path).success(function () {
                         scope.$emit('browser-needs-refresh');
@@ -16,13 +16,22 @@ parkAdmin.directive("browserSidebar", ['FileBrowser', '$rootScope', '$dialogs', 
             }
 
             scope.deleteFolder = function($event, path) {
-                var dlg = $dialogs.confirm("Are you sure?","Do you really want to delete " + path + " and all it's contents?");
+                var dlg = $dialogs.confirm(attrs.deleteModalTitle, _format(attrs.deleteDirectoryText, path));
                 dlg.result.then(function() {
                     browser.deleteFolder(path).success(function() {
                         scope.$emit('directory-deleted', path);
                     })
                 })
             }
+
+            var _format = function(input) {
+                var formatted = input;
+                for (var i = 1; i < arguments.length; i++) {
+                    var regexp = new RegExp('\\{'+(i-1)+'\\}', 'gi');
+                    formatted = formatted.replace(regexp, arguments[i]);
+                }
+                return formatted;
+            };
 
             scope.$on('file-clicked', function(ev, file) {
                 scope.file = file;
