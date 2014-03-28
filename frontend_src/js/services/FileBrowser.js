@@ -44,6 +44,15 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
 
             return workingPath;
         }
+    };
+
+    this.move = function(srcPath, destPath) {
+        return $http.get(serviceBackend + 'move/', {
+            params: {
+                'src': srcPath,
+                'dest': destPath
+            }
+        })
     }
 
     this.mkdir = function(basepath, name) {
@@ -53,7 +62,23 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
                 'name': name
             }
         });
-    }
+    };
+
+    this.deleteFile = function(path) {
+        return $http.get(serviceBackend + 'delete', {
+            params: {
+                'path': path
+            }
+        });
+    };
+
+    this.deleteFolder = function(path) {
+        return $http.get(serviceBackend + 'deleteFolder', {
+            params: {
+                'path': path
+            }
+        });
+    };
 
     /**
      * Returns the currently loaded path
@@ -68,7 +93,7 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
         }
 
         return _merge(currentPath);
-    }
+    };
 
     var _merge = function(pathArray) {
         var path = pathArray.join('/');
@@ -76,7 +101,7 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
             return '/';
         }
         return path;
-    }
+    };
 
     var _getFilesInFolder = function(folder) {
         return $http.get(serviceBackend + 'list/', {

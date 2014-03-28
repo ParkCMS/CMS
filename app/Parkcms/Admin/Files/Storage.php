@@ -4,6 +4,7 @@ namespace Parkcms\Admin\Files;
 
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
+use Illuminate\Filesystem\Filesystem;
 
 class Storage
 {
@@ -13,11 +14,13 @@ class Storage
     private $baseUrl;
 
     private $path;
+    private $fs;
 
-    public function __construct(Finder $finder, Path $path)
+    public function __construct(Finder $finder, Path $path, Filesystem $fs)
     {
         $this->finder = $finder;
         $this->path = $path;
+        $this->fs = $fs;
     }
 
     public function setBasePath($basePath)
@@ -85,9 +88,49 @@ class Storage
 
     public function mkdir($path)
     {
+        $path = $this->basePath . $path;
+        
         if (!mkdir($path)) {
             throw new Exception("No Permissions to create directory!");
         }
+    }
+
+    public function move($src, $dest)
+    {
+        return $this->fs->move($src, $dest . DIRECTORY_SEPARATOR . basename($src));
+    }
+
+    public function exists($path)
+    {
+        $path = $this->buildPath($path);
+
+        return $path;
+    }
+
+    public function deleteFile($path)
+    {
+        if (!@unlink($path)) {
+            throw new Exception("Unable to delete file!");
+        }
+    }
+
+    public function deleteFolder($path)
+    {
+        if (!$this->fs->deleteDirectory($path, false)) {
+            throw new Exception("Unable to delete directory!");
+        }
+    }
+
+    private function rrmdir($path)
+    {
+        foreach (glob($dir . '/*') as $file) { 
+            if (is_dir($file)){
+                $this->rrmdir($file);
+            } else {
+                unlink($file);
+            } 
+        }
+        rmdir($dir); 
     }
 
     public function buildPath($file)

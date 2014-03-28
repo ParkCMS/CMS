@@ -1,6 +1,7 @@
-var parkAdmin = angular.module('parkAdmin', ['ngRoute','ui.bootstrap', 'flow']);
+var parkAdmin = angular.module('parkAdmin', ['ngRoute','ui.bootstrap', 'dialogs', 'flow', 'ngDragDrop']);
 
 parkAdmin.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
+
     $routeProvider.when('/', {
         controller: 'overviewController',
         templateUrl: 'admin/partials/dashboard'

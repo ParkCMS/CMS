@@ -6,6 +6,7 @@ parkAdmin.controller('filesController',['$scope', '$modal', 'FileBrowser', funct
     $scope.cd = function(path, ev) {
         browser.cd(path).success(function(data) {
            $scope.files = data;
+           $scope.$broadcast('file-clicked', null);
         });
 
         if (typeof ev !== 'undefined') {
@@ -28,7 +29,7 @@ parkAdmin.controller('filesController',['$scope', '$modal', 'FileBrowser', funct
             browser.mkdir(browser.cwd(), dirname).success(function() {
                 $scope.refresh();
             });
-        })
+        });
     }
 
     $scope.refresh = function(ev) {
@@ -38,6 +39,14 @@ parkAdmin.controller('filesController',['$scope', '$modal', 'FileBrowser', funct
             ev.preventDefault();
         }
     };
+
+    $scope.$on('browser-needs-refresh', function() {
+        $scope.refresh();
+    });
+
+    $scope.$on('directory-deleted', function() {
+        $scope.refresh();
+    });
 
     $scope.hideComplete = function(file) {
         return !file.isComplete();
@@ -53,28 +62,41 @@ parkAdmin.controller('filesController',['$scope', '$modal', 'FileBrowser', funct
 
     $scope.queryBuild = function(flowFile, flowChunk) {
         return {'virtualPath': flowFile.virtualPath};
-        //console.log(flowFile.name);
     };
-    $scope.$on('flow::fileAdded', function (event, $flow, flowFile) {
-        console.log(flowFile.name);//prevent file from uploading
-    });
 
-    $scope.preview = function(file) {
+    $scope.preview = function(file, $event) {
         $scope.$broadcast('file-clicked', file);
+        $scope.selected = file.path;
+
+        if (typeof ev !== 'undefined') {
+            $event.preventDefault();
+        }
+    }
+
+    $scope.move = function(src, dest) {
+        browser.move(src.path, dest.path).success(function() {
+            $scope.refresh();
+        });
     }
 
     $scope.cd('/');
 }]);
 
-parkAdmin.controller('MkdirController',['$scope', '$modalInstance', function($scope, $modalInstance) {
+parkAdmin.controller('MkdirController',['$scope', '$modalInstance', 'cwd', function($scope, $modalInstance, cwd) {
     $scope.fields = {};
     $scope.fields.dirname = "";
+    $scope.cwd = cwd;
     $scope.ok = function() {
-        console.log($scope.dirname);
-        $modalInstance.close($scope.dirname);
+        $modalInstance.close($scope.fields.dirname);
     };
 
     $scope.cancel = function() {
         $modalInstance.dismiss('cancel');
     }
+
+    $scope.hitEnter = function(evt){
+        if(angular.equals(evt.keyCode,13) && !(angular.equals($scope.fields.dirname,null) || angular.equals($scope.fields.dirname,''))) {
+            $scope.ok();
+        }
+    };
 }]);

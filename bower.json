@@ -6,6 +6,13 @@
     "angular": "*",
     "angular-bootstrap": "*",
     "angular-route": "~1.2.15",
-    "ng-flow": "~2"
+    "ng-flow": "~2",
+    "ng-context-menu": "~0.0.8",
+    "angular-dialog-service": "~3.1.0",
+    "angular-sanitize": "~1.2.15",
+    "angular-dragdrop-ganarajpr": "~1.0.1"
+  },
+  "resolutions": {
+    "bootstrap": "3.1.*"
   }
 }

@@ -58,6 +58,61 @@ class Controller extends \Controller
         }
     }
 
+    public function move()
+    {
+        $src = urldecode(Input::get('src'));
+        $dest = urldecode(Input::get('dest'));
+
+        $src = $this->store->buildPath($this->path->clean($src));
+        $dest = $this->store->buildPath($this->path->clean($dest));
+
+        if ($src && $dest) {
+            if ($this->store->move($src, $dest)) {
+                return Response::json(array('message' => 'Files were moved successfully!'));
+            } else {
+                return Response::json(array('message' => 'Unable to move to destination!'), 500);
+            }
+        } else {
+            return Response::json(array('message' => 'Either src or dest does not exist'));
+        }
+    }
+
+    public function deleteFile()
+    {
+        $path = urldecode(Input::get('path'));
+
+        $path = $this->store->buildPath($this->path->clean($path));
+
+        if ($path && is_file($path)) {
+            try {
+                $this->store->deleteFile($path);
+                return Response::json(array('message' => 'File was deleted successfully!'), 200);
+            } catch (Exception $e) {
+                return Response::json(array('error' => 500, 'message' => $e->getMessage()), 500);
+            }
+        } else {
+            return Response::json(array('error' => 404, 'message' => 'File does not exist or is not a file!'), 404);
+        }
+    }
+
+    public function deleteFolder()
+    {
+        $path = urldecode(Input::get('path'));
+
+        $path = $this->store->buildPath($this->path->clean($path));
+
+        if ($path && is_dir($path)) {
+            try {
+                $this->store->deleteFolder($path);
+                return Response::json(array('message' => 'Directory was deleted successfully!'), 200);
+            } catch (Exception $e) {
+                return Response::json(array('error' => 500, 'message' => $e->getMessage()), 500);
+            }
+        } else {
+            return Response::json(array('error' => 404, 'message' => 'File does not exist or is not a file!'), 404);
+        }
+    }
+
     public function uploadGet()
     {
         $file = $this->initUploadFile();

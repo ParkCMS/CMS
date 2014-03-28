@@ -8,7 +8,8 @@
             <h3>Create folder</h3>
         </div>
         <div class="modal-body">
-            <input type="text" class="input" ng-model="fields.dirname" />
+            <p>Create a folder in <code>@{{ cwd }}</code> called:</p>
+            <input type="text" class="form-control" ng-keyup="hitEnter($event)" placeholder="folder name" ng-model="fields.dirname" />
         </div>
         <div class="modal-footer">
             <button class="btn btn-primary" ng-click="ok()">OK</button>
@@ -16,7 +17,7 @@
         </div>
     </script>
     <div class="row toolbar">
-        <div class="col-md-2">
+        <div class="col-md-3 col-lg-2">
             <div class="btn-group">
                 <button class="btn btn-default" title="{{ trans('admin_default.upload_action') }}" flow-btn>
                     <span class="glyphicon glyphicon-arrow-up"></span>
@@ -34,7 +35,7 @@
                 </button>
             </div>
         </div>
-        <div class="col-md-10" browser-breadcrumb>
+        <div class="col-md-9 col-lg-10" browser-breadcrumb>
 
         </div>
     </div>
@@ -42,13 +43,13 @@
         <div class="col-md-8 filelist" ng-class="{'dragging': dragging}" flow-drop flow-drag-enter="dragging=true" flow-drag-leave="dragging=false">
             <div class="row">
                 <div class="col-sm-6 col-md-2 file" ng-repeat="file in files">
-                    <div class="thumbnail" ng-if="file.isDir" ng-click="cd(file.path)">
+                    <div ui-draggable="true" drag="file" ui-on-drop="move($data, file)" class="thumbnail" ng-class="{'selected': selected == file.path}" ng-if="file.isDir" ng-click="preview(file)" ng-dblclick="cd(file.path)">
                         <p>
                             <i style="font-size: 300%" class="glyphicon glyphicon-folder-open"></i>
                         </p>
                         <p>@{{ file.filename }}</p>
                     </div>
-                    <div class="thumbnail" ng-if="file.isFile" ng-click="preview(file)">
+                    <div ui-draggable="true" drag="file" class="thumbnail" ng-class="{'selected': selected == file.path}" ng-if="file.isFile" ng-click="preview(file)">
                         <p>
                             <i style="font-size: 300%" class="glyphicon glyphicon-picture"></i>
                         </p>
@@ -86,7 +87,7 @@
                         <td>@{{file.getType()}}</td>
                         <td ng-switch="file.isComplete()">
                             <span ng-switch-when="false">
-                                <progressbar max="100" value="file.progress() * 100" type="warning">@{{ file.progress() * 100 }} %</progressbar>
+                                <progressbar max="100" value="file.progress() * 100" type="warning">@{{ file.progress() | percentage }} %</progressbar>
                             </span>
                             <span ng-switch-default>{{ trans('admin_default.done') }}</span>
                         </td>

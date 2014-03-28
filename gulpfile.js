@@ -18,10 +18,13 @@ gulp.task('less', function() {
 
 var third_party = [
     'frontend_src/bower_components/angular/angular.min.js',
+    'frontend_src/bower_components/angular-route/angular-route.min.js',
+    'frontend_src/bower_components/angular-sanitize/angular-sanitize.min.js',
     'frontend_src/bower_components/angular-bootstrap/ui-bootstrap.min.js',
     'frontend_src/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
-    'frontend_src/bower_components/angular-route/angular-route.min.js',
     'frontend_src/bower_components/ng-flow/dist/ng-flow-standalone.min.js',
+    'frontend_src/bower_components/angular-dialog-service/dialogs.min.js',
+    'frontend_src/bower_components/angular-dragdrop-ganarajpr/draganddrop.js'
 ]
 
 gulp.task('js', function() {

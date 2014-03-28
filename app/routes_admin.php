@@ -20,6 +20,11 @@ Route::group(array('prefix' => 'admin', 'before' => 'pcms_auth'), function() {
     Route::post('files/upload', 'Parkcms\Admin\Files\Controller@uploadPost');
 
     Route::get('files/mkdir', 'Parkcms\Admin\Files\Controller@mkdir');
+
+    Route::get('files/move', 'Parkcms\Admin\Files\Controller@move');
+
+    Route::get('files/delete', 'Parkcms\Admin\Files\Controller@deleteFile');
+    Route::get('files/deleteFolder', 'Parkcms\Admin\Files\Controller@deleteFolder');
 });
 
 Route::get('login', array('as' => 'login', 'uses' => 'Parkcms\Auth\LoginController@loginForm'));

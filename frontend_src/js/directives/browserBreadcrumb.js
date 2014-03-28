@@ -4,7 +4,7 @@ parkAdmin.directive("browserBreadcrumb", ['FileBrowser', function(browser) {
         templateUrl: 'admin/partials/browserBreadcrumb',
         link: function(scope, element, attrs) {
             scope.cwd = [];
-            scope.up = function(event, level) {
+            scope.up = function (event, level) {
                 var tmp = [];
                 for (var i = 0; i <= level; i++) {
                     tmp.push(scope.cwd[i]);
@@ -13,6 +13,17 @@ parkAdmin.directive("browserBreadcrumb", ['FileBrowser', function(browser) {
 
                 event.preventDefault();
             }
+
+            scope.buildToIndex = function (index) {
+                var tmp = [];
+
+                for (var i = 0; i <= index; i++) {
+                    tmp.push(scope.cwd[i]);
+                }
+
+                return '/' + tmp.join('/');
+            }
+
             scope.$watch(function() {
                 return browser.cwd(true);
             }, function(newVal) {
