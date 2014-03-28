@@ -2,7 +2,7 @@
      flow-name="upload.flow"
      flow-file-added="fileAdded($event, $file)"
      flow-files-submitted="startUpload($event, $files)"
-     flow-complete="refresh()">
+     flow-complete="uploadComplete()">
     <script type="text/ng-template" id="admin/partials/mkdir_modal">
         <div class="modal-header">
             <h3>Create folder</h3>

@@ -40,6 +40,11 @@ parkAdmin.controller('filesController',['$scope', '$modal', 'FileBrowser', funct
         }
     };
 
+    $scope.uploadComplete = function() {
+        $scope.refresh();
+        $scope.upload.flow.cancel();
+    }
+
     $scope.$on('browser-needs-refresh', function() {
         $scope.refresh();
     });

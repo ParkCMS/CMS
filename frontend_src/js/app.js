@@ -1,6 +1,6 @@
 var parkAdmin = angular.module('parkAdmin', ['ngRoute','ui.bootstrap', 'dialogs', 'flow', 'ngDragDrop']);
 
-parkAdmin.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
+parkAdmin.config(['$routeProvider', '$httpProvider', 'flowFactoryProvider', function($routeProvider, $httpProvider, flowFactoryProvider) {
 
     $routeProvider.when('/', {
         controller: 'overviewController',
@@ -38,6 +38,10 @@ parkAdmin.config(['$routeProvider', '$httpProvider', function($routeProvider, $h
             }
         };
     }]);
+
+    flowFactoryProvider.defaults = {
+        testChunks: false
+    };
 }]);
 
 parkAdmin.run(['$http', function($http) {

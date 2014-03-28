@@ -97,7 +97,16 @@ class Storage
 
     public function move($src, $dest)
     {
-        return $this->fs->move($src, $dest . DIRECTORY_SEPARATOR . basename($src));
+        $filename = $this->makeUniqueFilename(basename($src), $dest);
+        return $this->fs->move($src, $dest . DIRECTORY_SEPARATOR . $filename);
+    }
+
+    public function makeUniqueFilename($filename, $base)
+    {
+        if (file_exists($base . DIRECTORY_SEPARATOR . $filename)) {
+            return date("dmy_His_") . $filename;
+        }
+        return $filename;
     }
 
     public function exists($path)

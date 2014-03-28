@@ -150,7 +150,10 @@ class Controller extends \Controller
         $filename = Input::get('flowRelativePath');
 
         $vp = $this->path->clean($vp);
+
         $vp = $this->path->resolveFilesystemPath(public_path('uploads'), $vp);
+
+        $filename = $this->store->makeUniqueFilename($filename, $vp);
 
         if ($file->validateFile() && $file->save($vp . '/' . $filename)) {
             // File upload was completed
