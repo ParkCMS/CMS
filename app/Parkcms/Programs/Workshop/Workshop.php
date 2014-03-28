@@ -13,12 +13,14 @@ use Input;
 use Session;
 use Request;
 use Asset;
+use Validator;
 
 class Workshop extends ProgramAbstract {
-
+    
     protected $context;
     protected $workshop;
     protected $input;
+    protected $failed;
 
     public function __construct(Context $context) {
         $this->context = $context;
@@ -118,9 +120,11 @@ class Workshop extends ProgramAbstract {
         }
         
         if(Request::isMethod('post')) {
-            foreach(Input::only('name', 'email', 'address', 'institution') as $key=>$value) {
+            foreach(Input::only('title', 'surname', 'firstname', 'middlename', 'email', 'address', 'city', 'zip', 'institution') as $key=>$value) {
                 $this->store($key, $value);
             }
+
+            return $this->valid();
         }
 
         return true;
@@ -157,6 +161,16 @@ class Workshop extends ProgramAbstract {
         return Session::get('workshops.' . $this->workshop->identifier . '.data.' . $key, $default);
     }
 
+    public function getAll($exteptParts = false) {
+        $data = Session::get('workshops.' . $this->workshop->identifier . '.data');
+
+        if($exteptParts === true && isset($data['parts'])) {
+            unset($data['parts']);
+        }
+
+        return $data;
+    }
+
     protected function delete($key) {
         Session::forget('workshops.' . $this->workshop->identifier . '.data.' . $key);
     }
@@ -167,5 +181,44 @@ class Workshop extends ProgramAbstract {
                 unset($array[$k]);
             }
         }
+    }
+
+    public function valid() {
+        $validator = Validator::make(
+            $this->getAll(true),
+            array(
+                'surname' => 'required|min:5',
+                'firstname' => 'required|min:5',
+                'address' => 'required|min:5',
+                'city' => 'required|min:5',
+                'zip' => 'required|integer',
+                'email' => 'required|email'
+            )
+        );
+
+        $failed = $validator->fails();        
+
+        View::share($this->workshop->identifier . '_messages', $validator->messages());
+
+        $this->failed = $validator->failed();
+
+        return !$failed;
+
+        /*switch($key) {
+            case 'email':
+                return filter_var($this->get($key), FILTER_E);
+        }*/
+    }
+
+    public function classFor($key) {
+        if(is_null($this->failed)) {
+            return '';
+        }
+
+        if(isset($this->failed[$key])) {
+            return 'has-error';
+        }
+
+        return $this->get($key) != '' ? 'has-success' : '';
     }
 }
