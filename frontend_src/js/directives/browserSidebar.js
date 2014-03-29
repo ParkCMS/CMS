@@ -13,16 +13,16 @@ parkAdmin.directive("browserSidebar", ['FileBrowser', '$rootScope', '$dialogs', 
                 });
 
                 $event.preventDefault();
-            }
+            };
 
             scope.deleteFolder = function($event, path) {
                 var dlg = $dialogs.confirm(attrs.deleteModalTitle, _format(attrs.deleteDirectoryText, path));
                 dlg.result.then(function() {
                     browser.deleteFolder(path).success(function() {
                         scope.$emit('directory-deleted', path);
-                    })
-                })
-            }
+                    });
+                });
+            };
 
             var _format = function(input) {
                 var formatted = input;
