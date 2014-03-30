@@ -4,3 +4,4 @@
 /node_modules
 /public/admin_assets/css
 public/admin_assets/css/main.css
+/public/admin_assets/js/admin.js

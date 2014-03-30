@@ -207,7 +207,7 @@ Q.angular.bootstrap?console.log("WARNING: Tried to load angular more than once."
 //# sourceMappingURL=angular.min.js.map
 
 /*
- AngularJS v1.2.15
+ AngularJS v1.2.16-build.47+sha.0e5106e
  (c) 2010-2014 Google, Inc. http://angularjs.org
  License: MIT
 */
@@ -222,7 +222,7 @@ function(){this.$get=function(){return{}}});n.directive("ngView",x);n.directive(
 //# sourceMappingURL=angular-route.min.js.map
 
 /*
- AngularJS v1.2.15
+ AngularJS v1.2.16-build.63+sha.8d4d437
  (c) 2010-2014 Google, Inc. http://angularjs.org
  License: MIT
 */
@@ -659,16 +659,16 @@ parkAdmin.directive("browserSidebar", ['FileBrowser', '$rootScope', '$dialogs', 
                 });
 
                 $event.preventDefault();
-            }
+            };
 
             scope.deleteFolder = function($event, path) {
                 var dlg = $dialogs.confirm(attrs.deleteModalTitle, _format(attrs.deleteDirectoryText, path));
                 dlg.result.then(function() {
                     browser.deleteFolder(path).success(function() {
                         scope.$emit('directory-deleted', path);
-                    })
-                })
-            }
+                    });
+                });
+            };
 
             var _format = function(input) {
                 var formatted = input;
