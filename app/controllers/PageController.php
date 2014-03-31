@@ -91,6 +91,14 @@ class PageController extends Controller {
             return null;
         });
 
+        if (Sentry::check()) {
+            Asset::style('pcms-frontend','admin_assets/css/frontend.css');
+            $this->parser->pushHandler(function($type, $identifier, $data, $nodeValue) use ($that) {
+                $context = App::make('Parkcms\Context');
+                return $nodeValue . "<button data-identifier='{$identifier}' data-route='{$context->route()}' data-type='{$type}' class='pcms-edit-button'>Bearbeiten</button>";
+            });
+        }
+
         return $this->parser->parse();
     }
     

@@ -16,6 +16,16 @@ gulp.task('less', function() {
             .pipe(notify({"message": "LESS compiled!"}));
 });
 
+gulp.task('frontend', function() {
+    return gulp.src('frontend_src/less/frontend.less')
+            .pipe(less({
+                paths: [ path.join(__dirname, 'frontend_src', 'bower_components', 'bootstrap', 'less') ]
+            }))
+            .pipe(minifycss())
+            .pipe(gulp.dest('public/admin_assets/css'))
+            .pipe(notify({"message": "Frontend compiled!"}));
+});
+
 var third_party = [
     'frontend_src/bower_components/angular/angular.min.js',
     'frontend_src/bower_components/angular-route/angular-route.min.js',
@@ -34,10 +44,14 @@ gulp.task('js', function() {
             .pipe(notify({"message": "JavaScript compiled!"}));
 });
 
-gulp.task('default', ['less', 'js'], function() {
+gulp.task('default', ['less', 'js', 'frontend'], function() {
 
     gulp.watch('frontend_src/less/*.less', function() {
         gulp.run('less');
+    });
+
+    gulp.watch('frontend_src/less/frontend.less', function() {
+        gulp.run('frontend');
     });
 
     gulp.watch('frontend_src/js/**/*.js', function() {

@@ -6,6 +6,10 @@ parkAdmin.config(['$routeProvider', '$httpProvider', 'flowFactoryProvider', func
         controller: 'overviewController',
         templateUrl: 'admin/partials/dashboard'
     })
+    .when('/pages', {
+        controller: 'pagesController',
+        templateUrl: 'admin/partials/pages'
+    })
     .when('/files', {
         controller: 'filesController',
         templateUrl: 'admin/partials/files'

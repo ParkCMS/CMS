@@ -19,6 +19,10 @@ class Asset {
             $attributes['media'] = 'all';
         }
 
+        if(!array_key_exists('rel', $attributes)) {
+            $attributes['rel'] = 'stylesheet';
+        }
+
         $this->register('style', $name, $source, $dependencies, $attributes);
 
         return $this;
