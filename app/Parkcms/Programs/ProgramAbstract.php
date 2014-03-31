@@ -2,6 +2,7 @@
 
 namespace Parkcms\Programs;
 
+use Lang;
 use URL;
 use View;
 
@@ -24,6 +25,8 @@ abstract class ProgramAbstract implements ProgramInterface {
 
         View::addNamespace($pi, $paths);
         View::share('p', $this);
+
+        Lang::addNamespace($pi, base_path('programs/' . $pp . '/lang'));
     }
 
     public function url() {
