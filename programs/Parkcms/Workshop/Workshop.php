@@ -38,8 +38,6 @@ class Workshop extends ProgramAbstract {
     public function initialize($identifier, array $params) {
         parent::initialize($identifier, $params);
 
-        View::addNamespace('workshops', public_path() . '/themes/default/views/workshops/');
-
         $this->workshop = WorkshopModel::with('parts')
             ->where('identifier', $identifier)
             ->where('active', true)->first();
@@ -90,7 +88,7 @@ class Workshop extends ProgramAbstract {
         $previousStep = $this->manager->previousStep($step);
         $nextStep = $this->manager->nextStep($step);
 
-        return View::make('workshops::' . $this->workshop->identifier . '.' . $step, array(
+        return View::make('parkcms-workshop::' . $this->workshop->identifier . '.' . $step, array(
             'workshop' => $this->workshop,
             'previous' => $previousStep === null ? null : $this->url() . '?workshop[' . $this->workshop->identifier . ']=' . $previousStep,
             'next' => $nextStep === null ? null : $this->url() . '?workshop[' . $this->workshop->identifier . ']=' . $nextStep,

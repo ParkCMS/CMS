@@ -17,7 +17,10 @@ abstract class ProgramAbstract implements ProgramInterface {
         $pp = $this->progPath();
         $theme = $this->context->theme();
 
-        $paths = array(public_path('themes/' . $theme . '/views/' . $pp), base_path('programs/' . $pp . '/views'));
+        $paths = array(
+            public_path('themes/' . $theme . '/views/' . $pp), // Theme overrides...
+            base_path('programs/' . $pp . '/views')            // Package views
+        );
 
         View::addNamespace($pi, $paths);
         View::share('p', $this);
