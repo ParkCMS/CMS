@@ -77,10 +77,10 @@ App::down(function()
 |
 */
 
-Asset::add('bootstrap', 'https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css');
+Asset::add('bootstrap', 'themes/default/css/bootstrap.min.css');
 
-Asset::add('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js');
-Asset::add('bootstrap', 'https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js', array('jquery'));
+Asset::add('jquery', 'themes/default/js/jquery.min.js');
+Asset::add('bootstrap', 'themes/default/js/bootstrap.min.js', array('jquery'));
 
 /*
 |--------------------------------------------------------------------------

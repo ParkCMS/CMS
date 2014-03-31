@@ -20,6 +20,7 @@ class CreateWorkshopsTable extends Migration {
 
 			$table->string('title');
 			$table->text('content');
+			$table->text('terms');
 			$table->text('registration_mail');
 
 			$table->date('date');

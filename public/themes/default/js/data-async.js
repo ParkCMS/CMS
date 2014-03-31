@@ -12,6 +12,7 @@ jQuery(function($) {
             
             success: function(data, status) {
                 $target.find('.modal-content').html(data);
+                $('[data-toogle="tooltip"]').tooltip();
             }
         });
         
