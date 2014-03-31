@@ -1,4 +1,4 @@
-var parkAdmin = angular.module('parkAdmin', ['ngRoute','ui.bootstrap', 'dialogs', 'flow', 'ngDragDrop']);
+var parkAdmin = angular.module('parkAdmin', ['ngRoute', 'ngAnimate','ui.bootstrap', 'dialogs', 'flow', 'ngDragDrop']);
 
 parkAdmin.config(['$routeProvider', '$httpProvider', 'flowFactoryProvider', function($routeProvider, $httpProvider, flowFactoryProvider) {
 
@@ -15,7 +15,7 @@ parkAdmin.config(['$routeProvider', '$httpProvider', 'flowFactoryProvider', func
         templateUrl: 'admin/partials/files'
     })
     .otherwise({redirectTo: '/'});
-    
+
     $httpProvider.interceptors.push(['$q', '$rootScope', '$location', 'UserService', 'TempStorage', 'BASE_URL', function($q, $rootScope, $location, User, store, BASE_URL) {
         return {
             'request': function(config) {

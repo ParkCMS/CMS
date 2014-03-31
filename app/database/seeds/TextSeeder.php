@@ -1,6 +1,6 @@
 <?php
 
-use Parkcms\Programs\Text\Model as Text;
+use Programs\Parkcms\Text\Model as Text;
 
 class TextSeeder extends Seeder {
 

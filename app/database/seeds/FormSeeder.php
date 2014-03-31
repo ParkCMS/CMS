@@ -1,7 +1,7 @@
 <?php
 
-use Parkcms\Programs\Form\Models\Form;
-use Parkcms\Programs\Form\Models\Field;
+use Programs\Parkcms\Form\Models\Form;
+use Programs\Parkcms\Form\Models\Field;
 
 class FormSeeder extends Seeder {
 
@@ -13,7 +13,7 @@ class FormSeeder extends Seeder {
     public function run()
     {
         Eloquent::unguard();
-        
+
         $en = Form::create(array(
             'identifier' => 'en-contact-contact',
             'email' => 'parkcms.team@gmail.com',
@@ -32,7 +32,7 @@ class FormSeeder extends Seeder {
                 'email' => 'required|email',
             )),
         ));
-        
+
     }
 
 }

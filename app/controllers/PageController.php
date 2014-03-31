@@ -7,26 +7,26 @@ use Parkcms\Template\ArgumentConverter as Converter;
 use Parkcms\Programs\Manager;
 
 class PageController extends Controller {
-    
+
     protected $parser;
     protected $manager;
 
     protected $page;
 
     /**
-     * 
+     *
      * @param Parser  $parser
      * @param Manager $manager
      */
     public function __construct(Manager $manager) {
         $this->parser = new Parser(new Converter(), App::make('events'));
         $this->manager = $manager;
-        
+
         $this->parser->setPrefix('pcms-');
     }
 
     public function index($lang = null) {
-        
+
         // @TODO: get user language
         if(is_null($lang)) {
             $lang = 'de';
@@ -35,12 +35,12 @@ class PageController extends Controller {
         $root = $this->lookupRoot($lang);
 
         $startPage = $root->children()->first();
-        
+
         if($startPage !== null) {
             return Redirect::to('/' . $lang . '/' . $startPage->alias);
         }
     }
-    
+
     /**
      * display the page, found by given route
      * @param  string $route page route (e.g. home)
@@ -54,13 +54,13 @@ class PageController extends Controller {
         } else {
             $attributes = array();
         }
-        
+
         // look up page tree root determined by user language
         $root = $this->lookupRoot($lang);
-        
-        // look up 
+
+        // look up
         $this->page = $root->descendants()->where('alias', $route)->first();
-        
+
         // if $this->page is null, page doesn't exists in database
         if($this->page === null) {
             App::abort(404);
@@ -69,7 +69,7 @@ class PageController extends Controller {
         // Register objects to the IoC
         App::instance('Parkcms\Models\Page', $this->page);
         App::instance('Parkcms\Context', new Context($route, $this->page, $attributes));
-        
+
         return $this->renderPage();
     }
 
@@ -78,7 +78,7 @@ class PageController extends Controller {
      * @return string
      */
     protected function renderPage() {
-        
+
         $view = View::make('page_templates.' . $this->page->template)->render();
 
         $this->parser->setSource($view);
@@ -92,16 +92,17 @@ class PageController extends Controller {
         });
 
         if (Sentry::check()) {
-            Asset::style('pcms-frontend','admin_assets/css/frontend.css');
+            Asset::style('pcms-frontend-style','admin_assets/css/frontend.css');
+            Asset::script('pcms-frontend-js', 'admin_assets/js/frontend.js');
             $this->parser->pushHandler(function($type, $identifier, $data, $nodeValue) use ($that) {
                 $context = App::make('Parkcms\Context');
-                return $nodeValue . "<button data-identifier='{$identifier}' data-route='{$context->route()}' data-type='{$type}' class='pcms-edit-button'>Bearbeiten</button>";
+                return $nodeValue . "<button data-lang='{$context->lang()}' data-identifier='{$identifier}' data-route='{$context->route()}' data-type='{$type}' class='pcms-edit-button'>Bearbeiten</button>";
             });
         }
 
         return $this->parser->parse();
     }
-    
+
     protected function lookupRoot($lang) {
         $select = Page::roots()->where('title', $lang);
 
