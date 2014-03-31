@@ -13,19 +13,18 @@
 
 include_once __DIR__ . "/routes_admin.php";
 
-Route::get('/', function()
-{
-	$lang = 'de'; // magic to get lang
-	
-	$root = Parkcms\Models\Page::roots()->where('title', $lang)->first();
-	
-	$startPage = $root->children()->first();
-	
-	if($startPage !== null) {
-		// $startPage->route();
-		
-		return Redirect::to('/' . $startPage->alias);
-	}
-});
+Route::any('/api/program/{lang}/{page}/{type}/{identifier}/{attributes?}', 'ProgramController@render')
+    ->where(array(
+        'attributes' => '[A-Za-z0-9\./]+'
+    ));
 
-Route::get('/{page}', 'PageController@showPage');
+Route::any('/{lang?}', 'PageController@index')
+   ->where(array(
+        'lang' => '[a-z]{2}(_[A-Z]{2})?'
+    ));
+
+Route::any('/{lang}/{page}/{attributes?}', 'PageController@showPage')
+    ->where(array(
+        'lang' => '[a-z]{2}(_[A-Z]{2})?',
+        'attributes' => '[A-Za-z0-9\./]+'
+    ));

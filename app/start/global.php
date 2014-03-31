@@ -67,6 +67,21 @@ App::down(function()
 	return Response::make("Be right back!", 503);
 });
 
+
+/*
+|--------------------------------------------------------------------------
+| Required global assets
+|--------------------------------------------------------------------------
+|
+| All global required assets here
+|
+*/
+
+Asset::add('bootstrap', 'themes/default/css/bootstrap.min.css');
+
+Asset::add('jquery', 'themes/default/js/jquery.min.js');
+Asset::add('bootstrap', 'themes/default/js/bootstrap.min.js', array('jquery'));
+
 /*
 |--------------------------------------------------------------------------
 | Require The Filters File

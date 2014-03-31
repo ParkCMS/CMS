@@ -5,7 +5,7 @@ namespace Parkcms\Models;
 use Baum\Node;
 
 class Page extends Node {
-	
-	protected $table = 'pages';
-	
+    
+    protected $table = 'pages';
+    
 }

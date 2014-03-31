@@ -108,6 +108,7 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Cartalyst\Sentry\SentryServiceProvider',
 
+		'Parkcms\Assets\AssetServiceProvider',
 	),
 
 	/*
@@ -175,6 +176,7 @@ return array(
 		'View'            => 'Illuminate\Support\Facades\View',
 		'Sentry' => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
 
+		'Asset'			  => 'Parkcms\Assets\AssetFacade',
 	),
 
 );
