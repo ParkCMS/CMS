@@ -3,7 +3,7 @@
 namespace Programs\Parkcms\Form;
 
 use Parkcms\Context;
-use Parkcms\Programs\ProgramInterface;
+use Parkcms\Programs\ProgramAbstract;
 use Programs\Parkcms\Form\Models\Form as Model;
 use Illuminate\Validation\Factory as Validator;
 
@@ -14,7 +14,7 @@ use Request;
 use URL;
 use View;
 
-class Form implements ProgramInterface {
+class Form extends ProgramAbstract {
 
     protected $context;
     protected $form;
@@ -34,10 +34,7 @@ class Form implements ProgramInterface {
      * @return true|false
      */
     public function initialize($identifier, array $params) {
-        
-        View::addNamespace('forms', public_path() . '/themes/default/views/forms/');
-
-        $this->identifier = $identifier;
+        parent::initialize($identifier, $params);
 
         if(strpos($identifier, "global") === 0) {
             $this->form = Model::where('identifier', $this->context->lang() . '-' . $identifier)->first();
@@ -50,7 +47,7 @@ class Form implements ProgramInterface {
         }
 
         try {
-            View::getFinder()->find('forms::' . $this->form->identifier);
+            View::getFinder()->find('parkcms-form::' . $this->form->identifier);
 
             Asset::script('data-async', 'themes/default/js/data-async.js', array('jquery', 'bootstrap'));
 
@@ -75,7 +72,7 @@ class Form implements ProgramInterface {
             $validator = $this->validator->make(Input::all(), $rules);
         }
 
-        return View::make('forms::' . $this->form->identifier, array(
+        return View::make('parkcms-form::' . $this->form->identifier, array(
             'action' => $url,
             'method' => 'post',
             'form' => $this->form,

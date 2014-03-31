@@ -13,10 +13,11 @@ abstract class ProgramAbstract implements ProgramInterface {
     public function initialize($identifier, array $params) {
         $this->identifier = $identifier;
         $pi = $this->generateProgramIdentifier();
+
         $pp = $this->progPath();
         $theme = $this->context->theme();
 
-        $paths = array(base_path('programs/' . $pp), public_path('themes/' . $theme . 'views/' . $pp));
+        $paths = array(public_path('themes/' . $theme . '/views/' . $pp), base_path('programs/' . $pp . '/views'));
 
         View::addNamespace($pi, $paths);
         View::share('p', $this);
@@ -31,7 +32,7 @@ abstract class ProgramAbstract implements ProgramInterface {
 
     public function generateProgramIdentifier()
     {
-        return str_replace('\\', '-', strtolower(str_replace('Programs\\', '', get_called_class())));
+        return str_replace('/', '-', strtolower($this->progPath()));
     }
 
     protected function progPath()
