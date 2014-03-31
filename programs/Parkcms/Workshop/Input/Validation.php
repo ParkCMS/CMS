@@ -100,7 +100,7 @@ class Validation {
         $this->validator = $this->factory->make(
             Input::only('accept_terms'),
             array(
-                'accept_terms' => 'required'
+                'accept_terms' => 'accepted'
             )
         );
 
