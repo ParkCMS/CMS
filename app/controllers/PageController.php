@@ -109,6 +109,8 @@ class PageController extends Controller {
             App::abort(404);
         }
 
+        App::setLocale($root->title);
+
         return $root;
     }
 }
