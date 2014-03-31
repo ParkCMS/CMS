@@ -1,6 +1,6 @@
 <?php
 
-namespace Parkcms\Programs\Text;
+namespace Programs\Parkcms\Text;
 
 use Parkcms\Context;
 use Parkcms\Programs\ProgramInterface;

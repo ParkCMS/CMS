@@ -1,6 +1,6 @@
 <?php
 
-namespace Parkcms\Programs\Workshop\Models;
+namespace Programs\Parkcms\Workshop\Models;
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
@@ -8,7 +8,7 @@ class Workshop extends Eloquent {
     protected $table = 'workshops';
 
     public function parts() {
-        return $this->hasMany('Parkcms\Programs\Workshop\Models\Part');
+        return $this->hasMany('Programs\Parkcms\Workshop\Models\Part');
     }
 
     public function registrations() {

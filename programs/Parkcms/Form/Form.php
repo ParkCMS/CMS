@@ -1,10 +1,10 @@
 <?php
 
-namespace Parkcms\Programs\Form;
+namespace Programs\Parkcms\Form;
 
 use Parkcms\Context;
 use Parkcms\Programs\ProgramInterface;
-use Parkcms\Programs\Form\Models\Form as Model;
+use Programs\Parkcms\Form\Models\Form as Model;
 use Illuminate\Validation\Factory as Validator;
 
 use App;
