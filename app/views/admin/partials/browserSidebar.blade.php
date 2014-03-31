@@ -7,7 +7,7 @@
                 <div class="btn-group" style="margin: auto;">
                     <a ng-href="@{{ file.url }}" type="button" class="btn btn-default">{{ trans('admin_default.download_action') }}</a>
                     <button ng-click="deleteFile($event, file.path)" type="button" class="btn btn-default">{{ trans('admin_default.delete_action') }}</button>
-                    <button type="button" class="btn btn-default">{{ trans('admin_default.rename_action') }}</button>
+                    <button ng-click="rename($event, file)" type="button" class="btn btn-default">{{ trans('admin_default.rename_action') }}</button>
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
                 <div class="btn-group" style="margin: auto;">
                     <a ng-href="@{{ file.url }}" type="button" class="btn btn-default">{{ trans('admin_default.archive_action') }}</a>
                     <button ng-click="deleteFolder($event, file.path)" type="button" class="btn btn-default">{{ trans('admin_default.delete_action') }}</button>
-                    <button type="button" class="btn btn-default">{{ trans('admin_default.rename_action') }}</button>
+                    <button ng-click="rename($event, file)" type="button" class="btn btn-default">{{ trans('admin_default.rename_action') }}</button>
                 </div>
             </div>
         </div>

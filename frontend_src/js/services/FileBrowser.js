@@ -80,6 +80,16 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
         });
     };
 
+    this.rename = function(src, dest) {
+        console.log(_dirname(src) + '/' + dest);
+        return $http.get(serviceBackend + 'rename', {
+            params: {
+                'src': src,
+                'dest': dest
+            }
+        })
+    }
+
     /**
      * Returns the currently loaded path
      * The root level is always '/'
@@ -102,6 +112,16 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
         }
         return path;
     };
+
+    var _dirname = function(path) {
+        // Adapted from PHP.js
+        //  discuss at: http://phpjs.org/functions/dirname/
+        //        http: //kevin.vanzonneveld.net
+        // original by: Ozh
+        // improved by: XoraX (http://www.xorax.info)
+
+        return path.replace(/\\/g, '/').replace(/\/[^\/]*\/?$/, '');
+    }
 
     var _getFilesInFolder = function(folder) {
         return $http.get(serviceBackend + 'list/', {

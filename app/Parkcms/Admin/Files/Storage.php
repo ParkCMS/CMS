@@ -125,6 +125,11 @@ class Storage
         return $this->fs->move($src, $dest . DIRECTORY_SEPARATOR . $filename);
     }
 
+    public function rename($src, $dest)
+    {
+        return $this->fs->move($src, dirname($src) . DIRECTORY_SEPARATOR . $dest);
+    }
+
     /**
      * Prefixes the given file name with the date if there is another file
      * with the same name at the given destination

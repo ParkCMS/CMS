@@ -207,7 +207,7 @@ Q.angular.bootstrap?console.log("WARNING: Tried to load angular more than once."
 //# sourceMappingURL=angular.min.js.map
 
 /*
- AngularJS v1.2.16-build.47+sha.0e5106e
+ AngularJS v1.2.15
  (c) 2010-2014 Google, Inc. http://angularjs.org
  License: MIT
 */
@@ -222,7 +222,7 @@ function(){this.$get=function(){return{}}});n.directive("ngView",x);n.directive(
 //# sourceMappingURL=angular-route.min.js.map
 
 /*
- AngularJS v1.2.16-build.63+sha.8d4d437
+ AngularJS v1.2.15
  (c) 2010-2014 Google, Inc. http://angularjs.org
  License: MIT
 */
@@ -670,6 +670,17 @@ parkAdmin.directive("browserSidebar", ['FileBrowser', '$rootScope', '$dialogs', 
                 });
             };
 
+            scope.rename = function($event, file) {
+                var dlg = $dialogs.create('/admin/partials/rename','renameFileController',{'src': file.path, 'name': file.filename},{key: false});
+                dlg.result.then(function(dest) {
+                    browser.rename(file.path, dest).success(function() {
+                        scope.$emit('browser-needs-refresh');
+                    });
+                });
+
+                $event.preventDefault();
+            };
+
             var _format = function(input) {
                 var formatted = input;
                 for (var i = 1; i < arguments.length; i++) {
@@ -684,7 +695,26 @@ parkAdmin.directive("browserSidebar", ['FileBrowser', '$rootScope', '$dialogs', 
             });
         }
     };
-}]);
+}]).controller('renameFileController',function($scope,$modalInstance,data){
+  $scope.file = {'src' : data.src, 'dest': data.name};
+
+  $scope.cancel = function(){
+    $modalInstance.dismiss('canceled');  
+  }; // end cancel
+  
+  $scope.save = function(){
+    if ($scope.file.dest == '') {
+        $modalInstance.dismiss('invalid dest path');
+        return;
+    }
+    $modalInstance.close($scope.file.dest);
+  }; // end save
+  
+  $scope.hitEnter = function(evt){
+    if(angular.equals(evt.keyCode,13) && !(angular.equals($scope.name,null) || angular.equals($scope.name,'')))
+                $scope.save();
+  }; // end hitEnter
+});
 parkAdmin.directive('checkAuth', ['$rootScope', '$location', 'UserService', 'TempStorage', function($root, $location, User, store) {
 	return {
 		link: function (scope, elem, attrs, ctrl) {
@@ -826,6 +856,16 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
         });
     };
 
+    this.rename = function(src, dest) {
+        console.log(_dirname(src) + '/' + dest);
+        return $http.get(serviceBackend + 'rename', {
+            params: {
+                'src': src,
+                'dest': dest
+            }
+        })
+    }
+
     /**
      * Returns the currently loaded path
      * The root level is always '/'
@@ -848,6 +888,16 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
         }
         return path;
     };
+
+    var _dirname = function(path) {
+        // Adapted from PHP.js
+        //  discuss at: http://phpjs.org/functions/dirname/
+        //        http: //kevin.vanzonneveld.net
+        // original by: Ozh
+        // improved by: XoraX (http://www.xorax.info)
+
+        return path.replace(/\\/g, '/').replace(/\/[^\/]*\/?$/, '');
+    }
 
     var _getFilesInFolder = function(folder) {
         return $http.get(serviceBackend + 'list/', {

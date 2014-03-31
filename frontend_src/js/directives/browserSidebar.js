@@ -24,6 +24,17 @@ parkAdmin.directive("browserSidebar", ['FileBrowser', '$rootScope', '$dialogs', 
                 });
             };
 
+            scope.rename = function($event, file) {
+                var dlg = $dialogs.create('/admin/partials/rename','renameFileController',{'src': file.path, 'name': file.filename},{key: false});
+                dlg.result.then(function(dest) {
+                    browser.rename(file.path, dest).success(function() {
+                        scope.$emit('browser-needs-refresh');
+                    });
+                });
+
+                $event.preventDefault();
+            };
+
             var _format = function(input) {
                 var formatted = input;
                 for (var i = 1; i < arguments.length; i++) {
@@ -38,4 +49,23 @@ parkAdmin.directive("browserSidebar", ['FileBrowser', '$rootScope', '$dialogs', 
             });
         }
     };
-}]);
+}]).controller('renameFileController',function($scope,$modalInstance,data){
+  $scope.file = {'src' : data.src, 'dest': data.name};
+
+  $scope.cancel = function(){
+    $modalInstance.dismiss('canceled');  
+  }; // end cancel
+  
+  $scope.save = function(){
+    if ($scope.file.dest == '') {
+        $modalInstance.dismiss('invalid dest path');
+        return;
+    }
+    $modalInstance.close($scope.file.dest);
+  }; // end save
+  
+  $scope.hitEnter = function(evt){
+    if(angular.equals(evt.keyCode,13) && !(angular.equals($scope.name,null) || angular.equals($scope.name,'')))
+                $scope.save();
+  }; // end hitEnter
+});

@@ -73,7 +73,29 @@ class Controller extends \Controller
                 return Response::json(array('message' => 'Unable to move to destination!'), 500);
             }
         } else {
-            return Response::json(array('message' => 'Either src or dest does not exist'));
+            return Response::json(array('message' => 'Either src or dest does not exist'), 404);
+        }
+    }
+
+    public function rename()
+    {
+        $src = urldecode(Input::get('src'));
+        $dest = urldecode(Input::get('dest'));
+
+        $src = $this->store->buildPath($this->path->clean($src));
+
+        $destExists = $this->store->buildPath($this->path->clean(dirname($src) . DIRECTORY_SEPARATOR . $dest));
+
+        if ($destExists) {
+            return Response::json(array('message' => 'There is already a file called ' . $dest . '!'), 500);
+        }
+
+        if ($src && $dest) {
+            if ($this->store->rename($src, $dest)) {
+                return Response::json(array('message' => 'Files were moved successfully!'));
+            } else {
+                return Response::json(array('message' => 'Unable to move to destination!'), 500);
+            }
         }
     }
 
