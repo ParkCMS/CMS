@@ -41,9 +41,31 @@
         </nav>
 
         <div class="container">
-    		@section('body')
-    		  <h1>Body</h1>
-    		@show
+            <div class="col-sm-3">
+                <div style="background-color: #526486; height: 75px; color: white;">
+                    <h5>Logo</h5>
+                </div>
+                <div style="background-color: #526486; height: 150px; color: white;">
+                    <h5>Behandlung</h5>
+                </div>
+                <div style="background-color: #526486; height: 200px; color: white;">
+                    <h5>Standorte</h5>
+                </div>
+                <div style="background-color: #526486; height: 150px; color: white;">
+                    <h5>Kontakt</h5>
+                </div>
+                <div style="background-color: #526486; height: 350px; color: white;">
+                    <h5>Aktuelles</h5>
+                </div>
+                <div style="background-color: #526486; height: 150px; color: white;">
+                    <h5>Team</h5>
+                </div>
+            </div>
+            <div class="col-sm-9">
+        		@section('body')
+        		  <h1>Body</h1>
+        		@show
+            </div>
         </div>
 
         <footer class="footer">
