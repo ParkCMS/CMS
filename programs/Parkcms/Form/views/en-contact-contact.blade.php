@@ -15,15 +15,15 @@
     <input type="hidden" name="identifier" value="{{ $form->identifier }}" />
 
     <div class="form-group">
-        <label for="inputName" class="col-sm-3 control-label">Name</label>
-        <div class="col-sm-9">
+        <label for="inputName" class="col-sm-2 control-label">Name</label>
+        <div class="col-sm-10">
             <input type="text" class="form-control" id="inputName" name="name" value="{{ Input::get('name') }}" />
         </div>
     </div>
 
     <div class="form-group">
-        <label for="inputEmail" class="col-sm-3 control-label">E-Mail</label>
-        <div class="col-sm-9">
+        <label for="inputEmail" class="col-sm-2 control-label">E-Mail</label>
+        <div class="col-sm-10">
             <input type="email" class="form-control" id="inputEmail" name="email" value="{{ Input::get('email') }}" />
         </div>
     </div>
