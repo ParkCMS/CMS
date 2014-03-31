@@ -5,8 +5,10 @@ namespace Parkcms\Programs\Form;
 use Parkcms\Context;
 use Parkcms\Programs\ProgramInterface;
 use Parkcms\Programs\Form\Models\Form as Model;
+use Illuminate\Validation\Factory as Validator;
 
 use App;
+use Asset;
 use Input;
 use Request;
 use URL;
@@ -18,9 +20,11 @@ class Form implements ProgramInterface {
     protected $form;
 
     protected $identifier;
+    protected $validator;
 
-    public function __construct(Context $context) {
+    public function __construct(Context $context, Validator $validator) {
         $this->context = $context;
+        $this->validator = $validator;
     }
 
     /**
@@ -47,6 +51,9 @@ class Form implements ProgramInterface {
 
         try {
             View::getFinder()->find('forms::' . $this->form->identifier);
+
+            Asset::script('data-async', 'themes/default/js/data-async.js', array('jquery', 'bootstrap'));
+
             return true;
         } catch(\InvalidArgumentException $e) {
             return false;
@@ -59,27 +66,24 @@ class Form implements ProgramInterface {
      */
     public function render() {
         
-        if($this->context->ajax()) {
-            if($this->submited()) {
-                
-                // App::abort('500', 'voll der fehler');
+        $url = URL::to($this->context->lang() . '/' . $this->context->route());
 
-                return json_encode(Input::all());
+        $validator = null;
+        if($this->submited()) {
+            $rules = (array)json_decode($this->form->rules);
 
-                return "true";
-            }
-        } else {
-            $url = URL::to('/api/program/' . $this->context->lang() . '/' . $this->context->route() . '/form/' . $this->identifier);
-
-            return View::make('forms::' . $this->form->identifier, array(
-                'action' => $url,
-                'method' => 'post',
-                'form' => $this->form
-            ))->render();
+            $validator = $this->validator->make(Input::all(), $rules);
         }
+
+        return View::make('forms::' . $this->form->identifier, array(
+            'action' => $url,
+            'method' => 'post',
+            'form' => $this->form,
+            'validator' => $validator,
+        ))->render();
     }
 
     protected function submited() {
-        return Request::isMethod('post');
+        return Request::isMethod('post') && Input::get('identifier') == $this->form->identifier;
     }
 }

@@ -17,38 +17,20 @@ class FormSeeder extends Seeder {
         $en = Form::create(array(
             'identifier' => 'en-contact-contact',
             'email' => 'parkcms.team@gmail.com',
-            'subject' => 'Contact form'
+            'subject' => 'Contact form',
+            'rules' => json_encode(array(
+                'name' => 'required|min:5',
+                'email' => 'required|email',
+            )),
         ));
         $de = Form::create(array(
             'identifier' => 'de-contact-contact',
             'email' => 'parkcms.team@gmail.com',
-            'subject' => 'Kontakt formular'
-        ));
-        
-        $en->fields()->create(array(
-            'type'     => 'email',
-            'name'  => 'email',
-            'values'     => '',
-            'attributes' => '{"placeholder": "E-Mail"}'
-        ));
-        $de->fields()->create(array(
-            'type'     => 'email',
-            'name'  => 'email',
-            'values'     => '',
-            'attributes' => '{"placeholder": "E-Mail"}'
-        ));
-        
-        $en->fields()->create(array(
-            'type'     => 'text',
-            'name'  => 'name',
-            'values'     => '',
-            'attributes' => '{"placeholder": "Name"}'
-        ));
-        $de->fields()->create(array(
-            'type'     => 'text',
-            'name'  => 'name',
-            'values'     => '',
-            'attributes' => '{"placeholder": "Name"}'
+            'subject' => 'Kontakt formular',
+            'rules' => json_encode(array(
+                'name' => 'required|min:5',
+                'email' => 'required|email',
+            )),
         ));
         
     }

@@ -53,7 +53,7 @@
         <div class="form-group">
             <label for="inputEmail" class="col-sm-3 control-label">E-Mail</label>
             <div class="col-sm-9 @if($p->failed('email')) has-error @endif">
-                <input type="text" class="form-control" id="inputEmail" placeholder="E-Mail" name="email" value="{{ $p->get('email') }}" data-toogle="tooltip" data-placement="bottom" title="{{ $p->message('email') }}">
+                <input type="email" class="form-control" id="inputEmail" placeholder="E-Mail" name="email" value="{{ $p->get('email') }}" data-toogle="tooltip" data-placement="bottom" title="{{ $p->message('email') }}">
             </div>
         </div>
     </div>
