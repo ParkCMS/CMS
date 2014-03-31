@@ -3,9 +3,9 @@
 namespace Programs\Parkcms\Text;
 
 use Parkcms\Context;
-use Parkcms\Programs\ProgramInterface;
+use Parkcms\Programs\ProgramAbstract;
 
-class Text implements ProgramInterface {
+class Text extends ProgramAbstract {
 
     protected $context;
     protected $content;

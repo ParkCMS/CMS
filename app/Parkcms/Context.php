@@ -56,5 +56,10 @@ class Context {
     public function ajax() {
         return $this->ajax;
     }
+
+    public function theme()
+    {
+        return 'default';
+    }
     
 }
