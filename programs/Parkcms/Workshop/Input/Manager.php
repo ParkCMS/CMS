@@ -57,6 +57,10 @@ class Manager {
      */
     public function setStep($step) {
         $this->step = $step;
+
+        if($this->step == $this->steps[0]) {
+            $this->clear();
+        }
     }
 
     /**
