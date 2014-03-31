@@ -1,10 +1,10 @@
 <?php
 
-namespace Parkcms\Programs\Workshop\Input;
+namespace Programs\Parkcms\Workshop\Input;
 
 use Illuminate\Validation\Factory;
-use Parkcms\Programs\Workshop\Models\Workshop;
-use Parkcms\Programs\Workshop\Models\Part;
+use Programs\Parkcms\Workshop\Models\Workshop;
+use Programs\Parkcms\Workshop\Models\Part;
 
 use Input;
 use Session;

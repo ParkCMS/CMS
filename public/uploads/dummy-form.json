@@ -1,0 +1,48 @@
+{
+    "actions": {
+        "form-1": {
+            "type": "Form",
+            "fields": [
+                {
+                    "type": "email",
+                    "name": "mail",
+                    "label": "Ihre E-Mail-Adresse"
+                },
+                {
+                    "type": "string",
+                    "name": "subject",
+                    "pattern": "[a-zA-Z .,-]",
+                    "label": "Betreff"
+                },
+                {
+                    "type": "text",
+                    "name": "message",
+                    "label": "Ihre Nachricht"
+                },
+                {
+                    "type": "button",
+                    "name": "submit",
+                    "label": "Senden"
+                }
+            ]
+        },
+        "client-info": {
+            "ip": true
+        },
+        "send-mail": {
+            "type": "mail",
+            "recipient": ["mail@example.org", "copy@example.org"],
+
+        }
+    },
+    "pipes": [
+        {
+            "in": ["form-1.post"],
+            "out": ["send-mail.in"]
+        },uuu
+        {
+            "in": ["client-info.out"],
+            "out": ["send-mail.in"]
+        }
+    ]
+}

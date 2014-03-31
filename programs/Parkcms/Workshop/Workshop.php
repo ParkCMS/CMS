@@ -1,15 +1,15 @@
 <?php
 
-namespace Parkcms\Programs\Workshop;
+namespace Programs\Parkcms\Workshop;
 
 use Parkcms\Programs\ProgramAbstract;
 
 use Parkcms\Context;
-use Parkcms\Programs\Workshop\Input\Manager;
+use Programs\Parkcms\Workshop\Input\Manager;
 
-use Parkcms\Programs\Workshop\Models\Workshop as WorkshopModel;
-use Parkcms\Programs\Workshop\Models\Part;
-use Parkcms\Programs\Workshop\Models\Registration;
+use Programs\Parkcms\Workshop\Models\Workshop as WorkshopModel;
+use Programs\Parkcms\Workshop\Models\Part;
+use Programs\Parkcms\Workshop\Models\Registration;
 
 use View;
 use Asset;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Parkcms\Programs\Nav;
+namespace Programs\Parkcms\Nav;
 
 use Parkcms\Programs\ProgramInterface;
 use Parkcms\Models\Page;

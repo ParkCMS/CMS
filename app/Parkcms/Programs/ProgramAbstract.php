@@ -18,7 +18,7 @@ abstract class ProgramAbstract implements ProgramInterface {
 
     public function url() {
 
-        $class = str_replace('\\', '-', strtolower(str_replace('Parkcms\\Programs\\', '', get_called_class())));
+        $class = str_replace('\\', '-', strtolower(str_replace('Programs\\Parkcms\\', '', get_called_class())));
 
         return URL::to('/api/program/' . $this->context->lang() . '/' . $this->context->route() . '/' . $class . '/' . $this->identifier);
     }

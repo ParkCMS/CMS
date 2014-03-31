@@ -1,6 +1,6 @@
 <?php
 
-namespace Parkcms\Programs\Workshop\Input;
+namespace Programs\Parkcms\Workshop\Input;
 
 use Session;
 use Request;
