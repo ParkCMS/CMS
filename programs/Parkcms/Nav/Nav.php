@@ -1,14 +1,14 @@
 <?php
 
-namespace Parkcms\Programs\Nav;
+namespace Programs\Parkcms\Nav;
 
-use Parkcms\Programs\ProgramInterface;
+use Parkcms\Programs\ProgramAbstract;
 use Parkcms\Models\Page;
 use Parkcms\Context;
 
 use URL;
 
-class Nav implements ProgramInterface {
+class Nav extends ProgramAbstract {
 
     protected $context;
     protected $content;

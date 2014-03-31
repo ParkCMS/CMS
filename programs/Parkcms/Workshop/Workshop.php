@@ -1,15 +1,15 @@
 <?php
 
-namespace Parkcms\Programs\Workshop;
+namespace Programs\Parkcms\Workshop;
 
 use Parkcms\Programs\ProgramAbstract;
 
 use Parkcms\Context;
-use Parkcms\Programs\Workshop\Input\Manager;
+use Programs\Parkcms\Workshop\Input\Manager;
 
-use Parkcms\Programs\Workshop\Models\Workshop as WorkshopModel;
-use Parkcms\Programs\Workshop\Models\Part;
-use Parkcms\Programs\Workshop\Models\Registration;
+use Programs\Parkcms\Workshop\Models\Workshop as WorkshopModel;
+use Programs\Parkcms\Workshop\Models\Part;
+use Programs\Parkcms\Workshop\Models\Registration;
 
 use View;
 use Asset;
@@ -37,8 +37,6 @@ class Workshop extends ProgramAbstract {
      */
     public function initialize($identifier, array $params) {
         parent::initialize($identifier, $params);
-
-        View::addNamespace('workshops', public_path() . '/themes/default/views/workshops/');
 
         $this->workshop = WorkshopModel::with('parts')
             ->where('identifier', $identifier)
@@ -90,7 +88,7 @@ class Workshop extends ProgramAbstract {
         $previousStep = $this->manager->previousStep($step);
         $nextStep = $this->manager->nextStep($step);
 
-        return View::make('workshops::' . $this->workshop->identifier . '.' . $step, array(
+        return View::make('parkcms-workshop::' . $this->workshop->identifier . '.' . $step, array(
             'workshop' => $this->workshop,
             'previous' => $previousStep === null ? null : $this->url() . '?workshop[' . $this->workshop->identifier . ']=' . $previousStep,
             'next' => $nextStep === null ? null : $this->url() . '?workshop[' . $this->workshop->identifier . ']=' . $nextStep,

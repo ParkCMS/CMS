@@ -25,8 +25,9 @@
 			"app/database/seeds",
 			"app/tests/TestCase.php"
 		],
-		"psr-0": {
-			"Parkcms": "app"
+		"psr-4": {
+			"Parkcms\\": "app/Parkcms",
+			"Programs\\": "programs"
 		}
 	},
 	"scripts": {
