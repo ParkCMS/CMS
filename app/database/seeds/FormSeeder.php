@@ -1,7 +1,7 @@
 <?php
 
-use Parkcms\Programs\Form\Models\Form;
-use Parkcms\Programs\Form\Models\Field;
+use Programs\Parkcms\Form\Models\Form;
+use Programs\Parkcms\Form\Models\Field;
 
 class FormSeeder extends Seeder {
 
@@ -21,6 +21,7 @@ class FormSeeder extends Seeder {
             'rules' => json_encode(array(
                 'name' => 'required|min:5',
                 'email' => 'required|email',
+                'comment' => 'required|min:10',
             )),
         ));
         $de = Form::create(array(
@@ -30,6 +31,7 @@ class FormSeeder extends Seeder {
             'rules' => json_encode(array(
                 'name' => 'required|min:5',
                 'email' => 'required|email',
+                'comment' => 'required|min:10',
             )),
         ));
         

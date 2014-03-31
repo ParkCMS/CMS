@@ -1,8 +1,8 @@
 <?php
 
-use Parkcms\Programs\Workshop\Models\Workshop;
-use Parkcms\Programs\Workshop\Models\Part;
-use Parkcms\Programs\Workshop\Models\Registration;
+use Programs\Parkcms\Workshop\Models\Workshop;
+use Programs\Parkcms\Workshop\Models\Part;
+use Programs\Parkcms\Workshop\Models\Registration;
 
 class WorkshopSeeder extends Seeder {
 
