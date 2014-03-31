@@ -10,6 +10,7 @@ use Illuminate\Validation\Factory as Validator;
 use App;
 use Asset;
 use Input;
+use Lang;
 use Request;
 use URL;
 use View;
@@ -70,6 +71,7 @@ class Form extends ProgramAbstract {
             $rules = (array)json_decode($this->form->rules);
 
             $validator = $this->validator->make(Input::all(), $rules);
+            $validator->setAttributeNames(Lang::get('parkcms-form::fields'));
 
             if(!$validator->fails()) {
                 
