@@ -2,7 +2,7 @@
 <h2>{{ $workshop->title }}</h2>
 <p>{{ $workshop->description }}</p>
 
-<a href="{{ $next }}" data-async="async" data-target="#workshop-{{ $workshop->identifier }}" role="button" class="btn btn-default">Register</a>
+<a href="{{ $next }}" data-async="async" data-target="#workshop-{{ $workshop->identifier }}" role="button" class="btn btn-default">{{ Lang::get('parkcms-workshop::fields.register') }}</a>
 
 <!-- Event Modal -->
 <div id="workshop-{{ $workshop->identifier }}" class="modal fade">

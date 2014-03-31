@@ -7,7 +7,7 @@
             @endforeach
         </ul>
     @else
-        Ihre Anfrage wurde abgeschickt!
+        Your request has been sent!
     @endif
 @endif
 
@@ -28,6 +28,10 @@
         </div>
     </div>
 
-    <button class="btn btn-default" type="reset">Zurücksetzen</button>
-    <button class="btn btn-primary" type="submit">Abschicken</button>
+    <div class="form-group">
+        <div class="col-sm-10 col-sm-offset-2">
+            <button class="btn btn-default" type="reset">Reset</button>
+            <button class="btn btn-primary" type="submit">Send</button>
+        </div>
+    </div>
 </form>

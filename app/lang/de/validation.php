@@ -99,17 +99,6 @@ return array(
     |
     */
 
-    'attributes' => array(
-        'name' => 'Name',
-        'firstname' => 'Vorname',
-        'middlename' => 'zweiter Vorname',
-        'surname' => 'Nachname',
-
-        'email' => 'E-Mail',
-        'phone' => 'Telefon',
-        'fax' => 'Fax',
-
-        'comment' => 'Kommentar',
-    ),
+    'attributes' => array(),
 
 );

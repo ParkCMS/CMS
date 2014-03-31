@@ -70,6 +70,10 @@ class Form extends ProgramAbstract {
             $rules = (array)json_decode($this->form->rules);
 
             $validator = $this->validator->make(Input::all(), $rules);
+
+            if(!$validator->fails()) {
+                
+            }
         }
 
         return View::make('parkcms-form::' . $this->form->identifier, array(
@@ -82,5 +86,13 @@ class Form extends ProgramAbstract {
 
     protected function submited() {
         return Request::isMethod('post') && Input::get('identifier') == $this->form->identifier;
+    }
+
+    public function get($key) {
+        if($this->submited()) {
+            return Input::get($key);
+        }
+
+        return '';
     }
 }

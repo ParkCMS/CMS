@@ -6,6 +6,7 @@ use Illuminate\Validation\Factory;
 use Programs\Parkcms\Workshop\Models\Workshop;
 use Programs\Parkcms\Workshop\Models\Part;
 
+use Lang;
 use Input;
 use Session;
 
@@ -66,6 +67,8 @@ class Validation {
             )
         );
 
+        $this->validator->setAttributeNames(Lang::get('parkcms-workshop::fields'));
+
         return !$this->validator->fails();
     }
 
@@ -98,10 +101,11 @@ class Validation {
 
     protected function validateCheck() {
         $this->validator = $this->factory->make(
-            Input::only('accept_terms'),
+            Input::only('terms'),
             array(
-                'accept_terms' => 'accepted'
-            )
+                'terms' => 'accepted'
+            ),
+            Lang::get('parkcms-workshop::validation')
         );
 
         return !$this->validator->fails();
