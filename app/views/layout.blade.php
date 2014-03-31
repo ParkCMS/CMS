@@ -4,7 +4,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         <pcms-styles />
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
         
     	<title>ParkCMS</title>
 	</head>
