@@ -68,6 +68,20 @@
             </div>
         </div>
 
+        <div class="rating" itemscope="itemscope" itemtype="http://schema.org/LocalBusiness">
+            <span itemprop="name">ParkCMS</span>
+            <div itemprop="aggregateRating" itemscope="itemscope" itemtype="http://schema.org/AggregateRating">        
+                <div class="num">
+                    <span class="rating" itemprop="ratingValue">4,9</span>
+                </div>
+                <div class="num">
+                    <span class="count" itemprop="reviewCount">
+                        65
+                    </span>
+                </div>
+            </div>
+        </div>
+
         <footer class="footer">
             <div class="container">
                 <div pcms-text="global-footer">
