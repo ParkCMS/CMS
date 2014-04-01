@@ -42,22 +42,22 @@
 
         <div class="container">
             <div class="col-sm-3">
-                <div style="background-color: #526486; height: 75px; color: white;">
+                <div class="left-box" style="height: 75px; color: white;">
                     <h5>Logo</h5>
                 </div>
-                <div style="background-color: #526486; height: 150px; color: white;">
+                <div class="left-box" style="height: 150px;">
                     <h5>Behandlung</h5>
                 </div>
-                <div style="background-color: #526486; height: 200px; color: white;">
+                <div class="left-box" style="height: 200px;">
                     <h5>Standorte</h5>
                 </div>
-                <div style="background-color: #526486; height: 150px; color: white;">
+                <div class="left-box" style="height: 150px;">
                     <h5>Kontakt</h5>
                 </div>
-                <div style="background-color: #526486; height: 350px; color: white;">
+                <div class="left-box" style="height: 350px;">
                     <h5>Aktuelles</h5>
                 </div>
-                <div style="background-color: #526486; height: 150px; color: white;">
+                <div class="left-box" style="height: 150px;">
                     <h5>Team</h5>
                 </div>
             </div>
