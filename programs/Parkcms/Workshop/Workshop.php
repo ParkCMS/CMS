@@ -11,9 +11,9 @@ use Programs\Parkcms\Workshop\Models\Workshop as WorkshopModel;
 use Programs\Parkcms\Workshop\Models\Part;
 use Programs\Parkcms\Workshop\Models\Registration;
 
-use View;
 use Asset;
 use Input;
+use View;
 
 class Workshop extends ProgramAbstract {
     
@@ -79,10 +79,20 @@ class Workshop extends ProgramAbstract {
         return $this->renderStep($this->manager->getStep());
     }
 
+    /**
+     * checks if the given step exists
+     * @param  string $step
+     * @return bool
+     */
     protected function validStep($step) {
         return in_array($step, $this->steps);
     }
 
+    /**
+     * renders view of given step and returns result
+     * @param  string $step
+     * @return string
+     */
     protected function renderStep($step) {
 
         $previousStep = $this->manager->previousStep($step);
@@ -95,14 +105,29 @@ class Workshop extends ProgramAbstract {
         ))->render();
     }
 
+    /**
+     * See Programs\Parkcms\Workshop\Input\Validation->failed($key)
+     * @param  string $key
+     * @return bool
+     */
     public function failed($key) {
         return $this->manager->validation()->failed($key);
     }
 
+    /**
+     * See Programs\Parkcms\Workshop\Input\Validation->message($key)
+     * @param  string $key
+     * @return string
+     */
     public function message($key) {
         return $this->manager->validation()->message($key);
     }
 
+    /**
+     * See Programs\Parkcms\Workshop\Input\Manager->get($key, $default)
+     * @param  string $key
+     * @return string
+     */
     public function get($key, $default = '') {
         return $this->manager->get($key, $default);
     }
