@@ -13,7 +13,7 @@ class FormSeeder extends Seeder {
     public function run()
     {
         Eloquent::unguard();
-        
+
         $en = Form::create(array(
             'identifier' => 'en-contact-contact',
             'email' => 'parkcms.team@gmail.com',
@@ -34,7 +34,7 @@ class FormSeeder extends Seeder {
                 'comment' => 'required|min:10',
             )),
         ));
-        
+
     }
 
 }

@@ -1,0 +1,1 @@
+<iframe src="{{ url() }}?admin=1" frameborder="0" style="width: 100%"></iframe>

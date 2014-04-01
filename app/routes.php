@@ -11,6 +11,8 @@
 |
 */
 
+include_once __DIR__ . "/routes_admin.php";
+
 Route::any('/api/program/{lang}/{page}/{type}/{identifier}/{attributes?}', 'ProgramController@render')
     ->where(array(
         'attributes' => '[A-Za-z0-9\./]+'
@@ -26,4 +28,3 @@ Route::any('/{lang}/{page}/{attributes?}', 'PageController@showPage')
         'lang' => '[a-z]{2}(_[A-Z]{2})?',
         'attributes' => '[A-Za-z0-9\./]+'
     ));
-

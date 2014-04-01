@@ -22,6 +22,10 @@ class Asset {
             $attributes['rel'] = 'stylesheet';
         }
 
+        if(!array_key_exists('rel', $attributes)) {
+            $attributes['rel'] = 'stylesheet';
+        }
+
         $this->register('style', $name, $source, $dependencies, $attributes);
 
         return $this;
