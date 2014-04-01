@@ -98,7 +98,7 @@ class Workshop extends ProgramAbstract {
             if($part->partType == 2) {
                 
             }
-            $part->registrations()->attach(1, array('amount' => $expires));
+            $part->registrations()->attach(1, array('value' => '1'));
         }
 
         $registration = Registration
