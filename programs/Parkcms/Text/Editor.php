@@ -14,7 +14,7 @@ class Editor extends BaseEditor
     public function index($properties)
     {
         $page = isset($properties['page']) ? $properties['page'] : 0;
-        return 'Texteditor auf Seite ' . $page;
+        return '<a ng-click="doLog(\'Aua\')">Texteditor</a> auf Seite ' . $page;
     }
 
     public function create()
