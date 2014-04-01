@@ -63,7 +63,7 @@ class Nav extends ProgramAbstract {
         return true;
     }
 
-    public function render() {
+    public function render($inlineTemplate = null) {
         return $this->content;
     }
 

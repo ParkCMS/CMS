@@ -86,6 +86,9 @@ class PageController extends Controller {
         $that = $this;
         $this->parser->pushHandler(function($type, $identifier, $data, $nodeValue) use($that) {
             if($program = $that->manager->lookup($type, $identifier, $data)) {
+                if(isset($data['inline-template'])) {
+                    return $program->render($nodeValue);
+                }
                 return $program->render();
             }
             return null;

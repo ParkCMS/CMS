@@ -16,6 +16,6 @@ interface ProgramInterface {
      * renders the program and returns the result
      * @return string
      */
-    public function render();
+    public function render($inlineTemplate = null);
     
 }

@@ -63,7 +63,7 @@ class Form extends ProgramAbstract {
      * renders the program and returns the result
      * @return string
      */
-    public function render() {
+    public function render($inlineTemplate = null) {
         
         $url = URL::to($this->context->lang() . '/' . $this->context->route());
 
