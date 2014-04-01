@@ -93,6 +93,7 @@ class Workshop extends ProgramAbstract {
             return;
         }
 
+        /*
         foreach($workshop->parts as $part) {
             if($part->partType == 2) {
                 
@@ -101,6 +102,7 @@ class Workshop extends ProgramAbstract {
         }
 
         $registration = Registration
+        */
     }
 
     /**
