@@ -11,9 +11,10 @@ class Editor extends BaseEditor
         $this->addEndpoint('index', 'index');
     }
 
-    public function index()
+    public function index($properties)
     {
-        return 'Texteditor';
+        $page = isset($properties['page']) ? $properties['page'] : 0;
+        return 'Texteditor auf Seite ' . $page;
     }
 
     public function create()
