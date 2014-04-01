@@ -44,7 +44,7 @@ The organizer preserves the right to cancel the workshop in case of too few part
 The organizer does not assume any liability for other costs in connection with a workshop cancellation.
 The registrant has the right to cancel his or her participation.',
             'registration_mail' => 'Thank you for registration',
-            'date' => '2013/01/01',
+            'date' => new \DateTime('-1 month'),
             'seats' => '50',
             'active' => '0'
         ));
