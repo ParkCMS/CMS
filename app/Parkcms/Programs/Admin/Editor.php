@@ -79,7 +79,8 @@ abstract class Editor
 
         foreach ($endpoints as $endpoint) {
             if (method_exists($resolver, $endpoint['action'])) {
-                $this->endpoints[$resource . '_' . $endpoint['action']] = array(
+                $route = ($resource != '') ? $resource . '_' . $endpoint['action'] : $endpoint['action'];
+                $this->endpoints[$route] = array(
                     'object' => $resolver,
                     'action' => $endpoint['action'],
                     'verb'   => $endpoint['verb']

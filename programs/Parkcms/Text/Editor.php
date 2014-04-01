@@ -9,7 +9,6 @@ class Editor extends BaseEditor
     public function register()
     {
         $this->addEndpoint('index', 'index');
-        $this->addResourceEndpoint('part', $this);
     }
 
     public function index()
