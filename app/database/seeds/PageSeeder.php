@@ -27,12 +27,12 @@ class PageSeeder extends Seeder {
 		
 		$en->children()->create(array(
 			'alias'		=> 'home',
-			'template'	=> 'default',
+			'template'	=> 'home',
 			'title'		=> 'Home',
 		));
 		$de->children()->create(array(
 			'alias'		=> 'home',
-			'template'	=> 'default',
+			'template'	=> 'home',
 			'title'		=> 'Startseite',
 		));
 		
