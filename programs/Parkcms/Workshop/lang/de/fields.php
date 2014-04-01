@@ -6,6 +6,7 @@ return array(
     'back'         => 'Zurück',
     'next'         => 'Weiter',
     'pay'          => 'Zahlen',
+    'finish'       => 'Abschließen',
 
     'register'     => 'Registrieren',
     'title'        => 'Titel',

@@ -16,13 +16,13 @@ use Input;
 use View;
 
 class Workshop extends ProgramAbstract {
-    
+
     protected $workshop;
 
     protected $context;
     protected $manager;
 
-    protected $steps = array('index', 'register', 'parts', 'check', 'pay');
+    protected $steps = array('index', 'register', 'parts', 'check', 'pay', 'complete');
 
     public function __construct(Context $context, Manager $manager) {
         $this->context = $context;
@@ -55,13 +55,12 @@ class Workshop extends ProgramAbstract {
 
         return true;
     }
-    
+
     /**
      * renders the program and returns the result
      * @return string
      */
     public function render($inlineTemplate = null) {
-
         if($step = Input::get(
             'workshop.' . $this->workshop->identifier,
             $this->steps[0]
@@ -71,12 +70,37 @@ class Workshop extends ProgramAbstract {
             }
         }
 
+        if($this->workshop->isFullOrClosed()) {
+            $step = 'index';
+        }
+
         $step = $this->manager->setStep($step);
 
         $this->manager->validatePrevious();
         $this->manager->check();
+
+        if($this->manager->getStep() == end($this->steps)) {
+            $this->complete();
+        }
         
         return $this->renderStep($this->manager->getStep());
+    }
+
+    public function complete() {
+        $this->check();
+
+        if($this->step != end($this->steps)) {
+            return;
+        }
+
+        foreach($workshop->parts as $part) {
+            if($part->partType == 2) {
+                
+            }
+            $part->registrations()->attach(1, array('amount' => $expires));
+        }
+
+        $registration = Registration
     }
 
     /**

@@ -79,14 +79,14 @@ class Validation {
             if(isset($checkedParts[$part->id])) {
                 if($this->validPartValue($part, $checkedParts[$part->id])) {
                     unset($checkedParts[$part->id]);
-                    $this->store('parts', $part->id, true);
+                    $this->store('parts', $part->id, $checkedParts[$part->id]);
                 }
             } else {
                 $this->delete('parts', $part->id);
             }
         }
 
-        return count($checkedParts) == 0;
+        return count($checkedParts) == 0 && count($this->getAll('parts')) > 0;
     }
 
     protected function validPartValue(Part $part, $value) {
@@ -109,6 +109,10 @@ class Validation {
         );
 
         return !$this->validator->fails();
+    }
+
+    protected function validatePay() {
+        return true;
     }
 
     public function failed($key) {

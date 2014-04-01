@@ -2,11 +2,14 @@
 
 namespace Programs\Parkcms\Workshop\Input;
 
+use Programs\Parkcms\Workshop\Models\Registration;
+use Programs\Parkcms\Workshop\Models\Registration;
+use Programs\Parkcms\Workshop\Models\Registration;
+
 use Session;
 use Request;
 
 class Manager {
-    
     /**
      * stores the session key dot notated
      * @var string

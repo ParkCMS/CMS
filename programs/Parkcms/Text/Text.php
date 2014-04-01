@@ -6,7 +6,6 @@ use Parkcms\Context;
 use Parkcms\Programs\ProgramAbstract;
 
 class Text extends ProgramAbstract {
-
     protected $context;
     protected $content;
 
