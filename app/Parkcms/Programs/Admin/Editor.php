@@ -18,6 +18,8 @@ abstract class Editor
     {
         $this->app = $app;
         $view->addNamespace('fields', __DIR__ . '/Fields/views');
+
+        $this->app->instance('pcms-editor', $this);
     }
 
     abstract public function register();
@@ -124,7 +126,7 @@ abstract class Editor
         return $this->handleEndpoint($route, $reqType, $properties);
     }
 
-    protected function makeField($field)
+    public function makeField($field)
     {
         $editorNamespace = str_replace('/', '\\', dirname(str_replace('\\', '/', get_called_class())));
         if (class_exists($editorNamespace . '\\Fields\\'. ucfirst($field))) {

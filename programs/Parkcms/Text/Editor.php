@@ -19,24 +19,39 @@ class Editor extends BaseEditor
 
         $model = Model::byContext($properties['lang'], $page, $properties['identifier'])->first();
 
-        $page = $this->makeField('Text');
+        $form = $this->makeField('Form');
 
-        $identifier = $this->makeField('Text');
+        $form->addFields(function($f) use ($properties, $model) {
 
-        $content = $this->makeField('Content');
+            if (isset($properties['global']) && $properties['global'] === 'global') {
+                $value = 'global';
+            } else {
+                $value = $properties['page'];
+            }
 
-        if (isset($properties['global']) && $properties['global'] === 'global') {
-            $value = 'global';
-        } else {
-            $value = $properties['page'];
-        }
+            $page = $f->addField('Text', array(
+                'name' => 'page',
+                'value' =>  $value,
+                'label' => 'Page:'
+            ));
 
-        $page->create(array('name' => 'page', 'value' =>  $value, 'label' => 'Page:', 'disabled' => true));
+            $page->setAttribute('disabled', 'disabled');
 
-        $identifier->create(array('name' => 'identifier', 'value' =>  $properties['identifier'], 'label' => 'Identifier:', 'disabled' => true));
-        $content->create(array('name' => 'content', 'value' =>  $model->text, 'label' => 'Content:'));
+            $identifier = $f->addField('Text', array(
+                'name' => 'identifier',
+                'value' =>  $properties['identifier'],
+                'label' => 'Identifier:'
+            ));
+            $identifier->setAttribute('disabled', 'disabled');
 
-        return $page->render() . $identifier->render() . $content->render();
+            $content = $f->addField('Content', array(
+                'name' => 'content',
+                'value' =>  $model->text,
+                'label' => 'Content:'
+            ));
+        });
+
+        return $form->render();
     }
 
     public function create()

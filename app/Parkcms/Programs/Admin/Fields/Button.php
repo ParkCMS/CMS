@@ -2,19 +2,24 @@
 
 namespace Parkcms\Programs\Admin\Fields;
 
-class Text extends FormField
+class Button extends FormField
 {
     protected $properties = array(
         'name' => '',
         'value' => '',
+        'type'  => 'button',
         'label' => false
     );
 
-    protected $template = "text";
+    protected $template = "button";
 
     public function create(array $properties) {
         $this->properties = $properties + $this->properties;
-        $this->setAttribute('class', 'form-control');
+        if (strtolower($this->properties['type']) == 'submit') {
+            $this->setAttribute('class', 'btn btn-primary');
+        } else {
+            $this->setAttribute('class', 'btn btn-default');
+        }
     }
 
     public function value() {
