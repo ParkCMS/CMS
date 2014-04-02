@@ -51,7 +51,7 @@ class Validation {
      */
     protected function validateRegister() {
         
-        foreach(Input::only('title', 'surname', 'firstname', 'middlename', 'email', 'address', 'city', 'zip', 'institution') as $key=>$value) {
+        foreach(Input::only('title', 'surname', 'firstname', 'middlename', 'email', 'address', 'city', 'zip', 'country', 'institution', 'phone', 'fax') as $key=>$value) {
             $this->store('register', $key, $value);
         }
 
@@ -63,7 +63,8 @@ class Validation {
                 'address' => 'required|min:5',
                 'city' => 'required|min:5',
                 'zip' => 'required|integer',
-                'email' => 'required|email'
+                'country' => 'required|min:5',
+                'email' => 'required|email',
             )
         );
 
@@ -78,8 +79,8 @@ class Validation {
         foreach ($this->workshop->parts as $part) {
             if(isset($checkedParts[$part->id])) {
                 if($this->validPartValue($part, $checkedParts[$part->id])) {
-                    unset($checkedParts[$part->id]);
                     $this->store('parts', $part->id, $checkedParts[$part->id]);
+                    unset($checkedParts[$part->id]);
                 }
             } else {
                 $this->delete('parts', $part->id);

@@ -6,4 +6,6 @@ jQuery(function($) {
         menu.slideToggle();
     });
 
+    $('[data-toggle=tooltip]').tooltip();
+
 })

@@ -22,6 +22,8 @@ class Workshop extends ProgramAbstract {
     protected $context;
     protected $manager;
 
+    protected $hasFailed;
+
     protected $steps = array('index', 'register', 'parts', 'check', 'pay', 'complete');
 
     public function __construct(Context $context, Manager $manager) {
@@ -61,22 +63,12 @@ class Workshop extends ProgramAbstract {
      * @return string
      */
     public function render($inlineTemplate = null) {
-        if($step = Input::get(
-            'workshop.' . $this->workshop->identifier,
-            $this->steps[0]
-        )) {
-            if(!$this->validStep($step)) {
-                $step = $this->steps[0];
-            }
-        }
 
-        if($this->workshop->isFullOrClosed()) {
-            $step = 'index';
-        }
+        $step = $this->getStep();
 
         $step = $this->manager->setStep($step);
 
-        $this->manager->validatePrevious();
+        $this->hasFailed = !$this->manager->validatePrevious();
         $this->manager->check();
 
         if($this->manager->getStep() == end($this->steps)) {
@@ -86,23 +78,77 @@ class Workshop extends ProgramAbstract {
         return $this->renderStep($this->manager->getStep());
     }
 
-    public function complete() {
-        $this->check();
+    protected function complete() {
+        $this->manager->check();
 
-        if($this->step != end($this->steps)) {
+        if($this->manager->getStep() != end($this->steps)) {
+            $this->manager->setStep($this->steps[0]);
             return;
         }
 
-        /*
-        foreach($workshop->parts as $part) {
-            if($part->partType == 2) {
-                
+        $total_amount = 0;
+        foreach($this->workshop->parts as $part) {
+            if($partValue = $this->manager->validation()->get('parts', $part->id)) {
+                $total_amount+= $partValue * $part->price;
             }
-            $part->registrations()->attach(1, array('value' => '1'));
         }
 
-        $registration = Registration
-        */
+        Registration::unguard();
+
+        $registration = new Registration(array(
+            'internal_id' => uniqid(),
+
+            'title' => $this->manager->validation()->get('register', 'title'),
+            'first_name' => $this->manager->validation()->get('register', 'firstname'),
+            'middle_name' => $this->manager->validation()->get('register', 'middlename'),
+            'sur_name' => $this->manager->validation()->get('register', 'surname'),
+
+            'address' => $this->manager->validation()->get('register', 'address'),
+            'institution' => $this->manager->validation()->get('register', 'institution'),
+            'city' => $this->manager->validation()->get('register', 'city'),
+            'zip' => $this->manager->validation()->get('register', 'zip'),
+            'country' => $this->manager->validation()->get('register', 'country'),
+
+            'email' => $this->manager->validation()->get('register', 'email'),
+            'phone' => $this->manager->validation()->get('register', 'phone'),
+            'fax' => $this->manager->validation()->get('register', 'fax'),
+
+            'total_amount' => $total_amount,
+
+            'payment_type' => '',
+            'payment_data' => '',
+        ));
+
+        $registration->save();
+        
+        foreach($this->workshop->parts as $part) {
+            if($partValue = $this->manager->validation()->get('parts', $part->id)) {
+                $part->registrations()->attach($registration, array('value' => $partValue));
+            }
+        }
+
+        $this->manager->clear();
+    }
+
+    protected function getStep() {
+        if(Input::get('identifier') != $this->workshop->identifier) {
+            return $this->steps[0];
+        }
+
+        if($step = Input::get(
+            'workshop.' . $this->workshop->identifier,
+            $this->steps[0]
+        )) {
+            if(!$this->validStep($step)) {
+                return $this->steps[0];
+            }
+        }
+
+        if($this->workshop->isFullOrClosed()) {
+            $step = 'index';
+        }
+
+        return $step;
     }
 
     /**
@@ -126,8 +172,16 @@ class Workshop extends ProgramAbstract {
 
         return View::make('parkcms-workshop::' . $this->workshop->identifier . '.' . $step, array(
             'workshop' => $this->workshop,
-            'previous' => $previousStep === null ? null : $this->url() . '?workshop[' . $this->workshop->identifier . ']=' . $previousStep,
-            'next' => $nextStep === null ? null : $this->url() . '?workshop[' . $this->workshop->identifier . ']=' . $nextStep,
+            'hasFailed'=> $this->hasFailed,
+            'first'    => $this->url(array('workshop' => array(
+                    $this->workshop->identifier => $this->steps[0]
+                ))),
+            'previous' => $previousStep === null ? null : $this->url(array('workshop' => array(
+                    $this->workshop->identifier => $previousStep
+                ))),
+            'next'     => $nextStep === null ? null : $this->url(array('workshop' => array(
+                    $this->workshop->identifier => $nextStep
+                ))),
         ))->render();
     }
 

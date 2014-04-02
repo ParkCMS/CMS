@@ -6,10 +6,91 @@
 @border-radius-base:        0px;
 @border-radius-large:       0px;
 @border-radius-small:       0px;
+@grid-gutter-width:         10px;
+
+body > .container {
+    margin-top: @grid-gutter-width;
+}
 
 .left-box {
-    background-color: #526486;
+    background-color: @brand-primary;
     border: 1px solid darken(@btn-primary-bg, 5%);
     color: white;
-    margin-bottom: 15px;
+    margin-bottom: @grid-gutter-width;
+
+    & > span.header {
+        margin: 5px;
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    &.locations {
+        div.maps {
+            position: relative;
+            display: block;
+
+            div.item {
+                background-color: #a1a1a1;
+
+                //width: 100px;
+                height: 100px;
+
+                display: none;
+
+                &:first-child {
+                    display: block;
+                }
+            }
+        }
+
+        ul {
+            padding: 0;
+            font-weight: bold;
+            font-size: 12px;
+
+            li {
+                list-style-type: none;
+                border-top: 1px solid #112121;
+                padding: 5px 0;
+            }
+        }
+    }
+}
+
+.nav-container {
+    background-color: @brand-primary;
+    position: relative;
+    min-height: 1px;
+
+    & > a {
+        padding: 5px;
+
+        color: white;
+        cursor: pointer;
+        font-size: 20px;
+        font-weight: bold;
+
+        display: block;
+
+        &:hover {
+            color: white;
+        }
+    }
+
+    .main-navigation {
+        display: none;
+        background-color: lighten(@btn-primary-bg, 5%);
+
+        &:before {
+            content: " ";
+            display: table;
+        }
+        &:after {
+            clear: both;
+        }
+    }
+
+    & * {
+        color: white;
+    }
 }

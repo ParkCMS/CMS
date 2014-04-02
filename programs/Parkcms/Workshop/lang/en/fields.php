@@ -2,6 +2,7 @@
 
 return array(
 
+    'abort'        => 'Abort',
     'close'        => 'Close',
     'back'         => 'Back',
     'next'         => 'Next',
@@ -18,7 +19,10 @@ return array(
     'location'     => 'Location',
     'city'         => 'City',
     'zip'          => 'Zip',
+    'country'      => 'Country',
     'email'        => 'E-Mail',
+    'phone'        => 'Phone',
+    'fax'          => 'Fax',
 
     'parts'        => 'I will register for the following parts:',
 
