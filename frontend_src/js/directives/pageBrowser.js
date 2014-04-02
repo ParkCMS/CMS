@@ -16,6 +16,7 @@ parkAdmin.directive("pageBrowser", ['$window', function($window) {
                 $window.addEventListener('message', function(event) {
                     var source = event.source.frameElement;
                     var data = event.data;
+                    
                     if (event.data.task == 'edit') {
                         scope.$emit('add-editor', data);
                     }

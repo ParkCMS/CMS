@@ -3,6 +3,7 @@
 namespace Parkcms\Programs\Admin;
 
 use Illuminate\Foundation\Application;
+use Illuminate\View\Environment as View;
 
 use InvalidArgumentException;
 use ReflectionException;
@@ -13,9 +14,10 @@ abstract class Editor
     protected $app = null;
     protected $endpoints = array();
 
-    public function __construct(Application $app)
+    public function __construct(Application $app, View $view)
     {
         $this->app = $app;
+        $view->addNamespace('fields', __DIR__ . '/Fields/views');
     }
 
     abstract public function register();
@@ -120,5 +122,19 @@ abstract class Editor
     public function route($route, $reqType, array $properties)
     {
         return $this->handleEndpoint($route, $reqType, $properties);
+    }
+
+    protected function makeField($field)
+    {
+        $editorNamespace = str_replace('/', '\\', dirname(str_replace('\\', '/', get_called_class())));
+        if (class_exists($editorNamespace . '\\Fields\\'. ucfirst($field))) {
+            return $this->app->make($editorNamespace . '\\'. ucfirst($field));
+        }
+
+        if (class_exists('Parkcms\Programs\Admin\Fields\\' . ucfirst($field))) {
+            return $this->app->make('Parkcms\Programs\Admin\Fields\\' . ucfirst($field));
+        }
+
+        return $this->app->make($field);
     }
 }

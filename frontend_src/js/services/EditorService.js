@@ -1,11 +1,12 @@
 parkAdmin.service("EditorService", ['$http', 'BASE_URL', function($http, BASE_URL) {
     var serviceBackend = BASE_URL + '/admin/programs/editor';
 
-    this.loadAction = function(type, identifier, page, action) {
+    this.loadAction = function(type, identifier, page, lang, action) {
         var params = {
             'type': type,
             'identifier': identifier,
             'page': page,
+            'lang': lang,
             'action': action
         };
 
@@ -13,6 +14,7 @@ parkAdmin.service("EditorService", ['$http', 'BASE_URL', function($http, BASE_UR
             params = {
                 'type': type,
                 'identifier': identifier,
+                'lang': lang,
                 'action': action,
                 'global': 'global'
             };

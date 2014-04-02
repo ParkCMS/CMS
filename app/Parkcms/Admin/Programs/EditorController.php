@@ -17,13 +17,13 @@ class EditorController extends Controller
         if (Input::has('type')) {
             $type = Input::get('type');
         } else {
-            return Response::json(array('title' => 'Request Error','message' => 'No type has been specified!'), 400);
+            return Response::json(array('error' => array('title' => 'Request Error','message' => 'No type has been specified!')), 400);
         }
 
         $class = $this->checkForClass($type);
 
         if ($class === null) {
-            return Response::json(array('title' => 'Editor Error', 'message' => 'For the given program type was no editor found!'), 404);
+            return Response::json(array('error' => array('title' => 'Editor Error', 'message' => 'For the given program type was no editor found!')), 404);
         }
 
         $editor = App::make($class);
