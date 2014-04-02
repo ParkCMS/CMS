@@ -15,8 +15,16 @@ gulp.task('less', function() {
             .pipe(gulp.dest('css'));
 });
 
+gulp.task('js', function() {
+    return gulp.src(['src/js/**/*.js'])
+            .pipe(concat('main.js'))
+            .pipe(gulp.dest('js'));
+});
+
 gulp.task('watch', function() {
     gulp.watch('src/less/*.less', ['less']);
+    
+    gulp.watch('src/js/**/*.js', ['js']);
 })
 
-gulp.task('default', ['less', 'watch']);
+gulp.task('default', ['less', 'js', 'watch']);

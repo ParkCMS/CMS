@@ -82,6 +82,8 @@ Asset::add('main', 'themes/default/css/main.css');
 Asset::add('jquery', 'themes/default/js/jquery.min.js');
 Asset::add('bootstrap', 'themes/default/js/bootstrap.min.js', array('jquery'));
 
+Asset::add('main', 'themes/default/js/main.js', array('bootstrap'));
+
 /*
 |--------------------------------------------------------------------------
 | Require The Filters File
