@@ -21,6 +21,9 @@ class Editor extends BaseEditor
 
         $form = $this->makeField('Form');
 
+        $form->setAction('update');
+        $form->setMethod('put');
+
         $form->addFields(function($f) use ($properties, $model) {
 
             if (isset($properties['global']) && $properties['global'] === 'global') {
@@ -42,6 +45,7 @@ class Editor extends BaseEditor
                 'value' =>  $properties['identifier'],
                 'label' => 'Identifier:'
             ));
+
             $identifier->setAttribute('disabled', 'disabled');
 
             $content = $f->addField('Content', array(
@@ -51,7 +55,9 @@ class Editor extends BaseEditor
             ));
         });
 
-        return $form->render();
+        $form->addSubmit('Save');
+
+        return $form;
     }
 
     public function create()

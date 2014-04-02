@@ -8,6 +8,8 @@ use Controller;
 use Response;
 use Request;
 
+use Parkcms\Programs\Admin\Field;
+
 class EditorController extends Controller
 {
     public function index()
@@ -35,7 +37,13 @@ class EditorController extends Controller
 
         $editor->register();
 
-        return $editor->route($action, Request::method(), Input::except('type', 'action'));
+        $result = $editor->route($action, Request::method(), Input::except('type', 'action'));
+
+        if ($result instanceof Field) {
+            return $result->render();
+        } else {
+            return $result;
+        }
     }
 
     public function convertRequestTypeToClass($type)

@@ -35,4 +35,20 @@ parkAdmin.directive("editor", ['EditorService', '$dialogs', '$compile', function
             element.attr('href', 'piep');
         }
     }
+}]).directive('editorAction', ['EditorService', function(EditorService) {
+    return {
+        restrict: 'A',
+        scope: false,
+        link: function(scope, element, attr) {
+            element.on('submit', function(event) {
+              scope.$apply(function() {
+                var action = attr.editorAction;
+                var method = attr.method;
+
+                console.log(scope);
+                event.preventDefault();
+              });
+            });
+        }
+    }
 }]);
