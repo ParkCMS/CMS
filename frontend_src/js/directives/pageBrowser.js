@@ -5,7 +5,6 @@ parkAdmin.directive("pageBrowser", ['$window', function($window) {
         link: function(scope, element, attributes) {
             var frame = element.find('iframe');
 
-            //scope.editors = [];
             element.find('iframe').on('load', function(ev) {
                 var frameURL = frame[0].contentWindow.location.href;
                 var frameContent = angular.element(frame[0].contentWindow.document);

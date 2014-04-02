@@ -1,4 +1,4 @@
-parkAdmin.directive("editor", ['EditorService', '$compile', function(EditorService, $compile) {
+parkAdmin.directive("editor", ['EditorService', '$dialogs', '$compile', function(EditorService, $dialogs, $compile) {
     return {
         restrict: 'E',
         //templateUrl: 'admin/partials/editor',
@@ -21,8 +21,10 @@ parkAdmin.directive("editor", ['EditorService', '$compile', function(EditorServi
                 var compiled = $compile(data);
                 
                 element.append( compiled(scope) );
+            }).error(function(data) {
+                $dialogs.error(data.title, data.message);
+                scope.$emit('close-editor', scope.data.unique);
             });
-            console.log(scope.data);
         },
         controller: ['$scope', function($scope) {
             this.data = $scope.data;
