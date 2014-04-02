@@ -48,7 +48,7 @@
             <div class="col-md-9">
                 <div class="nav-container navbar">
                     <a type="button" data-toggle="menu-toggle">
-                        Dropdown
+                        Menu
                         <span class="caret"></span>
                     </a>
                     <div class="main-navigation" role="navigation" pcms-nav="menu" pcms-nav-class="menu nav"></div>

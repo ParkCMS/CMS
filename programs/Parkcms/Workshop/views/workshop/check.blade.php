@@ -6,6 +6,49 @@
     <div class="modal-body">
         <p>{{ $workshop->description }}</p>
 
+        <table>
+            <tbody>
+                <tr>
+                    <td>Titel</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Nachname</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Vorname</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Institution</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Adresse</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Ort</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Land</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>E-Mail</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Telefon</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <hr />
+
         <h4>{{ Lang::get('parkcms-workshop::fields.terms') }}:</h4>
         <div class="container-fluid">
             <textarea class="col-sm-12" rows="12">{{ $workshop->terms }}</textarea>
