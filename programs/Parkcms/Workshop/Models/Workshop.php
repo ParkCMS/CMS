@@ -4,6 +4,8 @@ namespace Programs\Parkcms\Workshop\Models;
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
+use Carbon\Carbon;
+
 class Workshop extends Eloquent {
     protected $table = 'workshops';
 
@@ -24,5 +26,29 @@ class Workshop extends Eloquent {
         }
 
         return $registrations;
+    }
+
+    public function isFullOrClosed() {
+        return $this->isClosed() || $this->isFull();
+    }
+
+    public function isFull() {
+        if($this->seats < 0) {
+            return false;
+        }
+
+        if($this->seats == 0) {
+            return true;
+        }
+
+        return count($this->registrations()) >= $this->seats;
+    }
+
+    public function isClosed() {
+        return $this->date->lt(Carbon::now());
+    }
+
+    public function getDates() {
+        return array('date', 'created_at', 'updated_at');
     }
 }

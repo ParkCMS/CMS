@@ -6,7 +6,6 @@ use Session;
 use Request;
 
 class Manager {
-    
     /**
      * stores the session key dot notated
      * @var string
@@ -57,6 +56,10 @@ class Manager {
      */
     public function setStep($step) {
         $this->step = $step;
+
+        if($this->step == $this->steps[0]) {
+            $this->clear();
+        }
     }
 
     /**
@@ -91,13 +94,15 @@ class Manager {
         $previousStep = $this->previousStep($this->step);
 
         if(Request::isMethod('get') && $previousStep != $this->steps[0]) {
-            return;
+            return true;
         }
 
         if($this->validation->validate($previousStep)) {
             $this->validation()->store('checked', $previousStep, true);
+            return true;
         } else {
             $this->validation()->store('checked', $previousStep, false);
+            return false;
         }
     }
 

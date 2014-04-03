@@ -1,13 +1,55 @@
 
-<form class="form" action="{{ $next }}" data-async="async" data-target="#workshop-{{ $workshop->identifier }}" method="post">
+<form class="form" action="{{ $next }}" method="post">
     <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&#215;</button>
         <h4 class="modal-title">{{ $workshop->title }}</h4>
     </div>
     <div class="modal-body">
         <p>{{ $workshop->description }}</p>
 
-        <h4>Terms:</h4>
+        <table>
+            <tbody>
+                <tr>
+                    <td>Titel</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Nachname</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Vorname</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Institution</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Adresse</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Ort</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Land</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>E-Mail</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Telefon</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <hr />
+
+        <h4>{{ Lang::get('parkcms-workshop::fields.terms') }}:</h4>
         <div class="container-fluid">
             <textarea class="col-sm-12" rows="12">{{ $workshop->terms }}</textarea>
         </div>
@@ -15,21 +57,21 @@
         <div class="container-fluid">
             <div class="checkbox">
                 <label>
-                    I will accept the terms.
-                    <input type="checkbox" name="accept_terms" value="1" />
+                    {{ Lang::get('parkcms-workshop::fields.accept') }}
+                    <input type="checkbox" name="terms" value="1" />
                 </label>
             </div>
         </div>
 
-@if($p->message('accept_terms'))
+@if($p->message('terms'))
         <div class="container-fluid">
-            <span style="color: red;">{{ $p->message('accept_terms') }}</span>
+            <span style="color: red;">{{ $p->message('terms') }}</span>
         </div>
 @endif
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <a href="{{ $previous }}" role="button" data-async="async" data-target="#workshop-{{ $workshop->identifier }}" class="btn btn-default">Back</a>
-        <button type="submit" class="btn btn-primary">Pay</button>
+        <a href="{{ $first }}" role="button" class="btn btn-default">{{ Lang::get('parkcms-workshop::fields.abort') }}</a>
+        <a href="{{ $previous }}" role="button" class="btn btn-default">{{ Lang::get('parkcms-workshop::fields.back') }}</a>
+        <button type="submit" class="btn btn-primary">{{ Lang::get('parkcms-workshop::fields.pay') }}</button>
     </div>
 </form>

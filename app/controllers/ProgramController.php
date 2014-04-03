@@ -37,6 +37,8 @@ class ProgramController extends Controller {
         if($this->root === null) {
             App::abort(404);
         }
+
+        App::setLocale($this->root->title);
     }
 
     protected function lookupPage($route, $attributes) {

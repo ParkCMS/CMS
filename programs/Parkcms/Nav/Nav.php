@@ -18,16 +18,17 @@ class Nav extends ProgramAbstract {
     }
     
     public function initialize($identifier, array $params) {
+        parent::initialize($identifier, $params);
 
         $root = Page::roots()->where('title', $this->context->lang())->first();
 
         $descendants = $root->descendants();
 
-        $this->content = '<ul' . (isset($params['class']) ? ' class="nav navbar-nav"' : '') . '>';
+        $this->content = '<ul' . (isset($params['class']) ? ' class="' . $params['class'] . '"' : '') . '>';
 
         $depth = 0;
         foreach($descendants->get() as $descendant) {
-            
+
             $this->closeLIUL($depth, $descendant->depth);
 
             $this->content.= '<li' . $this->classes($descendant) . '>';
@@ -36,6 +37,7 @@ class Nav extends ProgramAbstract {
             if($this->hasChildren($descendant)) {
                 $this->content.= ' class="dropdown-toggle" data-toggle="dropdown"';
             }
+
             $this->content.= '>' . $descendant->title;
 
             if($this->hasChildren($descendant)) {
@@ -63,7 +65,7 @@ class Nav extends ProgramAbstract {
         return true;
     }
 
-    public function render() {
+    public function render($inlineTemplate = null) {
         return $this->content;
     }
 

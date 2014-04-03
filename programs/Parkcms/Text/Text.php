@@ -6,7 +6,6 @@ use Parkcms\Context;
 use Parkcms\Programs\ProgramAbstract;
 
 class Text extends ProgramAbstract {
-
     protected $context;
     protected $content;
 
@@ -32,7 +31,7 @@ class Text extends ProgramAbstract {
      * renders the program and returns the result
      * @return string
      */
-    public function render() {
+    public function render($inlineTemplate = null) {
         return $this->context->ajax() ? $this->content->toJson() : $this->content->text;
     }
 }

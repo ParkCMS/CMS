@@ -2,7 +2,17 @@
 <h2>{{ $workshop->title }}</h2>
 <p>{{ $workshop->description }}</p>
 
-<a href="{{ $next }}" data-async="async" data-target="#workshop-{{ $workshop->identifier }}" role="button" class="btn btn-default">Register</a>
+<form action="{{ $next }}" method="post">
+    <input type="hidden" name="identifier" value="{{ $workshop->identifier }}" />
+    <button type="submit" class="btn btn-default" @if($workshop->isFullOrClosed()) disabled="disabled"@endif>{{ Lang::get('parkcms-workshop::fields.register') }}</button>
+</form>
+
+
+@if($workshop->seats >= 0)
+    <p>
+        {{ count($workshop->registrations()) }} von {{ $workshop->seats }} Plätzen vergeben
+    </p>
+@endif
 
 <!-- Event Modal -->
 <div id="workshop-{{ $workshop->identifier }}" class="modal fade">

@@ -1,6 +1,6 @@
 <?php
 
-namespace Parkcms\Programs\Workshop\Models;
+namespace Programs\Parkcms\Workshop\Models;
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
@@ -12,6 +12,6 @@ class Registration extends Eloquent {
     }
 
     public function parts() {
-        return $this->belongsToMany('Programs\Parkcms\Workshop\Models\Part', 'workshop_part_registration')->withPivot('amount');
+        return $this->belongsToMany('Programs\Parkcms\Workshop\Models\Part', 'workshop_part_registration')->withPivot('value');
     }
 }

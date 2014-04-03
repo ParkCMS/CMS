@@ -21,6 +21,7 @@ class FormSeeder extends Seeder {
             'rules' => json_encode(array(
                 'name' => 'required|min:5',
                 'email' => 'required|email',
+                'comment' => 'required|min:10',
             )),
         ));
         $de = Form::create(array(
@@ -30,6 +31,7 @@ class FormSeeder extends Seeder {
             'rules' => json_encode(array(
                 'name' => 'required|min:5',
                 'email' => 'required|email',
+                'comment' => 'required|min:10',
             )),
         ));
 

@@ -2,6 +2,7 @@
 
 namespace Parkcms\Programs;
 
+use Lang;
 use URL;
 use View;
 
@@ -24,13 +25,24 @@ abstract class ProgramAbstract implements ProgramInterface {
 
         View::addNamespace($pi, $paths);
         View::share('p', $this);
+
+        Lang::addNamespace($pi, base_path('programs/' . $pp . '/lang'));
     }
 
-    public function url() {
+    public function url(array $params = array(), $api = false) {
+        if($api) {
+            $class = str_replace('\\', '-', strtolower(str_replace('Programs\\Parkcms\\', '', get_called_class())));
 
-        $class = str_replace('\\', '-', strtolower(str_replace('Programs\\Parkcms\\', '', get_called_class())));
+            return URL::to('/api/program/' . $this->context->lang() . '/' . $this->context->route() . '/' . $class . '/' . $this->identifier);
+        }
 
-        return URL::to('/api/program/' . $this->context->lang() . '/' . $this->context->route() . '/' . $class . '/' . $this->identifier);
+        if(!empty($params)) {
+            $params = http_build_query(array_merge(array('identifier' => $this->identifier), $params), '', '&amp;');
+        } else {
+            $params = 'identifier=' . $this->identifier;
+        }
+
+        return URL::to('/' . $this->context->lang() . '/' . $this->context->route() . '?' . $params);
     }
 
     public function generateProgramIdentifier()

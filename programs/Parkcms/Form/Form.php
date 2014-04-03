@@ -10,6 +10,8 @@ use Illuminate\Validation\Factory as Validator;
 use App;
 use Asset;
 use Input;
+use Lang;
+use Mail;
 use Request;
 use URL;
 use View;
@@ -61,7 +63,7 @@ class Form extends ProgramAbstract {
      * renders the program and returns the result
      * @return string
      */
-    public function render() {
+    public function render($inlineTemplate = null) {
         
         $url = URL::to($this->context->lang() . '/' . $this->context->route());
 
@@ -69,7 +71,18 @@ class Form extends ProgramAbstract {
         if($this->submited()) {
             $rules = (array)json_decode($this->form->rules);
 
-            $validator = $this->validator->make(Input::all(), $rules);
+            $validator = $this->validator->make(Input::except('identifier'), $rules);
+            $validator->setAttributeNames(Lang::get('parkcms-form::fields'));
+
+            if(!$validator->fails()) {
+                $form = $this->form;
+
+                Mail::send('parkcms-form::mail', array('input' => Input::except('identifier')), function($message) use($form) {
+                    $message->from(Input::get('email'), Input::get('name'));
+                    $message->to($form->email);
+                    $message->subject($form->subject);
+                });
+            }
         }
 
         return View::make('parkcms-form::' . $this->form->identifier, array(
@@ -82,5 +95,13 @@ class Form extends ProgramAbstract {
 
     protected function submited() {
         return Request::isMethod('post') && Input::get('identifier') == $this->form->identifier;
+    }
+
+    public function get($key) {
+        if($this->submited()) {
+            return Input::get($key);
+        }
+
+        return '';
     }
 }

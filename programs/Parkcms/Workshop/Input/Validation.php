@@ -6,6 +6,7 @@ use Illuminate\Validation\Factory;
 use Programs\Parkcms\Workshop\Models\Workshop;
 use Programs\Parkcms\Workshop\Models\Part;
 
+use Lang;
 use Input;
 use Session;
 
@@ -50,7 +51,7 @@ class Validation {
      */
     protected function validateRegister() {
         
-        foreach(Input::only('title', 'surname', 'firstname', 'middlename', 'email', 'address', 'city', 'zip', 'institution') as $key=>$value) {
+        foreach(Input::only('title', 'surname', 'firstname', 'middlename', 'email', 'address', 'city', 'zip', 'country', 'institution', 'phone', 'fax') as $key=>$value) {
             $this->store('register', $key, $value);
         }
 
@@ -62,9 +63,12 @@ class Validation {
                 'address' => 'required|min:5',
                 'city' => 'required|min:5',
                 'zip' => 'required|integer',
-                'email' => 'required|email'
+                'country' => 'required|min:5',
+                'email' => 'required|email',
             )
         );
+
+        $this->validator->setAttributeNames(Lang::get('parkcms-workshop::fields'));
 
         return !$this->validator->fails();
     }
@@ -75,15 +79,15 @@ class Validation {
         foreach ($this->workshop->parts as $part) {
             if(isset($checkedParts[$part->id])) {
                 if($this->validPartValue($part, $checkedParts[$part->id])) {
+                    $this->store('parts', $part->id, $checkedParts[$part->id]);
                     unset($checkedParts[$part->id]);
-                    $this->store('parts', $part->id, true);
                 }
             } else {
                 $this->delete('parts', $part->id);
             }
         }
 
-        return count($checkedParts) == 0;
+        return count($checkedParts) == 0 && count($this->getAll('parts')) > 0;
     }
 
     protected function validPartValue(Part $part, $value) {
@@ -98,13 +102,18 @@ class Validation {
 
     protected function validateCheck() {
         $this->validator = $this->factory->make(
-            Input::only('accept_terms'),
+            Input::only('terms'),
             array(
-                'accept_terms' => 'required'
-            )
+                'terms' => 'accepted'
+            ),
+            Lang::get('parkcms-workshop::validation')
         );
 
         return !$this->validator->fails();
+    }
+
+    protected function validatePay() {
+        return true;
     }
 
     public function failed($key) {

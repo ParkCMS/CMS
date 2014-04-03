@@ -7,7 +7,7 @@
             @endforeach
         </ul>
     @else
-        Ihre Anfrage wurde abgeschickt!
+        Your request has been sent!
     @endif
 @endif
 
@@ -17,17 +17,28 @@
     <div class="form-group">
         <label for="inputName" class="col-sm-2 control-label">Name</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputName" name="name" value="{{ Input::get('name') }}" />
+            <input type="text" class="form-control" id="inputName" name="name" value="{{ $p->get('name') }}" />
         </div>
     </div>
 
     <div class="form-group">
         <label for="inputEmail" class="col-sm-2 control-label">E-Mail</label>
         <div class="col-sm-10">
-            <input type="email" class="form-control" id="inputEmail" name="email" value="{{ Input::get('email') }}" />
+            <input type="email" class="form-control" id="inputEmail" name="email" value="{{ $p->get('email') }}" />
         </div>
     </div>
 
-    <button class="btn btn-default" type="reset">Zurücksetzen</button>
-    <button class="btn btn-primary" type="submit">Abschicken</button>
+    <div class="form-group">
+        <label for="inputComment" class="col-sm-2 control-label">Comment</label>
+        <div class="col-sm-10">
+            <textarea class="form-control" id="inputComment" name="comment" rows="10">{{ $p->get('comment') }}</textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-10 col-sm-offset-2">
+            <button class="btn btn-default" type="reset">Reset</button>
+            <button class="btn btn-primary" type="submit">Send</button>
+        </div>
+    </div>
 </form>
