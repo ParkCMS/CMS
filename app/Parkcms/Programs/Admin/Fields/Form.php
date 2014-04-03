@@ -18,7 +18,7 @@ class Form implements Field
 
     private $fields;
     private $properties = array(
-        'name' => '',
+        'name' => 'form',
         'class' => '',
         'value' => '',
         'label' => false,

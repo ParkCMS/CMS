@@ -16,7 +16,7 @@ parkAdmin.directive("editor", ['EditorService', '$dialogs', '$compile', function
                 'index'
             ).success(function(data) {
                 var compiled = $compile(data);
-                
+
                 element.find('.editor-content').append( compiled(scope) );
             }).error(function(data) {
                 $dialogs.error(data.error.title, data.error.message);
@@ -56,19 +56,13 @@ parkAdmin.directive("editor", ['EditorService', '$dialogs', '$compile', function
                 var action = attr.editorAction;
                 var method = attr.method;
 
-                var formData = element.serializeArray();
-
-                var reformatData = {};
-
-                for (var i = 0; i < formData.length; i++) {
-                    reformatData[formData[i]['name']] = formData[i]['value'];
-                };
+                var formData = scope.form;
 
                 EditorService.update({
                     'action': action,
                     'method': method,
                     'program': scope.data,
-                    'data': {'form': reformatData}
+                    'data': {'form': formData}
                 }).success(function(data) {
                     scope.$emit('updated-editor', data);
                 });
