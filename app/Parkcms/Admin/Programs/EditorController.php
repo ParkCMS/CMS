@@ -41,6 +41,8 @@ class EditorController extends Controller
 
         if ($result instanceof Field) {
             return $result->render();
+        } else if(is_array($result)) {
+            return json_encode($result);
         } else {
             return $result;
         }

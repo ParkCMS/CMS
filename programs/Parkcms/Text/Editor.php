@@ -9,13 +9,14 @@ class Editor extends BaseEditor
     public function register()
     {
         $this->addEndpoint('index', 'index');
+        $this->addEndpoint('update', 'update');
     }
 
     public function index($properties)
     {
         //$identifier = $properties['lang'] . $properties['page'] . '-' . $properties['identifier'];
         
-        $page = (isset($properties['global'])) ? false : $properties['page'];
+        $page = (isset($properties['global']) && $properties['global'] === 'global') ? false : $properties['page'];
 
         $model = Model::byContext($properties['lang'], $page, $properties['identifier'])->first();
 
@@ -49,7 +50,7 @@ class Editor extends BaseEditor
             $identifier->setAttribute('disabled', 'disabled');
 
             $content = $f->addField('Content', array(
-                'name' => 'content',
+                'name' => 'text',
                 'value' =>  $model->text,
                 'label' => 'Content:'
             ));
@@ -63,5 +64,24 @@ class Editor extends BaseEditor
     public function create()
     {
         return 'Create';
+    }
+
+    public function update($properties)
+    {
+        $form = $properties['form'];
+
+        //dd($properties);
+
+        $page = (isset($properties['global']) && $properties['global'] === 'global') ? false : $properties['route'];
+
+        $model = Model::byContext($properties['lang'], $page, $properties['identifier'])->first();
+
+        //dd($model->text);
+
+        $model->text = $form['text'];
+
+        $model->save();
+
+        return array('message' => 'Field updated successfully', 'type' => 'success', 'redirect' => 'index');
     }
 }

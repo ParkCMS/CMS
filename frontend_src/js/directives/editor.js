@@ -5,7 +5,7 @@ parkAdmin.directive("editor", ['EditorService', '$dialogs', '$compile', function
             data: '='
         },
         transclude: true,
-        template: '<div ng-transclude></div>',
+        template: '<div class="editor-messages"></div><div class="editor-content" ng-transclude></div>',
         link: function(scope, element, attributes) {
 
             EditorService.loadAction(
@@ -17,10 +17,21 @@ parkAdmin.directive("editor", ['EditorService', '$dialogs', '$compile', function
             ).success(function(data) {
                 var compiled = $compile(data);
                 
-                element.append( compiled(scope) );
+                element.find('.editor-content').append( compiled(scope) );
             }).error(function(data) {
                 $dialogs.error(data.error.title, data.error.message);
                 scope.$emit('close-editor', scope.data.unique);
+            });
+
+            scope.$on('updated-editor', function(ev, data) {
+                if (typeof data['message'] !== 'undefined') {
+                    scope.message = {'type': data['type'], 'message': data['message']};
+                    scope.message.close = function() {
+                        scope.message = null;
+                    };
+                    var msg = $compile('<alert type="message.type" close="message.close()">{{ message.message }}</alert>')
+                    element.find('.editor-messages').append(msg(scope));
+                }
             });
         },
         controller: ['$scope', function($scope) {
@@ -45,7 +56,23 @@ parkAdmin.directive("editor", ['EditorService', '$dialogs', '$compile', function
                 var action = attr.editorAction;
                 var method = attr.method;
 
-                console.log(scope);
+                var formData = element.serializeArray();
+
+                var reformatData = {};
+
+                for (var i = 0; i < formData.length; i++) {
+                    reformatData[formData[i]['name']] = formData[i]['value'];
+                };
+
+                EditorService.update({
+                    'action': action,
+                    'method': method,
+                    'program': scope.data,
+                    'data': {'form': reformatData}
+                }).success(function(data) {
+                    scope.$emit('updated-editor', data);
+                });
+
                 event.preventDefault();
               });
             });

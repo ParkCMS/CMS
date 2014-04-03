@@ -27,7 +27,7 @@ Route::group(array('prefix' => 'admin', 'before' => 'pcms_auth'), function() {
     Route::get('files/delete', 'Parkcms\Admin\Files\Controller@deleteFile');
     Route::get('files/deleteFolder', 'Parkcms\Admin\Files\Controller@deleteFolder');
 
-    Route::get('programs/editor', 'Parkcms\Admin\Programs\EditorController@index');
+    Route::any('programs/editor', 'Parkcms\Admin\Programs\EditorController@index');
 });
 
 Route::get('login', array('as' => 'login', 'uses' => 'Parkcms\Auth\LoginController@loginForm'));
