@@ -5,7 +5,6 @@ parkAdmin.directive("pageBrowser", ['$window', function($window) {
         link: function(scope, element, attributes) {
             var frame = element.find('iframe');
 
-            //scope.editors = [];
             element.find('iframe').on('load', function(ev) {
                 var frameURL = frame[0].contentWindow.location.href;
                 var frameContent = angular.element(frame[0].contentWindow.document);
@@ -17,6 +16,7 @@ parkAdmin.directive("pageBrowser", ['$window', function($window) {
                 $window.addEventListener('message', function(event) {
                     var source = event.source.frameElement;
                     var data = event.data;
+                    
                     if (event.data.task == 'edit') {
                         scope.$emit('add-editor', data);
                     }

@@ -27,6 +27,7 @@ gulp.task('frontend', function() {
 });
 
 var third_party = [
+    'frontend_src/bower_components/jquery/dist/jquery.min.js',
     'frontend_src/bower_components/angular/angular.min.js',
     'frontend_src/bower_components/angular-route/angular-route.min.js',
     'frontend_src/bower_components/angular-animate/angular-animate.min.js',

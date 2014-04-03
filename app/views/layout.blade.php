@@ -4,7 +4,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         <pcms-styles />
-        
+
     	<title>ParkCMS</title>
 	</head>
 	<body>
@@ -51,7 +51,7 @@
                         Menu
                         <span class="caret"></span>
                     </a>
-                    <div class="main-navigation" role="navigation" pcms-nav="menu" pcms-nav-class="menu nav"></div>
+                    <div class="main-navigation" role="navigation" pcms-program="nav" pcms-nav="menu" pcms-nav-class="menu nav"></div>
                     <!--
                     <div class="main-navigation" role="navigation">
                         <div class="col-md-4">
@@ -74,7 +74,7 @@
 
         <div class="rating" itemscope="itemscope" itemtype="http://schema.org/LocalBusiness">
             <span itemprop="name">ParkCMS</span>
-            <div itemprop="aggregateRating" itemscope="itemscope" itemtype="http://schema.org/AggregateRating">        
+            <div itemprop="aggregateRating" itemscope="itemscope" itemtype="http://schema.org/AggregateRating">
                 <div class="num">
                     <span class="rating" itemprop="ratingValue">4,9</span>
                 </div>

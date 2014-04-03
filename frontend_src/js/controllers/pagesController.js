@@ -28,8 +28,24 @@ parkAdmin.controller('pagesController',['$scope', '$modal', function($scope, $mo
 		}
 	});
 
+	$scope.$on('close-editor', function(ev, data) {
+		var index = null;
+		for (var i = 0; i < $scope.tabs.editors.length; i++) {
+			if ($scope.tabs.editors[i].unique === data) {
+				index = i;
+				break;
+			}
+		}
+		if (index !== null) {
+			$scope.editorClose(index, ev);
+		}
+	});
+
 	$scope.editorClose = function(index, event) {
 		$scope.tabs.editors.splice(index, 1);
-		event.preventDefault();
+
+		if (typeof event !== 'undefined') {
+            event.preventDefault();
+        }
 	};
 }]);

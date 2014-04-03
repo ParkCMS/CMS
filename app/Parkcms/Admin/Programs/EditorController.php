@@ -8,6 +8,8 @@ use Controller;
 use Response;
 use Request;
 
+use Parkcms\Programs\Admin\Field;
+
 class EditorController extends Controller
 {
     public function index()
@@ -17,13 +19,13 @@ class EditorController extends Controller
         if (Input::has('type')) {
             $type = Input::get('type');
         } else {
-            return Response::json(array('message' => 'No type has been specified!'), 400);
+            return Response::json(array('error' => array('title' => 'Request Error','message' => 'No type has been specified!')), 400);
         }
 
         $class = $this->checkForClass($type);
 
         if ($class === null) {
-            return Response::json(array('message' => 'No editor was found'), 404);
+            return Response::json(array('error' => array('title' => 'Editor Error', 'message' => 'For the given program type was no editor found!')), 404);
         }
 
         $editor = App::make($class);
@@ -35,7 +37,15 @@ class EditorController extends Controller
 
         $editor->register();
 
-        return $editor->route($action, Request::method(), Input::except('type', 'action'));
+        $result = $editor->route($action, Request::method(), Input::except('type', 'action'));
+
+        if ($result instanceof Field) {
+            return $result->render();
+        } else if(is_array($result)) {
+            return json_encode($result);
+        } else {
+            return $result;
+        }
     }
 
     public function convertRequestTypeToClass($type)
