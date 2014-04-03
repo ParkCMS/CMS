@@ -33,17 +33,44 @@ parkAdmin.directive("editor", ['EditorService', '$dialogs', '$compile', function
                     element.find('.editor-messages').append(msg(scope));
                 }
             });
-        },
-        controller: ['$scope', function($scope) {
-            this.data = $scope.data;
-        }]
+
+            scope.$on('load-action', function(ev, action) {
+                EditorService.loadAction(
+                    scope.data.type,
+                    scope.data.identifier,
+                    scope.data.route,
+                    scope.data.lang,
+                    action.action,
+                    action.params
+                ).success(function(data) {
+                    var compiled = $compile(data);
+
+                    element.find('.editor-content').html( compiled(scope) );
+                }).error(function(data) {
+                    $dialogs.error(data.error.title, data.error.message);
+                    if (action.action === 'index') {
+                        scope.$emit('close-editor', scope.data.unique);
+                    } else {
+                        scope.$emit('load-action', {'action': 'index'});
+                    }
+                });
+                event.preventDefault();
+            });
+        }
     };
 }]).directive('loadAction', [function() {
     return {
         restrict: 'A',
-        require: '^editor',
-        link: function (scope, element, attributes, editorCtrl) {
-            element.attr('href', 'piep');
+        scope: {
+            loadParams: '='
+        },
+        link: function (scope, element, attributes) {
+            element.attr('href', '#');
+            element.bind('click', function(event) {
+                console.log(typeof scope.loadParams);
+                scope.$emit('load-action', {'action': attributes.loadAction, 'params': scope.loadParams});
+                event.preventDefault();
+            });
         }
     }
 }]).directive('editorAction', ['EditorService', function(EditorService) {
