@@ -36,6 +36,11 @@ class Editor extends BaseEditor
                 'action'    => 'edit',
                 'title'     => 'Edit',
                 'content'   => 'Edit'
+            ),
+            array(
+                'action'    => 'delete',
+                'title'     => 'Delete',
+                'content'   => 'Delete'
             )
         ));
 
