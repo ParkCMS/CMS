@@ -6,12 +6,16 @@ use Parkcms\Template\AttributeParser as Parser;
 use Parkcms\Template\ArgumentConverter as Converter;
 use Parkcms\Programs\Manager;
 
+use Illuminate\Http\RedirectResponse;
+
 class PageController extends Controller {
 
     protected $parser;
     protected $manager;
 
     protected $page;
+
+    protected $redirect = null;
 
     /**
      *
@@ -86,10 +90,16 @@ class PageController extends Controller {
         $that = $this;
         $this->parser->pushHandler(function($type, $identifier, $data, $nodeValue) use($that) {
             if($program = $that->manager->lookup($type, $identifier, $data)) {
-                if(isset($data['inline-template'])) {
-                    return $program->render($nodeValue);
+                $result = $program->render(
+                    isset($data['inline-template']) ? $nodeValue : null
+                );
+                
+                if($result instanceof RedirectResponse) {
+                    $that->redirect = $result;
+                    return '';
                 }
-                return $program->render();
+
+                return $result;
             }
             return null;
         });
@@ -103,7 +113,13 @@ class PageController extends Controller {
             });
         }
 
-        return $this->parser->parse();
+        $parsed = $this->parser->parse();
+
+        if(!is_null($this->redirect)) {
+            return $this->redirect;
+        }
+
+        return $parsed;
     }
 
     protected function lookupRoot($lang) {
