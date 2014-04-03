@@ -109,6 +109,7 @@ return array(
 		'Cartalyst\Sentry\SentryServiceProvider',
 
 		'Parkcms\Assets\AssetServiceProvider',
+		'Parkcms\Template\TemplateServiceProvider'
 	),
 
 	/*
@@ -177,6 +178,7 @@ return array(
 		'Sentry' => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
 
 		'Asset'			  => 'Parkcms\Assets\AssetFacade',
+		'Parser'		  => 'Parkcms\Template\Parser',
 	),
 
 );
