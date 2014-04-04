@@ -37,7 +37,7 @@ abstract class ProgramAbstract implements ProgramInterface {
         }
 
         if(!empty($params)) {
-            $params = http_build_query(array_merge(array('identifier' => $this->identifier), $params), '', '&amp;');
+            $params = http_build_query(array_merge(array('identifier' => $this->identifier), $params));
         } else {
             $params = 'identifier=' . $this->identifier;
         }
