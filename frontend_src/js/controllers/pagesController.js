@@ -1,6 +1,8 @@
 parkAdmin.controller('pagesController',['$scope', '$modal', function($scope, $modal, browser) {
 	$scope.tabs = {};
 	$scope.tabs.editors = [];
+	$scope.status = {};
+	$scope.status.browserLoading = false;
 	$scope.$on('add-editor', function(ev, data) {
 		if (data.identifier.indexOf('global-') === 0) {
 			data.unique = data.lang + '-' + data.type + '-' + data.identifier;
@@ -10,7 +12,7 @@ parkAdmin.controller('pagesController',['$scope', '$modal', function($scope, $mo
 			data.global = false;
 		}
 		var apply = null;
-		// TODO: select already opened tab
+		
 		for (var i = 0; i < $scope.tabs.editors.length; i++) {
 			if ($scope.tabs.editors[i].unique === data.unique) {
 				apply = i;
@@ -48,4 +50,14 @@ parkAdmin.controller('pagesController',['$scope', '$modal', function($scope, $mo
             event.preventDefault();
         }
 	};
+
+	$scope.$on('browser-load-start', function(ev) {
+		$scope.status.browserLoading = true;
+		ev.preventDefault();
+	});
+
+	$scope.$on('browser-load-finish', function(ev) {
+		$scope.status.browserLoading = false;
+		ev.preventDefault();
+	});
 }]);

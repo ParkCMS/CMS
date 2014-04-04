@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body flow-prevent-drop>
-    <nav class="navbar navbar-default" role="navigation">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -46,7 +46,7 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-    <div class="container" ng-view>
+    <div class="container main-view" ng-view>
         @section('name')
         <h1>ParkCMS</h1>
         @show

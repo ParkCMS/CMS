@@ -35,7 +35,7 @@
                 </button>
             </div>
         </div>
-        <div class="col-md-9 col-lg-10" browser-breadcrumb>
+        <div class="col-md-9 col-lg-10" browser-breadcrumb on-change="cd(path)" on-drop="move($data, path)">
 
         </div>
     </div>

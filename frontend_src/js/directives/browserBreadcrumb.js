@@ -2,14 +2,21 @@ parkAdmin.directive("browserBreadcrumb", ['FileBrowser', function(browser) {
     return {
         restrict: "A",
         templateUrl: 'admin/partials/browserBreadcrumb',
+        scope: {
+            onChange: '&',
+            onDrop: '&'
+        },
         link: function(scope, element, attrs) {
             scope.cwd = [];
             scope.up = function (event, level) {
                 var tmp = [];
-                for (var i = 0; i <= level; i++) {
-                    tmp.push(scope.cwd[i]);
+                if (level >= 0) {
+                    for (var i = 0; i <= level; i++) {
+                        tmp.push(scope.cwd[i]);
+                    }
                 }
-                scope.cd('/' + tmp.join('/'));
+
+                scope.onChange({'path': '/' + tmp.join('/')});
 
                 event.preventDefault();
             }

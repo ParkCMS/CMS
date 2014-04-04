@@ -88,7 +88,7 @@
 
         <footer class="footer">
             <div class="container">
-                <div pcms-text="global-footer">
+                <div pcms-program="text" pcms-text="global-footer">
                     Footer...
                 </div>
             </div>

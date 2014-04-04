@@ -2,5 +2,5 @@
     @if ($label)
         <label for="{{ $name }}">{{ $label }}</label>
     @endif
-    <textarea {{ $attributes }} name="{{ $name }}">{{ $value }}</textarea>
+    <textarea {{ $attributes }} ng-model="form.{{ $name }}" ng-init="form.{{ $name }}='{{ $value }}'" name="{{ $name }}">{{ $value }}</textarea>
 </div>

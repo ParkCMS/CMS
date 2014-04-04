@@ -4,9 +4,9 @@
 
 @foreach($ticker->items as $item)
     <div class="ticker-item">
-        @if(!is_null($item->media_preview))
+        @if(!empty($item->media_preview))
             <div class="media-preview">
-                <img src="{{ URL::to($item->media_preview) }}" />
+                <img src="{{ URL::to('files' . $item->media_preview) }}" />
             </div>
         @endif
 

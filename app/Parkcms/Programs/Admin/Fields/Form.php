@@ -18,7 +18,7 @@ class Form implements Field
 
     private $fields;
     private $properties = array(
-        'name' => '',
+        'name' => 'form',
         'class' => '',
         'value' => '',
         'label' => false,
@@ -64,6 +64,15 @@ class Form implements Field
     public function addSubmit($label)
     {
         $btn = $this->addField('Button', array('name' => 'submit', 'value' => $label, 'type' => 'submit'));
+    }
+
+    public function addButton($label, $name, $action, $params = array())
+    {
+        $btn = $this->addField('Button', array('name' => $name, 'value' => $label, 'type' => 'button'));
+        $btn->setAttribute('load-action', $action);
+        if (!empty($params)) {
+            $btn->setAttribute('load-params', json_encode($params));
+        }
     }
 
     public function setAction($action)

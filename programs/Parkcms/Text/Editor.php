@@ -14,7 +14,6 @@ class Editor extends BaseEditor
 
     public function index($properties)
     {
-        //$identifier = $properties['lang'] . $properties['page'] . '-' . $properties['identifier'];
         
         $page = (isset($properties['global']) && $properties['global'] === 'global') ? false : $properties['page'];
 
@@ -70,13 +69,9 @@ class Editor extends BaseEditor
     {
         $form = $properties['form'];
 
-        //dd($properties);
-
         $page = (isset($properties['global']) && $properties['global'] === 'global') ? false : $properties['route'];
 
         $model = Model::byContext($properties['lang'], $page, $properties['identifier'])->first();
-
-        //dd($model->text);
 
         $model->text = $form['text'];
 

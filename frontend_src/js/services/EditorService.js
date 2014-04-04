@@ -1,7 +1,7 @@
 parkAdmin.service("EditorService", ['$http', 'BASE_URL', function($http, BASE_URL) {
     var serviceBackend = BASE_URL + '/admin/programs/editor';
 
-    this.loadAction = function(type, identifier, page, lang, action) {
+    this.loadAction = function(type, identifier, page, lang, action, parameters) {
         var params = {
             'type': type,
             'identifier': identifier,
@@ -20,13 +20,17 @@ parkAdmin.service("EditorService", ['$http', 'BASE_URL', function($http, BASE_UR
             };
         }
 
+        if (typeof parameters !== 'undefined') {
+            params = angular.extend(params, parameters);
+        }
+
         return $http.get(serviceBackend, {
             params: params
         });
     };
 
     this.update = function(options) {
-        
+
         if (_isGlobalIdentifier(options.program.identifier)) {
             options.program = {
                 'type': options.program.type,
