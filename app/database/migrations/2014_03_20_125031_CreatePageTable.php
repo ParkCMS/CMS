@@ -30,6 +30,8 @@ class CreatePageTable extends Migration {
 			$table->string('title');
 			$table->text('meta');
 			
+			$table->integer('unpublished')->default(2);
+			
 			$table->timestamps();
 		});
 	}
