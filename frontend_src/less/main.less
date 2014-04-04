@@ -9,11 +9,13 @@
 @brand-primary: #559999;
 
 // Navigation
-@navbar-default-bg: #444;
-@navbar-default-color: #fff;
-@navbar-default-link-color: darken(#fff, 20%);
-@navbar-default-link-hover-color: darken(#fff, 25%);
-@navbar-default-link-active-color: darken(#fff, 25%);
+@navbar-inverse-bg: #444;
+@navbar-inverse-color: #fff;
+@navbar-inverse-link-color: darken(#fff, 20%);
+@navbar-inverse-link-hover-color: darken(#fff, 25%);
+@navbar-inverse-link-active-color: darken(#fff, 25%);
+
+@navbar-default-link-hover-bg: darken(@navbar-default-bg, 5%);
 
 body {
 	padding-top: 70px;
@@ -29,4 +31,12 @@ body {
 
 .editor-messages {
     margin-top: 10px;
+}
+
+.toolbar i {
+	text-align: center; font-size: 130%; display: block;
+}
+
+.toolbar li a {
+	padding-bottom: 10px;
 }

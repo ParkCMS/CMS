@@ -62,6 +62,35 @@ parkAdmin.directive("editor", ['EditorService', '$dialogs', '$compile', function
                 });
                 event.preventDefault();
             });
+
+            scope.$on('call-action', function(ev, action) {
+                EditorService.loadAction(
+                    scope.data.type,
+                    scope.data.identifier,
+                    scope.data.route,
+                    scope.data.lang,
+                    action.action,
+                    action.params
+                ).success(function(data) {
+                    if (typeof data['message'] !== 'undefined') {
+                        scope.message.type = data['type'];
+                        scope.message.message = data['message'];
+
+                        if (typeof data['redirect'] !== 'undefined') {
+                            scope.$emit('load-action', {action: data['redirect']});
+                        }
+                        scope.$emit('update-page-browser');
+                    }
+                }).error(function(data) {
+                    $dialogs.error(data.error.title, data.error.message);
+                    if (action.action === 'index') {
+                        scope.$emit('close-editor', scope.data.unique);
+                    } else {
+                        scope.$emit('load-action', {'action': 'index'});
+                    }
+                });
+                event.preventDefault();
+            });
         }
     };
 }]).directive('loadAction', [function() {
@@ -74,6 +103,22 @@ parkAdmin.directive("editor", ['EditorService', '$dialogs', '$compile', function
             element.attr('href', '#');
             element.bind('click', function(event) {
                 scope.$emit('load-action', {'action': attributes.loadAction, 'params': scope.loadParams});
+                event.preventDefault();
+            });
+        }
+    }
+}]).directive('confirmAction', ['$dialogs', function($dialogs) {
+    return {
+        restrict: 'A',
+        scope: {
+            loadParams: '='
+        },
+        link: function (scope, element, attributes) {
+            element.attr('href', '#');
+            element.bind('click', function(event) {
+                $dialogs.confirm(attributes.title, attributes.confirmMessage).result.then(function(btn) {
+                    scope.$emit('call-action', {'action': attributes.confirmAction, 'params': scope.loadParams});
+                });
                 event.preventDefault();
             });
         }

@@ -8,7 +8,7 @@ use Illuminate\Html\HtmlBuilder as Html;
 
 use Parkcms\Programs\Admin\Field;
 
-abstract class FormField implements Field
+class Toolbar implements Field
 {
     protected $input;
     protected $view;
@@ -17,6 +17,12 @@ abstract class FormField implements Field
     protected $attributes = array(
         'class' => ''
     );
+
+    private $properties = array(
+        'name' => 'toolbar',
+    );
+
+    private $buttons = array();
 
     public function __construct(Input $input, View $v, Html $html)
     {
@@ -40,17 +46,34 @@ abstract class FormField implements Field
         $this->attributes = $attributes + $this->attributes;
     }
 
-    public function setValue($value)
+    public function addButton($title, $icon='asterisk', array $action = array())
     {
-        $this->properties['value'] = $value;
+        $this->buttons[] = array(
+            'title' => $title,
+            'icon' => $icon,
+            'actions' => $this->html->attributes($action)
+        );
     }
 
-    abstract public function create(array $properties);
+    /*
+     * Interface Methods
+     */
 
-    abstract public function value();
+    public function create(array $properties)
+    {
+        $this->properties = $properties + $this->properties;
+    }
 
-    public function render() {
-        $attributes = $this->html->attributes($this->attributes);
-        return $this->view->make('fields::' . $this->template, $this->properties + array('attributes' => $attributes));
+    public function value()
+    {
+
+    }
+
+    public function render()
+    {
+        return $this->view->make(
+            'fields::toolbar',
+            $this->properties + array('buttons' => $this->buttons)
+        );
     }
 }

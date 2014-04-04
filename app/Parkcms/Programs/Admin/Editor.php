@@ -34,7 +34,7 @@ abstract class Editor
 
         if (is_string($action)) {
             $explodedAction = explode('@', $action);
-            
+
             if (class_exists($explodedAction[0])) {
                 $this->endpoints[$end] = array(
                     'object' => $explodedAction[0],
@@ -74,7 +74,8 @@ abstract class Editor
             array('action' => 'show', 'verb' => 'get'),
             array('action' => 'edit', 'verb' => 'get'),
             array('action' => 'update', 'verb' => 'put'),
-            array('action' => 'destroy', 'verb' => 'delete')
+            array('action' => 'destroy', 'verb' => 'delete'),
+            array('action' => 'delete', 'verb' => 'get')
         );
 
         if (is_string($resolver)) {
