@@ -63,9 +63,14 @@
             </div>
         </div>
 
-@if($p->message('terms'))
+@if($errors->first('terms'))
         <div class="container-fluid">
-            <span style="color: red;">{{ $p->message('terms') }}</span>
+            <span style="color: red;">{{ $errors->first('terms') }}</span>
+        </div>
+@endif
+@if($errors->first('payment'))
+        <div class="container-fluid">
+            <span style="color: red;">{{ $errors->first('payment') }}</span>
         </div>
 @endif
     </div>

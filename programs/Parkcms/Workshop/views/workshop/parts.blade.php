@@ -8,7 +8,7 @@
 
         <p>{{ Lang::get('parkcms-workshop::fields.parts') }}</p>
 
-@if($hasFailed)
+@if($errors->first('parts'))
         <div class="container-fluid">
             <span style="color: red;">{{ Lang::get('parkcms-workshop::validation.parts') }}</span>
         </div>
@@ -18,7 +18,7 @@
             <div class="checkbox">
                 <label>
                     {{ $part->title }}
-                    <input type="checkbox" name="parts[{{ $part->id }}]" value="1" @if($p->get($part->id)) checked="checked"@endif />
+                    <input type="checkbox" name="parts[{{ $part->id }}]" value="1" @if($p->step()->get($part->id)) checked="checked"@endif />
                 </label>
             </div>
         @endforeach
