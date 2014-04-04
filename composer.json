@@ -14,8 +14,7 @@
 		"baum/baum": "~1.0",
 		"parkcms/template": "*@dev",
 		"cartalyst/sentry": "2.1.*",
-		"flowjs/flow-php-server": "0.2.*",
-		"paypal/rest-api-sdk-php" : "0.5.*"
+		"flowjs/flow-php-server": "0.2.*"
 	},
 	"autoload": {
 		"classmap": [
