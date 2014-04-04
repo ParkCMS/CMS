@@ -17,9 +17,14 @@
 
 @navbar-default-link-hover-bg: darken(@navbar-default-bg, 5%);
 
+html {
+	height: 100%;
+}
+
 body {
 	padding-top: 70px;
 	background-color: lighten(#EEEEDD, 6.5%);
+	height: 100%;
 }
 
 .main-view {
@@ -27,6 +32,7 @@ body {
 	padding-top: 10px;
 	padding-bottom: 20px;
 	border: 1px solid darken(#EEEEDD, 4%);
+	height: 95%;
 }
 
 .editor-messages {
@@ -39,4 +45,5 @@ body {
 
 .toolbar li a {
 	padding-bottom: 10px;
+	text-align: center;
 }

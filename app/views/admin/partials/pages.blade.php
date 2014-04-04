@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row pages">
     <div class="col-md-12">
 	    <tabset>
 			<tab>
