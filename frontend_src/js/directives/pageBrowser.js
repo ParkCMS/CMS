@@ -5,13 +5,20 @@ parkAdmin.directive("pageBrowser", ['$window', function($window) {
         link: function(scope, element, attributes) {
             var frame = element.find('iframe');
 
-            element.find('iframe').on('load', function(ev) {
+            scope.$emit('browser-load-start');
+            scope.browserUrl = attributes.src;
+
+            frame.on('load', function(ev) {
                 var frameURL = frame[0].contentWindow.location.href;
                 var frameContent = angular.element(frame[0].contentWindow.document);
 
                 var buttons = angular.element(frame[0].contentWindow.document.querySelectorAll('.pcms-edit-button'));
 
                 buttons.css('display', 'block');
+
+                scope.$apply(function() {
+                    scope.$emit('browser-load-finish');
+                });
 
                 $window.addEventListener('message', function(event) {
                     var source = event.source.frameElement;
@@ -21,6 +28,11 @@ parkAdmin.directive("pageBrowser", ['$window', function($window) {
                         scope.$emit('add-editor', data);
                     }
                 });
+            });
+
+            scope.$on('update-page-browser', function() {
+                scope.$emit('browser-load-start');
+                element.find('iframe')[0].contentWindow.location.reload(true);
             });
         }
     };

@@ -119,8 +119,10 @@ class Editor extends BaseEditor
         $item->media_preview = $form['fileselect'];
         $item->link = $form['link'];
 
-        $item->save();
-
-        return array('message' => 'Field updated successfully', 'type' => 'success', 'redirect' => 'index');
+        if ($item->save()) {
+            return array('message' => 'Field updated successfully', 'type' => 'success', 'redirect' => 'index');
+        } else {
+            return array('message' => 'The given item could not be saved!', 'type' => 'error', 'redirect' => 'index');
+        }
     }
 }

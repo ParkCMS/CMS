@@ -5,7 +5,7 @@ parkAdmin.directive("editor", ['EditorService', '$dialogs', '$compile', function
             data: '='
         },
         transclude: true,
-        template: '<div class="editor-messages"></div><div class="editor-content" ng-transclude>Loading...</div>',
+        template: '<div class="editor-messages"><alert ng-if="message.message" type="message.type" close="message.close()">{{ message.message }}</alert></div><div class="editor-content" ng-transclude>Loading...</div>',
         link: function(scope, element, attributes) {
 
             EditorService.loadAction(
@@ -23,14 +23,20 @@ parkAdmin.directive("editor", ['EditorService', '$dialogs', '$compile', function
                 scope.$emit('close-editor', scope.data.unique);
             });
 
+            scope.message = {};
+            scope.message.close = function() {
+                scope.message.message = null;
+            };
+
             scope.$on('updated-editor', function(ev, data) {
                 if (typeof data['message'] !== 'undefined') {
-                    scope.message = {'type': data['type'], 'message': data['message']};
-                    scope.message.close = function() {
-                        scope.message = null;
-                    };
-                    var msg = $compile('<alert type="message.type" close="message.close()">{{ message.message }}</alert>')
-                    element.find('.editor-messages').append(msg(scope));
+                    scope.message.type = data['type'];
+                    scope.message.message = data['message'];
+
+                    if (typeof data['redirect'] !== 'undefined') {
+                        scope.$emit('load-action', {action: data['redirect']});
+                    }
+                    scope.$emit('update-page-browser');
                 }
             });
 
