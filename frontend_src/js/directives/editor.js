@@ -67,7 +67,6 @@ parkAdmin.directive("editor", ['EditorService', '$dialogs', '$compile', function
         link: function (scope, element, attributes) {
             element.attr('href', '#');
             element.bind('click', function(event) {
-                console.log(typeof scope.loadParams);
                 scope.$emit('load-action', {'action': attributes.loadAction, 'params': scope.loadParams});
                 event.preventDefault();
             });

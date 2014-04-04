@@ -13,8 +13,13 @@ parkAdmin.directive("fileBrowser", ['FileBrowser', '$dialogs', function(BrowserS
             scope.files = [];
             ngModelController.$render = function() {
                 // ngModelController.$viewValue === path
-                if (typeof ngModelController.$viewValue !== undefined && ngModelController.$viewValue !== '') {
-                    scope.cd(ngModelController.$viewValue);
+                if (typeof ngModelController.$viewValue !== undefined) {
+                    var path = BrowserService.dirname(ngModelController.$viewValue);
+                    if (path == '') {
+                        scope.cd('/');
+                    } else {
+                        scope.cd(path);
+                    }
                 } else {
                     scope.cd('/');
                 }

@@ -5,9 +5,10 @@ namespace Parkcms\Programs\Admin\Fields;
 class Text extends FormField
 {
     protected $properties = array(
-        'name' => '',
+        'name'  => '',
         'value' => '',
-        'label' => false
+        'label' => false,
+        'type'  => 'text'
     );
 
     protected $template = "text";

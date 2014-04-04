@@ -69,13 +69,9 @@ class Editor extends BaseEditor
     {
         $form = $properties['form'];
 
-        //dd($properties);
-
         $page = (isset($properties['global']) && $properties['global'] === 'global') ? false : $properties['route'];
 
         $model = Model::byContext($properties['lang'], $page, $properties['identifier'])->first();
-
-        //dd($model->text);
 
         $model->text = $form['text'];
 

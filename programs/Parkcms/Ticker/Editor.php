@@ -82,13 +82,20 @@ class Editor extends BaseEditor
 
             $file = $form->addField('FileSelect', array(
                 'name'  => 'fileselect',
-                'label' => 'Select Image or Media Preview:'
+                'label' => 'Select Image or Media Preview:',
+                'value' => $item->media_preview
             ));
 
             $link = $form->addField('Text', array(
                 'name'  => 'link',
                 'value' => $item->link,
                 'label' => 'Link:'
+            ));
+
+            $id = $form->addField('Text', array(
+                'type'  => 'hidden',
+                'name'  => 'id',
+                'value' => $item->id
             ));
         });
 
@@ -100,6 +107,20 @@ class Editor extends BaseEditor
 
     public function update($properties)
     {
-        return "<p>Update</p>";
+        $form = $form = $properties['form'];
+
+        $item = Item::find($form['id']);
+        if ($item === null) {
+            return Response::json(array('error' => array('title' => 'Ticker Editor Error', 'message' => 'The given item with ID #' . $properties['id'] . ' was not found in the database!')), 404);
+        }
+
+        $item->title = $form['title'];
+        $item->description = $form['description'];
+        $item->media_preview = $form['fileselect'];
+        $item->link = $form['link'];
+
+        $item->save();
+
+        return array('message' => 'Field updated successfully', 'type' => 'success', 'redirect' => 'index');
     }
 }

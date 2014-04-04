@@ -123,6 +123,8 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
         return path.replace(/\\/g, '/').replace(/\/[^\/]*\/?$/, '');
     }
 
+    this.dirname = _dirname;
+
     var _getFilesInFolder = function(folder) {
         return $http.get(serviceBackend + 'list/', {
             params: {
