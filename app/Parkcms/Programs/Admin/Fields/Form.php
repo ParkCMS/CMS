@@ -66,6 +66,15 @@ class Form implements Field
         $btn = $this->addField('Button', array('name' => 'submit', 'value' => $label, 'type' => 'submit'));
     }
 
+    public function addButton($label, $name, $action, $params = array())
+    {
+        $btn = $this->addField('Button', array('name' => $name, 'value' => $label, 'type' => 'button'));
+        $btn->setAttribute('load-action', $action);
+        if (!empty($params)) {
+            $btn->setAttribute('load-params', json_encode($params));
+        }
+    }
+
     public function setAction($action)
     {
         $this->setAttribute('editor-action', $action);

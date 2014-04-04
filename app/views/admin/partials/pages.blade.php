@@ -5,7 +5,7 @@
 			<tab class="slide" ng-repeat="editor in tabs.editors track by editor.unique" active="editor.active">
 				<tab-heading>
 					<a ng-click="editorClose($index, $event)"><i class="glyphicon glyphicon-remove"></i></a>
-					Edit <span ng-if="!editor.global">@{{ editor.route }}/</span>@{{ editor.identifier }} (@{{ editor.type }})
+					Edit @{{ editor.lang }}<span ng-if="!editor.global">-@{{ editor.route }}</span>/@{{ editor.identifier }} (@{{ editor.type }})
 				</tab-heading>
 				<editor data="editor"></editor>
 			</tab>

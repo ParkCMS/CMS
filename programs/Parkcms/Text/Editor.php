@@ -14,7 +14,6 @@ class Editor extends BaseEditor
 
     public function index($properties)
     {
-        //$identifier = $properties['lang'] . $properties['page'] . '-' . $properties['identifier'];
         
         $page = (isset($properties['global']) && $properties['global'] === 'global') ? false : $properties['page'];
 

@@ -5,7 +5,7 @@ parkAdmin.directive("editor", ['EditorService', '$dialogs', '$compile', function
             data: '='
         },
         transclude: true,
-        template: '<div class="editor-messages"></div><div class="editor-content" ng-transclude></div>',
+        template: '<div class="editor-messages"></div><div class="editor-content" ng-transclude>Loading...</div>',
         link: function(scope, element, attributes) {
 
             EditorService.loadAction(
