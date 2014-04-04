@@ -2,31 +2,58 @@
 
 namespace Programs\Parkcms\Workshop;
 
+use Parkcms\Context;
 use Parkcms\Programs\ProgramAbstract;
 
-use Parkcms\Context;
-use Programs\Parkcms\Workshop\Input\Manager;
+use Programs\Parkcms\Workshop\Models\Workshop as Model;
 
-use Programs\Parkcms\Workshop\Models\Workshop as WorkshopModel;
-use Programs\Parkcms\Workshop\Models\Part;
-use Programs\Parkcms\Workshop\Models\Registration;
+use Programs\Parkcms\Workshop\Steps\Index;
+use Programs\Parkcms\Workshop\Steps\Register;
+use Programs\Parkcms\Workshop\Steps\Parts;
+use Programs\Parkcms\Workshop\Steps\Check;
+use Programs\Parkcms\Workshop\Steps\Pay;
+use Programs\Parkcms\Workshop\Steps\Complete;
 
 use Asset;
 use Input;
-use View;
+use Redirect;
+use Request;
+use Session;
 
 class Workshop extends ProgramAbstract {
-
+    
     protected $workshop;
-
     protected $context;
-    protected $manager;
 
-    protected $steps = array('index', 'register', 'parts', 'check', 'pay', 'complete');
+    protected $step;
 
-    public function __construct(Context $context, Manager $manager) {
+    public function __construct(
+        Context $context,
+        Index $index,
+        Register $register,
+        Parts $parts,
+        Check $check,
+        Pay $pay,
+        Complete $complete)
+    {
         $this->context = $context;
-        $this->manager = $manager;
+
+        $this->steps = array(
+            'index' => $index,
+            'register' => $register,
+            'parts' => $parts,
+            'check' => $check,
+            'pay' => $pay,
+            'complete' => $complete,
+        );
+
+        while(($current = current($this->steps)) !== false) {
+            $current->next(next($this->steps));
+            if(current($this->steps) !== false) {
+                current($this->steps)->prev($current);
+            }
+        }
+        reset($this->steps);
     }
 
     /**
@@ -38,7 +65,7 @@ class Workshop extends ProgramAbstract {
     public function initialize($identifier, array $params) {
         parent::initialize($identifier, $params);
 
-        $this->workshop = WorkshopModel::with('parts')
+        $this->workshop = Model::with('parts')
             ->where('identifier', $identifier)
             ->where('active', true)->first();
 
@@ -46,12 +73,12 @@ class Workshop extends ProgramAbstract {
             return false;
         }
 
+        foreach($this->steps as $step) {
+            $step->setProgram($this);
+            $step->setWorkshop($this->workshop);
+        }
+
         Asset::script('data-async', 'themes/default/js/data-async.js', array('jquery', 'bootstrap'));
-
-        $this->manager->setSteps($this->steps);
-
-        $this->manager->validation()->setSessionKey('workshops.' . $this->workshop->identifier);
-        $this->manager->validation()->setWorkshop($this->workshop);
 
         return true;
     }
@@ -61,100 +88,44 @@ class Workshop extends ProgramAbstract {
      * @return string
      */
     public function render($inlineTemplate = null) {
-        if($step = Input::get(
-            'workshop.' . $this->workshop->identifier,
-            $this->steps[0]
-        )) {
-            if(!$this->validStep($step)) {
-                $step = $this->steps[0];
+        $this->findStep();
+
+        if(Request::isMethod('post')) {
+            if(($validate = $this->step->prev->validate()) !== null) {
+                return $validate;
             }
+        }
+
+        $checkAll = $this->step->checkAll(true);
+
+        if($checkAll != null && $this->step->name() != $checkAll) {
+            return Redirect::to($this->url(array('step' => $checkAll)));
+        }
+
+        $this->step->perform();
+
+        return $this->step->render();
+    }
+
+    public function findStep() {
+        if(Input::get('identifier') != $this->workshop->identifier) {
+            return ($this->step = $this->steps['index']);
         }
 
         if($this->workshop->isFullOrClosed()) {
-            $step = 'index';
+            return ($this->step = $this->steps['index']);
         }
 
-        $step = $this->manager->setStep($step);
+        $step = Input::get('step', 'index');
 
-        $this->manager->validatePrevious();
-        $this->manager->check();
-
-        if($this->manager->getStep() == end($this->steps)) {
-            $this->complete();
-        }
-        
-        return $this->renderStep($this->manager->getStep());
-    }
-
-    public function complete() {
-        $this->check();
-
-        if($this->step != end($this->steps)) {
-            return;
+        if(!isset($this->steps[$step])) {
+            return ($this->step = $this->steps['index']);
         }
 
-        /*
-        foreach($workshop->parts as $part) {
-            if($part->partType == 2) {
-                
-            }
-            $part->registrations()->attach(1, array('value' => '1'));
-        }
-
-        $registration = Registration
-        */
+        return ($this->step = $this->steps[$step]);
     }
 
-    /**
-     * checks if the given step exists
-     * @param  string $step
-     * @return bool
-     */
-    protected function validStep($step) {
-        return in_array($step, $this->steps);
-    }
-
-    /**
-     * renders view of given step and returns result
-     * @param  string $step
-     * @return string
-     */
-    protected function renderStep($step) {
-
-        $previousStep = $this->manager->previousStep($step);
-        $nextStep = $this->manager->nextStep($step);
-
-        return View::make('parkcms-workshop::' . $this->workshop->identifier . '.' . $step, array(
-            'workshop' => $this->workshop,
-            'previous' => $previousStep === null ? null : $this->url() . '?workshop[' . $this->workshop->identifier . ']=' . $previousStep,
-            'next' => $nextStep === null ? null : $this->url() . '?workshop[' . $this->workshop->identifier . ']=' . $nextStep,
-        ))->render();
-    }
-
-    /**
-     * See Programs\Parkcms\Workshop\Input\Validation->failed($key)
-     * @param  string $key
-     * @return bool
-     */
-    public function failed($key) {
-        return $this->manager->validation()->failed($key);
-    }
-
-    /**
-     * See Programs\Parkcms\Workshop\Input\Validation->message($key)
-     * @param  string $key
-     * @return string
-     */
-    public function message($key) {
-        return $this->manager->validation()->message($key);
-    }
-
-    /**
-     * See Programs\Parkcms\Workshop\Input\Manager->get($key, $default)
-     * @param  string $key
-     * @return string
-     */
-    public function get($key, $default = '') {
-        return $this->manager->get($key, $default);
+    public function step() {
+        return $this->step;
     }
 }

@@ -16,18 +16,20 @@ class AssetServiceProvider extends ServiceProvider
 
         $app = $this->app;
         Event::listen('parkcms.parser.post', function($dom) use($app) {
-            foreach($dom->getElementsByTagName('pcms-styles') as $styles) {
-                foreach($this->app['parkcms.asset']->styles($dom) as $node) {
-                    $styles->parentNode->insertBefore($node);
+            foreach($dom('pcms-styles') as $styles) {
+                $stylesheets = '';
+                foreach($this->app['parkcms.asset']->styles() as $node) {
+                    $stylesheets .= $node;
                 }
-                $styles->parentNode->removeChild($styles);
+                $styles->setOuterText($stylesheets);
             }
 
-            foreach($dom->getElementsByTagName('pcms-scripts') as $scripts) {
-                foreach($this->app['parkcms.asset']->scripts($dom) as $node) {
-                    $scripts->parentNode->insertBefore($node);
+            foreach($dom('pcms-scripts') as $scripts) {
+                $scriptsTags = '';
+                foreach($this->app['parkcms.asset']->scripts() as $node) {
+                    $scriptsTags .= $node;
                 }
-                $scripts->parentNode->removeChild($scripts);
+                $scripts->setOuterText($scriptsTags);
             }
         });
     }

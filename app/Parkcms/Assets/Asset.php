@@ -4,6 +4,7 @@ namespace Parkcms\Assets;
 
 use URL;
 use Config;
+use HTML;
 
 class Asset {
     public $assets = array();
@@ -53,15 +54,15 @@ class Asset {
         $this->assets[$type][$name] = compact('source', 'dependencies', 'attributes');
     }
 
-    public function styles($dom) {
-        return $this->group($dom, 'style');
+    public function styles() {
+        return $this->group('style');
     }
 
-    public function scripts($dom) {
-        return $this->group($dom, 'script');
+    public function scripts() {
+        return $this->group('script');
     }
 
-    protected function group($dom, $group) {
+    protected function group($group) {
         if(!isset($this->assets[$group]) or count($this->assets[$group]) == 0) {
             return array();
         }
@@ -69,13 +70,13 @@ class Asset {
         $assets = array();
 
         foreach ($this->arrange($this->assets[$group]) as $name => $data) {
-            $assets[] = $this->asset($dom, $group, $name);
+            $assets[] = $this->asset($group, $name);
         }
 
         return $assets;
     }
 
-    protected function asset($dom, $group, $name) {
+    protected function asset($group, $name) {
         if(!isset($this->assets[$group][$name])) {
             return null;
         }
@@ -86,15 +87,11 @@ class Asset {
             $asset['source'] = $this->path($asset['source']);
         }
 
-        $node = $dom->createElement($group == 'style' ? 'link' : 'script');
-
-        foreach($asset['attributes'] as $key => $value) {
-            $node->setAttribute($key, $value);
+        if ($group == 'style') {
+            return HTML::style(URL::to($asset['source']), $asset['attributes']);
         }
 
-        $node->setAttribute($group == 'style' ? 'href' : 'src', URL::to($asset['source']));
-
-        return $node;
+        return HTML::script(URL::to($asset['source']), $asset['attributes']);
     }
 
     protected function arrange($assets) {

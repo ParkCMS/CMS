@@ -2,6 +2,7 @@
 
 return array(
 
+    'abort'        => 'Abbrechen',
     'close'        => 'Schließen',
     'back'         => 'Zurück',
     'next'         => 'Weiter',
@@ -18,7 +19,10 @@ return array(
     'location'     => 'Ort',
     'city'         => 'Ort',
     'zip'          => 'PLZ',
+    'country'      => 'Land',
     'email'        => 'E-Mail',
+    'phone'        => 'Telefon',
+    'fax'          => 'Fax',
 
     'parts'        => 'Ich werde folgende Angebote wahrnehmen:',
 

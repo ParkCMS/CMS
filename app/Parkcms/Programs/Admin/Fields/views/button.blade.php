@@ -1,0 +1,1 @@
+<button type="{{ $type }}" {{ $attributes }} name="{{ $name }}">{{ $value }}</button>

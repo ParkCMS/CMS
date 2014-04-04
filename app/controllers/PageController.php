@@ -2,16 +2,18 @@
 
 use Parkcms\Models\Page;
 use Parkcms\Context;
-use Parkcms\Template\AttributeParser as Parser;
 use Parkcms\Template\ArgumentConverter as Converter;
 use Parkcms\Programs\Manager;
 
+use Illuminate\Http\RedirectResponse;
+
 class PageController extends Controller {
 
-    protected $parser;
     protected $manager;
 
     protected $page;
+
+    protected $redirect = null;
 
     /**
      *
@@ -19,10 +21,9 @@ class PageController extends Controller {
      * @param Manager $manager
      */
     public function __construct(Manager $manager) {
-        $this->parser = new Parser(new Converter(), App::make('events'));
         $this->manager = $manager;
 
-        $this->parser->setPrefix('pcms-');
+        Parser::setPrefix('pcms-');
     }
 
     public function index($lang = null) {
@@ -81,15 +82,21 @@ class PageController extends Controller {
 
         $view = View::make('page_templates.' . $this->page->template)->render();
 
-        $this->parser->setSource($view);
+        Parser::setSource($view);
 
         $that = $this;
-        $this->parser->pushHandler(function($type, $identifier, $data, $nodeValue) use($that) {
+        Parser::pushHandler(function($type, $identifier, $data, $nodeValue) use($that) {
             if($program = $that->manager->lookup($type, $identifier, $data)) {
-                if(isset($data['inline-template'])) {
-                    return $program->render($nodeValue);
+                $result = $program->render(
+                    isset($data['inline-template']) ? $nodeValue : null
+                );
+                
+                if($result instanceof RedirectResponse) {
+                    $that->redirect = $result;
+                    return '';
                 }
-                return $program->render();
+
+                return $result;
             }
             return null;
         });
@@ -97,13 +104,19 @@ class PageController extends Controller {
         if (Sentry::check()) {
             Asset::style('pcms-frontend-style','admin_assets/css/frontend.css');
             Asset::script('pcms-frontend-js', 'admin_assets/js/frontend.js');
-            $this->parser->pushHandler(function($type, $identifier, $data, $nodeValue) use ($that) {
+            Parser::pushHandler(function($type, $identifier, $data, $nodeValue) use ($that) {
                 $context = App::make('Parkcms\Context');
                 return $nodeValue . "<button data-lang='{$context->lang()}' data-identifier='{$identifier}' data-route='{$context->route()}' data-type='{$type}' class='pcms-edit-button'>Bearbeiten</button>";
             });
         }
 
-        return $this->parser->parse();
+        $parsed = Parser::parse();
+
+        if(!is_null($this->redirect)) {
+            return $this->redirect;
+        }
+
+        return $parsed;
     }
 
     protected function lookupRoot($lang) {

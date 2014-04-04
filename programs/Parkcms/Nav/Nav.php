@@ -22,9 +22,9 @@ class Nav extends ProgramAbstract {
 
         $root = Page::roots()->where('title', $this->context->lang())->first();
 
-        $descendants = $root->descendants();
+        $descendants = $root->descendants()->where('unpublished', 0);
 
-        $this->content = '<ul' . (isset($params['class']) ? ' class="nav navbar-nav"' : '') . '>';
+        $this->content = '<ul' . (isset($params['class']) ? ' class="' . $params['class'] . '"' : '') . '>';
 
         $depth = 0;
         foreach($descendants->get() as $descendant) {

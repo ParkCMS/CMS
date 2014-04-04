@@ -3,6 +3,7 @@
 namespace Parkcms\Programs\Admin;
 
 use Illuminate\Foundation\Application;
+use Illuminate\View\Environment as View;
 
 use InvalidArgumentException;
 use ReflectionException;
@@ -13,9 +14,12 @@ abstract class Editor
     protected $app = null;
     protected $endpoints = array();
 
-    public function __construct(Application $app)
+    public function __construct(Application $app, View $view)
     {
         $this->app = $app;
+        $view->addNamespace('fields', __DIR__ . '/Fields/views');
+
+        $this->app->instance('pcms-editor', $this);
     }
 
     abstract public function register();
@@ -79,7 +83,8 @@ abstract class Editor
 
         foreach ($endpoints as $endpoint) {
             if (method_exists($resolver, $endpoint['action'])) {
-                $this->endpoints[$resource . '_' . $endpoint['action']] = array(
+                $route = ($resource != '') ? $resource . '_' . $endpoint['action'] : $endpoint['action'];
+                $this->endpoints[$route] = array(
                     'object' => $resolver,
                     'action' => $endpoint['action'],
                     'verb'   => $endpoint['verb']
@@ -119,5 +124,19 @@ abstract class Editor
     public function route($route, $reqType, array $properties)
     {
         return $this->handleEndpoint($route, $reqType, $properties);
+    }
+
+    public function makeField($field)
+    {
+        $editorNamespace = str_replace('/', '\\', dirname(str_replace('\\', '/', get_called_class())));
+        if (class_exists($editorNamespace . '\\Fields\\'. ucfirst($field))) {
+            return $this->app->make($editorNamespace . '\\'. ucfirst($field));
+        }
+
+        if (class_exists('Parkcms\Programs\Admin\Fields\\' . ucfirst($field))) {
+            return $this->app->make('Parkcms\Programs\Admin\Fields\\' . ucfirst($field));
+        }
+
+        return $this->app->make($field);
     }
 }
