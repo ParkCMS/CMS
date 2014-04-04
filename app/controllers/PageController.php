@@ -35,7 +35,7 @@ class PageController extends Controller {
 
         $root = $this->lookupRoot($lang);
 
-        $startPage = $root->children()->first();
+        $startPage = $root->descendants()->where('unpublished', '<=', 1)->first();
 
         if($startPage !== null) {
             return Redirect::to('/' . $lang . '/' . $startPage->alias);
@@ -60,7 +60,7 @@ class PageController extends Controller {
         $root = $this->lookupRoot($lang);
 
         // look up
-        $this->page = $root->descendants()->where('alias', $route)->first();
+        $this->page = $root->descendants()->where('unpublished', '<=', 1)->where('alias', $route)->first();
 
         // if $this->page is null, page doesn't exists in database
         if($this->page === null) {
