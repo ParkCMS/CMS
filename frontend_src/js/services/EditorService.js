@@ -41,6 +41,8 @@ parkAdmin.service("EditorService", ['$http', 'BASE_URL', function($http, BASE_UR
             };
         }
 
+        options.program.page = options.program.route;
+
         return $http({
             method: options.method,
             url: serviceBackend,
