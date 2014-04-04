@@ -21,7 +21,6 @@ class Editor extends BaseEditor
         $ticker = $this->getTicker($properties);
         $toolbar = $this->makeField('Toolbar');
         $toolbar->addButton('New Item', 'file', array('load-action' => 'create'));
-        $toolbar->addButton('Delete Ticker', 'trash', array('load-action' => 'create'));
 
         $table = $this->makeField('Table');
 
@@ -60,58 +59,6 @@ class Editor extends BaseEditor
         }
 
         return $this->generateItemForm('update', 'put', $item);
-    }
-
-    private function generateItemForm($action, $method, $item = null)
-    {
-        $form = $this->makeField('Form');
-
-        $form->setAction($action);
-        $form->setMethod($method);
-
-        $form->addFields(function($form) use ($item) {
-            $title = $form->addField('Text', array(
-                'name'  => 'title',
-                'value' => '',
-                'label' => 'Title:'
-            ));
-
-            $description = $form->addField('Content', array(
-                'name'  => 'description',
-                'value' => '',
-                'label' => 'Description:'
-            ));
-
-            $file = $form->addField('FileSelect', array(
-                'name'  => 'fileselect',
-                'label' => 'Select Image or Media Preview:',
-                'value' => ''
-            ));
-
-            $link = $form->addField('Text', array(
-                'name'  => 'link',
-                'value' => '',
-                'label' => 'Link:'
-            ));
-
-            if ($item !== null)
-            {
-                $title->setValue($item->title);
-                $description->setValue($item->description);
-                $file->setValue($item->media_preview);
-                $link->setValue($item->link);
-                $id = $form->addField('Text', array(
-                    'type'  => 'hidden',
-                    'name'  => 'id',
-                    'value' => $item->id
-                ));
-            }
-        });
-
-        $form->addSubmit('Save');
-        $form->addButton('Cancel', 'abort', 'index');
-
-        return $form;
     }
 
     public function update($properties)
@@ -182,5 +129,57 @@ class Editor extends BaseEditor
         }
 
         return $ticker;
+    }
+
+    private function generateItemForm($action, $method, $item = null)
+    {
+        $form = $this->makeField('Form');
+
+        $form->setAction($action);
+        $form->setMethod($method);
+
+        $form->addFields(function($form) use ($item) {
+            $title = $form->addField('Text', array(
+                'name'  => 'title',
+                'value' => '',
+                'label' => 'Title:'
+            ));
+
+            $description = $form->addField('Content', array(
+                'name'  => 'description',
+                'value' => '',
+                'label' => 'Description:'
+            ));
+
+            $file = $form->addField('FileSelect', array(
+                'name'  => 'fileselect',
+                'label' => 'Select Image or Media Preview:',
+                'value' => ''
+            ));
+
+            $link = $form->addField('Text', array(
+                'name'  => 'link',
+                'value' => '',
+                'label' => 'Link:'
+            ));
+
+            if ($item !== null)
+            {
+                $title->setValue($item->title);
+                $description->setValue($item->description);
+                $file->setValue($item->media_preview);
+                $link->setValue($item->link);
+                $id = $form->addField('Text', array(
+                    'type'  => 'hidden',
+                    'name'  => 'id',
+                    'value' => $item->id
+                ));
+            }
+        });
+
+        $form->addSubmit('Save');
+        $form->addButton('Cancel', 'abort', 'index');
+
+        return $form;
     }
 }
