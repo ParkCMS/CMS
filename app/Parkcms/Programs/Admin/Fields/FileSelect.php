@@ -6,51 +6,17 @@ use Illuminate\Http\Request as Input;
 use Illuminate\View\Environment as View;
 use Illuminate\Html\HtmlBuilder as Html;
 
-use Parkcms\Programs\Admin\Field;
-
-class FileSelect implements Field
+class FileSelect extends FormField
 {
     protected $input;
     protected $view;
     protected $html;
 
-    protected $attributes = array(
-        'class' => ''
+    protected $properties = array(
+        'name' => '',
     );
 
-    private $properties = array(
-        'name' => 'form',
-    );
-
-    private $headers = array();
-
-    private $keys = array();
-
-    private $rows = null;
-
-    private $buttons = array();
-
-    public function __construct(Input $input, View $v, Html $html)
-    {
-        $this->input = $input;
-        $this->view = $v;
-        $this->html = $html;
-    }
-
-    public function setAttribute($key, $value)
-    {
-        $this->attributes[$key] = $value;
-    }
-
-    public function getAttribute($key)
-    {
-        return $this->attributes[$key];
-    }
-
-    public function setAttributes(array $attributes)
-    {
-        $this->attributes = $attributes + $this->attributes;
-    }
+    protected $template = "fileselect";
 
     /*
      * Interface Methods
@@ -62,12 +28,5 @@ class FileSelect implements Field
 
     public function value() {
 
-    }
-
-    public function render() {
-        $attributes = $this->html->attributes($this->attributes);
-        return $this->view->make('fields::fileselect', $this->properties + array(
-            'attributes' => $attributes
-        );
     }
 }

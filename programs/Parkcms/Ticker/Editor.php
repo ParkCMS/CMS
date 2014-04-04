@@ -13,14 +13,11 @@ class Editor extends BaseEditor
 {
     public function register()
     {
-        // $this->addEndpoint('index', 'index');
-        // $this->addEndpoint('update', 'update');
         $this->addResourceEndpoint('', $this);
     }
 
     public function index($properties)
     {
-        //$identifier = $properties['lang'] . $properties['page'] . '-' . $properties['identifier'];
 
         $page = (isset($properties['global']) && $properties['global'] === 'global') ? false : $properties['page'];
 
@@ -81,6 +78,11 @@ class Editor extends BaseEditor
                 'name'  => 'description',
                 'value' => $item->description,
                 'label' => 'Description:'
+            ));
+
+            $file = $form->addField('FileSelect', array(
+                'name'  => 'fileselect',
+                'label' => 'Select Image or Media Preview:'
             ));
 
             $link = $form->addField('Text', array(
