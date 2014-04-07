@@ -1,6 +1,10 @@
 <div class="form-group">
     @if ($label)
-        <label for="{{ $name }}">{{ $label }}</label>
+        <label for="form-{{ $name }}">{{ $label }}</label>
     @endif
-    <input type="{{ $type }}" {{ $attributes }} ng-model="form.{{ $name }}" ng-init="form.{{ $name }}='{{ $value }}'" value="{{ $value }}" name="{{ $name }}" />
+    @if($type == 'number')
+        <input type="{{ $type }}" id="form-{{ $name }}" {{ $attributes }} ng-model="form.{{ $name }}" ng-init="form.{{ $name }}={{ $value }}" value="{{ $value }}" name="{{ $name }}" />
+    @else
+        <input type="{{ $type }}" id="form-{{ $name }}" {{ $attributes }} ng-model="form.{{ $name }}" ng-init="form.{{ $name }}='{{ $value }}'" value="{{ $value }}" name="{{ $name }}" />
+    @endif
 </div>
