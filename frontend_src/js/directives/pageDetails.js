@@ -4,6 +4,7 @@ parkAdmin.directive("pageDetails", ['$window', 'PagesService', function($window,
         templateUrl: 'admin/partials/pagedetails',
         scope: {
             page: '=',
+            hideDetails: '=',
             onNavigate: '&',
             onCreate: '&'
         },

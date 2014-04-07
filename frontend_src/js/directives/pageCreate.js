@@ -8,7 +8,7 @@ parkAdmin.directive("pageCreate", ['PagesService', function(PagesService) {
             position: '='
         },
         link: function(scope, element, attributes) {
-            //scope.page = false;
+            console.log('loaded');
         }
     };
 }]);

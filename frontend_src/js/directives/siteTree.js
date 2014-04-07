@@ -14,6 +14,8 @@ parkAdmin.directive("siteTree", ['$window', 'PagesService', function($window, Pa
             scope.clickedPage = function(page, event) {
                 scope.selected = page.id;
 
+                scope.expanded[page.id] = true;
+
                 if (typeof scope.onSelect !== 'undefined') {
                     scope.onSelect({page: page});
                 }

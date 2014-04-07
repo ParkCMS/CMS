@@ -3,7 +3,7 @@
         <site-tree model="trees" on-select="select(page)"></site-tree>
     </div>
     <div class="col-md-8">
-        <page-details on-create="createPage(page, position)" on-navigate="navigate(page)" page="page"></page>
-        <page-create ng-if="status.showCreatePage" from="create.page" position="create.type"></page-create>
+        <page-details hide-details="status.showCreatePage" on-create="createPage(page, position)" on-navigate="navigate(page)" page="page"></page-details>
+        <page-create ng-show="status.showCreatePage" from="create.page" position="create.position"></page-create>
     </div>
 </div>

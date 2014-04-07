@@ -17,7 +17,7 @@
                             <td>Type</td>
                             <td>@{{ page.type }}</td>
                         </tr>
-                        <tr>
+                        <tr ng-hide="hideDetails">
                             <td>Template</td>
                             <td>@{{ page.template }}</td>
                         </tr>
@@ -25,7 +25,7 @@
                             <td>Language</td>
                             <td>@{{ page.lang }}</td>
                         </tr>
-                        <tr>
+                        <tr ng-hide="hideDetails">
                             <td>Publish State</td>
                             <td>@{{ page.unpublished }}</td>
                         </tr>
