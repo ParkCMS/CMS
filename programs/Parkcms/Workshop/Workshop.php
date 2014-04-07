@@ -22,6 +22,8 @@ use Session;
 
 class Workshop extends ProgramAbstract {
     
+    public $config;
+
     protected $workshop;
     protected $context;
 
@@ -71,6 +73,20 @@ class Workshop extends ProgramAbstract {
 
         if(is_null($this->workshop)) {
             return false;
+        }
+
+        $cp = __DIR__ . DIRECTORY_SEPARATOR . $this->identifier . '.paypal';
+
+        if(!file_exists($cp)) {
+            return false;
+        }
+
+        $this->config = (object)parse_ini_file($cp, true);
+
+        foreach($this->config as &$item) {
+            if(is_array($item)) {
+                $item = (object) $item;
+            }
         }
 
         foreach($this->steps as $step) {
