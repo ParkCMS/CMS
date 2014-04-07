@@ -11,6 +11,7 @@
             <label for="alias">Alias</label>
             <input type="Text" class="form-control" id="alias">
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a href="#" class="btn btn-default">Cancel</a>
     </form>
 </div>
