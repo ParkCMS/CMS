@@ -8,5 +8,6 @@ return array(
     'user_not_active'   => 'The given user is not activated!',
     'user_suspended'    => 'This user is currently suspended!',
     'user_banned'       => 'This user was banned!',
-    'logout_success'    => 'Logout successful!'
+    'logout_success'    => 'Logout successful!',
+    'login'				=> 'Login',
 );

@@ -25,12 +25,6 @@
                     <li highlight-active="(.*)\/$"><a href="#">{{ trans('admin_default.dashboard') }}</a></li>
                     <li highlight-active="(.*)\/pages$"><a href="#/pages">{{ trans('admin_default.pages') }}</a></li>
                     <li highlight-active="(.*)\/files$"><a href="#/files">{{ trans('admin_default.files') }}</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Action</a></li>
-                        </ul>
-                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
