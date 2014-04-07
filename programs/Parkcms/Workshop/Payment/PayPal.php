@@ -6,13 +6,13 @@ use Session;
 
 class PayPal {
 
-    protected $target;
+    protected $endpoint;
 
     protected $client_id;
     protected $secret;
     
-    public function __construct($client_id, $secret, $target = 'https://api.sandbox.paypal.com/v1') {
-        $this->target = $target;
+    public function __construct($client_id, $secret, $endpoint) {
+        $this->endpoint = $endpoint;
         $this->client_id = $client_id;
         $this->secret = $secret;
     }
@@ -23,7 +23,7 @@ class PayPal {
      */
     public function token() {
         if($this->invalidToken(Session::get('paypal.token'))) {
-            $curl = curl_init("{$this->target}/oauth2/token");
+            $curl = curl_init("{$this->endpoint}/oauth2/token");
             
             curl_setopt($curl, CURLOPT_HEADER, false);
             
@@ -68,7 +68,7 @@ class PayPal {
      * @return json
      */
     public function pay($data) {
-        $curl = curl_init("{$this->target}/payments/payment");
+        $curl = curl_init("{$this->endpoint}/payments/payment");
         
         curl_setopt($curl, CURLOPT_HEADER, false);
         
@@ -102,7 +102,7 @@ class PayPal {
      * @return bool
      */
     public function execute($payment, $payer) {
-        $curl = curl_init("{$this->target}/payments/payment/{$payment}/execute");
+        $curl = curl_init("{$this->endpoint}/payments/payment/{$payment}/execute");
         
         curl_setopt($curl, CURLOPT_HEADER, false);
         
@@ -138,7 +138,7 @@ class PayPal {
      * @return bool
      */
     public function approval($payment, $payer) {
-        $curl = curl_init("{$this->target}/payments/payment/{$payment}");
+        $curl = curl_init("{$this->endpoint}/payments/payment/{$payment}");
         
         curl_setopt($curl, CURLOPT_HEADER, false);
         
