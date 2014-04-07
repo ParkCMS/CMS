@@ -109,7 +109,8 @@ return array(
 		'Cartalyst\Sentry\SentryServiceProvider',
 
 		'Parkcms\Assets\AssetServiceProvider',
-		'Parkcms\Template\TemplateServiceProvider'
+		'Parkcms\Template\TemplateServiceProvider',
+		'Parkcms\BootServiceProvider',
 	),
 
 	/*
