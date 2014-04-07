@@ -16,7 +16,7 @@ class Index extends Step {
 
     public function perform() {
         $this->clearAll();
-        $paypal = new PayPal(null, null);
+        $paypal = new PayPal(null, null, null);
         $paypal->clear();
     }
 }
