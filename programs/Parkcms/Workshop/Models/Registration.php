@@ -12,6 +12,6 @@ class Registration extends Eloquent {
     }
 
     public function parts() {
-        return $this->belongsToMany('Programs\Parkcms\Workshop\Models\Part', 'workshop_part_registration')->withPivot('value');
+        return $this->belongsToMany('Programs\Parkcms\Workshop\Models\Part', 'workshop_part_registration')->withPivot('value')->orderBy('order');
     }
 }

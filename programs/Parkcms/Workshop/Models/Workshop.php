@@ -10,7 +10,7 @@ class Workshop extends Eloquent {
     protected $table = 'workshops';
 
     public function parts() {
-        return $this->hasMany('Programs\Parkcms\Workshop\Models\Part');
+        return $this->hasMany('Programs\Parkcms\Workshop\Models\Part')->orderBy('order');
     }
 
     public function registrations() {
@@ -28,6 +28,24 @@ class Workshop extends Eloquent {
         return $registrations;
     }
 
+    public function occupiedSeats() {
+
+        $registrations = array();
+
+        $occupiedSeats = 0;
+
+        foreach($this->parts()->where('connected_with_seats', true)->get() as $part) {
+            foreach($part->registrations()->get() as $registration) {
+                if(!in_array($registration->id, $registrations)) {
+                    $registrations[] = $registration->id;
+                    $occupiedSeats+= $registration->pivot->value;
+                }
+            }
+        }
+
+        return $occupiedSeats;
+    }
+
     public function isFullOrClosed() {
         return $this->isClosed() || $this->isFull();
     }
@@ -41,7 +59,7 @@ class Workshop extends Eloquent {
             return true;
         }
 
-        return count($this->registrations()) >= $this->seats;
+        return $this->occupiedSeats() >= $this->seats;
     }
 
     public function isClosed() {

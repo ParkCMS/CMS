@@ -1,6 +1,6 @@
 <div class="form-group">
     @if ($label)
-        <label for="{{ $name }}">{{ $label }}</label>
+        <label for="form-{{ $name }}">{{ $label }}</label>
     @endif
-    <textarea {{ $attributes }} ng-model="form.{{ $name }}" ng-init="form.{{ $name }}='{{ $value }}'" name="{{ $name }}">{{ $value }}</textarea>
+    <textarea id="form-{{ $name }}" {{ $attributes }} ng-model="form.{{ $name }}" ng-init="form.{{ $name }}='{{ $value }}'" name="{{ $name }}">{{ $value }}</textarea>
 </div>
