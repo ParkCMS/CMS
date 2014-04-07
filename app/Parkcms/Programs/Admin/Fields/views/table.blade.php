@@ -18,7 +18,7 @@
 			@if (count($buttons) > 0)
 				<td>
 					@foreach ($buttons as $button)
-						<a load-action="{{ $button['action'] }}" load-params="{'id': {{ $row->id }} }" title="{{ $button['title'] }}">{{ $button['content'] }}</a>
+						<a {{ $button['attributes'] }} load-params="{'id': {{ $row->id }} }">{{ $button['content'] }}</a>
 					@endforeach
 				</td>
 			@endif
@@ -26,7 +26,7 @@
 		@endforeach
 		@if (count($rows) === 0)
 		<tr>
-			<td class="empty-table" colspan="{{ count($headers) }}">No entries available!</td>
+			<td class="empty-table" colspan="{{ count($headers) + 1 }}">No entries available!</td>
 		</tr>
 		@endif
 	</tbody>

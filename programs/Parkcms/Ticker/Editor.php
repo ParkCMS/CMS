@@ -18,14 +18,9 @@ class Editor extends BaseEditor
 
     public function index($properties)
     {
-
-        $page = (isset($properties['global']) && $properties['global'] === 'global') ? false : $properties['page'];
-
-        if ($page) {
-            $ticker = Ticker::where('identifier', $properties['lang'] . '-' . $properties['page'] . '-' . $properties['identifier'])->with('items')->first();
-        } else {
-            $ticker = Ticker::where('identifier', $properties['lang'] . '-' . $properties['identifier'])->with('items')->first();
-        }
+        $ticker = $this->getTicker($properties);
+        $toolbar = $this->makeField('Toolbar');
+        $toolbar->addButton('New Item', 'file', array('load-action' => 'create'));
 
         $table = $this->makeField('Table');
 
@@ -33,12 +28,13 @@ class Editor extends BaseEditor
 
         $table->setButtons(array(
             array(
-                'action'    => 'edit',
+                'load-action'    => 'edit',
                 'title'     => 'Edit',
                 'content'   => 'Edit'
             ),
             array(
-                'action'    => 'delete',
+                'confirm-action'    => 'delete',
+                'confirm-message'   => 'Do you really want to delete the selected entry?',
                 'title'     => 'Delete',
                 'content'   => 'Delete'
             )
@@ -46,12 +42,12 @@ class Editor extends BaseEditor
 
         $table->setRows($ticker->items);
 
-        return $table;
+        return $toolbar->render() . $table->render();
     }
 
     public function create()
     {
-        return 'Create';
+        return $this->generateItemForm('store', 'post');
     }
 
     public function edit($properties)
@@ -62,52 +58,12 @@ class Editor extends BaseEditor
             return Response::json(array('error' => array('title' => 'Ticker Editor Error', 'message' => 'The given item with ID #' . $properties['id'] . ' was not found in the database!')), 404);
         }
 
-        $form = $this->makeField('Form');
-
-        $form->setAction('update');
-        $form->setMethod('put');
-
-        $form->addFields(function($form) use ($properties, $item) {
-            $title = $form->addField('Text', array(
-                'name'  => 'title',
-                'value' => $item->title,
-                'label' => 'Title:'
-            ));
-
-            $description = $form->addField('Content', array(
-                'name'  => 'description',
-                'value' => $item->description,
-                'label' => 'Description:'
-            ));
-
-            $file = $form->addField('FileSelect', array(
-                'name'  => 'fileselect',
-                'label' => 'Select Image or Media Preview:',
-                'value' => $item->media_preview
-            ));
-
-            $link = $form->addField('Text', array(
-                'name'  => 'link',
-                'value' => $item->link,
-                'label' => 'Link:'
-            ));
-
-            $id = $form->addField('Text', array(
-                'type'  => 'hidden',
-                'name'  => 'id',
-                'value' => $item->id
-            ));
-        });
-
-        $form->addSubmit('Save');
-        $form->addButton('Cancel', 'abort', 'index');
-
-        return $form;
+        return $this->generateItemForm('update', 'put', $item);
     }
 
     public function update($properties)
     {
-        $form = $form = $properties['form'];
+        $form = $properties['form'];
 
         $item = Item::find($form['id']);
         if ($item === null) {
@@ -124,5 +80,106 @@ class Editor extends BaseEditor
         } else {
             return array('message' => 'The given item could not be saved!', 'type' => 'error', 'redirect' => 'index');
         }
+    }
+
+    public function store($properties)
+    {
+        $form = $properties['form'];
+
+        $ticker = $this->getTicker($properties);
+
+        $item = new Item;
+
+        $item->title = $form['title'];
+        $item->description = $form['description'];
+        $item->media_preview = $form['fileselect'];
+        $item->link = $form['link'];
+        $item->ticker_id = $ticker->id;
+
+        if ($item->save()) {
+            return array('message' => 'Field created successfully', 'type' => 'success', 'redirect' => 'index');
+        } else {
+            return array('message' => 'The given item could not be saved!', 'type' => 'error', 'redirect' => 'index');
+        }
+    }
+
+    public function delete($properties)
+    {
+        $item = Item::find($properties['id']);
+
+        if ($item === null) {
+            return Response::json(array('error' => array('title' => 'Ticker Editor Error', 'message' => 'The given item with ID #' . $properties['id'] . ' was not found in the database!')), 404);
+        }
+
+        if ($item->delete()) {
+            return array('message' => 'Item deleted successfully', 'type' => 'success', 'redirect' => 'index');
+        } else {
+            return array('message' => 'The given item could not be deleted!', 'type' => 'error', 'redirect' => 'index');
+        }
+    }
+
+    private function getTicker($properties)
+    {
+        $page = (isset($properties['global']) && $properties['global'] === 'global') ? false : $properties['page'];
+
+        if ($page) {
+            $ticker = Ticker::where('identifier', $properties['lang'] . '-' . $properties['page'] . '-' . $properties['identifier'])->with('items')->first();
+        } else {
+            $ticker = Ticker::where('identifier', $properties['lang'] . '-' . $properties['identifier'])->with('items')->first();
+        }
+
+        return $ticker;
+    }
+
+    private function generateItemForm($action, $method, $item = null)
+    {
+        $form = $this->makeField('Form');
+
+        $form->setAction($action);
+        $form->setMethod($method);
+
+        $form->addFields(function($form) use ($item) {
+            $title = $form->addField('Text', array(
+                'name'  => 'title',
+                'value' => '',
+                'label' => 'Title:'
+            ));
+
+            $description = $form->addField('Content', array(
+                'name'  => 'description',
+                'value' => '',
+                'label' => 'Description:'
+            ));
+
+            $file = $form->addField('FileSelect', array(
+                'name'  => 'fileselect',
+                'label' => 'Select Image or Media Preview:',
+                'value' => ''
+            ));
+
+            $link = $form->addField('Text', array(
+                'name'  => 'link',
+                'value' => '',
+                'label' => 'Link:'
+            ));
+
+            if ($item !== null)
+            {
+                $title->setValue($item->title);
+                $description->setValue($item->description);
+                $file->setValue($item->media_preview);
+                $link->setValue($item->link);
+                $id = $form->addField('Text', array(
+                    'type'  => 'hidden',
+                    'name'  => 'id',
+                    'value' => $item->id
+                ));
+            }
+        });
+
+        $form->addSubmit('Save');
+        $form->addButton('Cancel', 'abort', 'index');
+
+        return $form;
     }
 }

@@ -18,7 +18,7 @@ class Table implements Field
         'class' => 'table table-striped'
     );
 
-    private $properties = array(
+    protected $properties = array(
         'name' => 'form',
     );
 
@@ -65,6 +65,9 @@ class Table implements Field
 
     public function setButtons(array $buttons)
     {
+        for ($i=0; $i < count($buttons); $i++) {
+            $buttons[$i]['attributes'] = $this->html->attributes(array_diff_key($buttons[$i], array_flip(array('content'))));
+        }
         $this->buttons = $buttons;
     }
 
