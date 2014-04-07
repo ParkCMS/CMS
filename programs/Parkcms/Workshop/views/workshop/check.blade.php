@@ -6,52 +6,43 @@
     <div class="modal-body">
         <p>{{ $workshop->description }}</p>
 
-        <table>
-            <tbody>
-                <tr>
-                    <td>Titel</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Nachname</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Vorname</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Institution</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Adresse</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Ort</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Land</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>E-Mail</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Telefon</td>
-                    <td></td>
-                </tr>
-            </tbody>
+        <table width="70%">
+@foreach($p->step()->prev->prev->getAll() as $k => $v)
+@if($v)
+            <tr>
+                <td width="50%">{{ Lang::get('parkcms-workshop::fields.' . $k) }}</td>
+                <td width="50%">{{ $v }}</td>
+            </tr>
+@endif
+@endforeach
+        </table>
+
+        <hr />
+
+        <table width="70%">
+@foreach($workshop->parts as $part)
+@if($p->step()->prev->get($part->id))
+            <tr>
+                <td width="50%">{{ $part->title }}</td>
+                <td>{{ round($part->price, 2) * $p->step()->prev->get($part->id) }}&euro;</td>
+            </tr>
+            <tr>
+                <td colspan="2">{{ $part->description }}</td>
+            </tr>
+@endif
+@endforeach
+            <tr><td colspan="2">&nbsp;</td></tr>
+            <tr>
+                <td width="50%">Total:</td>
+                <td>{{ $p->step()->prev->totalAmount() }}&euro;</td>
+            </tr>
         </table>
 
         <hr />
 
         <h4>{{ Lang::get('parkcms-workshop::fields.terms') }}:</h4>
         <div class="container-fluid">
-            <textarea class="col-sm-12" rows="12">{{ $workshop->terms }}</textarea>
+            <textarea class="col-sm-12" rows="12" disabled>{{ $workshop->terms }}</textarea>
         </div>
 
         <div class="container-fluid">
