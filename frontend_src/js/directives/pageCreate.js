@@ -5,7 +5,8 @@ parkAdmin.directive("pageCreate", ['PagesService', function(PagesService) {
         scope: {
             page: '=',
             from: '=',
-            position: '='
+            position: '=',
+            visible: '=?'
         },
         link: function(scope, element, attributes) {
             console.log('loaded');

@@ -14,10 +14,9 @@ parkAdmin.directive("pageManager", ['$window', 'PagesService', function($window,
 
             scope.status.showCreatePage = false;
 
-            scope.showCreatePage = false;
-
             scope.select = function(page) {
                 scope.page = page;
+                scope.status.showCreatePage = false;
             };
 
             scope.navigate = function (page, event) {
