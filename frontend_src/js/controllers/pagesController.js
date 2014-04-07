@@ -1,8 +1,18 @@
-parkAdmin.controller('pagesController',['$scope', '$modal', function($scope, $modal, browser) {
+parkAdmin.controller('pagesController',['$scope', '$modal', 'BASE_URL', function($scope, $modal, BASE_URL) {
 	$scope.tabs = {};
 	$scope.tabs.editors = [];
 	$scope.status = {};
+	$scope.status.browserActive = true;
 	$scope.status.browserLoading = false;
+
+	$scope.browserSource = BASE_URL + '?admin=1';
+
+	$scope.navigateTo = function(url) {
+		$scope.browserSource = BASE_URL + '/' + url + '?admin=1';
+		$scope.$broadcast('browser-relocate', $scope.browserSource);
+		$scope.status.browserActive = true;
+	}
+
 	$scope.$on('add-editor', function(ev, data) {
 		if (data.identifier.indexOf('global-') === 0) {
 			data.unique = data.lang + '-' + data.type + '-' + data.identifier;
