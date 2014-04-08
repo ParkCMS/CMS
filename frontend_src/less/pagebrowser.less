@@ -29,10 +29,34 @@
 .site-tree li {
     i {
         float: left;
-        background: #fff;
         padding-right: 5px;
         display: block;
+        font-style: normal;
+        background: #fff;
+
+        &.expand:after, &.expanded:after {
+            display: block;
+            font-weight: normal;
+            content: "\27A4";
+            
+            background: #fff;
+        }
+
+        &.page {
+            background: transparent !important;
+        }
+        
+        &.expanded:after {
+            
+            -moz-transform: rotate(30deg);
+            -ms-transform: rotate(30deg);
+            -o-transform: rotate(30deg);
+            -webkit-transform: rotate(30deg);
+
+            transform: rotate(30deg);
+        }
     }
+
     a {
         display: block;
         &.selected {
