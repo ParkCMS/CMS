@@ -1,4 +1,4 @@
-<div flow-init="{target:'/admin/files/upload', 'query':queryBuild}"
+<div flow-init="{target:'{{ url() }}/admin/files/upload', 'query':queryBuild}"
      flow-name="upload.flow"
      flow-file-added="fileAdded($event, $file)"
      flow-files-submitted="startUpload($event, $files)"
