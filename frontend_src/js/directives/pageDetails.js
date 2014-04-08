@@ -9,7 +9,6 @@ parkAdmin.directive("pageDetails", ['$window', 'PagesService', function($window,
             onCreate: '&'
         },
         link: function(scope, element, attributes) {
-            //scope.page = false;
 
             scope.navigateBrowserTo = function (page, event) {
                 scope.onNavigate({page: page.lang + '/' + page.alias});

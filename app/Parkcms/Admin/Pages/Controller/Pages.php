@@ -23,6 +23,21 @@ class Pages extends BaseController
         $response->header('Content-Type', 'application/json');
 
         return $response;
-        //return \Response::json($siteTree);
+    }
+
+    public function availableTemplates()
+    {
+        /*$theme = Config::get('cmex.template');
+
+        $this->finder->files()->in(app_path() . "/../public/templates/" . $theme)->name('*.twig')->depth('== 0');
+
+        $templates = array();
+
+        foreach ($this->finder as $file) {
+            $templatename = str_replace('.twig', '', $file->getFilename());
+            $templates[] = array("id" => $templatename, "name" => $templatename ." Template");
+        }
+
+        return Response::json($templates);*/
     }
 }
