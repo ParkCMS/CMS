@@ -1,5 +1,7 @@
 parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL) {
-    var serviceBackend = BASE_URL + '/admin/files/';
+    var serviceBackend = BASE_URL + '/admin/files';
+
+    console.log(serviceBackend);
 
     var currentPath = [''];
 
@@ -47,7 +49,7 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
     };
 
     this.move = function(srcPath, destPath) {
-        return $http.get(serviceBackend + 'move/', {
+        return $http.get(serviceBackend + '/move', {
             params: {
                 'src': srcPath,
                 'dest': destPath
@@ -56,7 +58,7 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
     }
 
     this.mkdir = function(basepath, name) {
-        return $http.get(serviceBackend + 'mkdir/', {
+        return $http.get(serviceBackend + '/mkdir', {
             params: {
                 'basepath': basepath,
                 'name': name
@@ -65,7 +67,7 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
     };
 
     this.deleteFile = function(path) {
-        return $http.get(serviceBackend + 'delete', {
+        return $http.get(serviceBackend + '/delete', {
             params: {
                 'path': path
             }
@@ -73,7 +75,7 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
     };
 
     this.deleteFolder = function(path) {
-        return $http.get(serviceBackend + 'deleteFolder', {
+        return $http.get(serviceBackend + '/deleteFolder', {
             params: {
                 'path': path
             }
@@ -82,7 +84,7 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
 
     this.rename = function(src, dest) {
         console.log(_dirname(src) + '/' + dest);
-        return $http.get(serviceBackend + 'rename', {
+        return $http.get(serviceBackend + '/rename', {
             params: {
                 'src': src,
                 'dest': dest
@@ -126,7 +128,7 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
     this.dirname = _dirname;
 
     var _getFilesInFolder = function(folder) {
-        return $http.get(serviceBackend + 'list/', {
+        return $http.get(serviceBackend + '/list', {
             params: {
                 'path': folder
             }
