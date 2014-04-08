@@ -80,7 +80,7 @@ class PageController extends Controller {
      */
     protected function renderPage() {
 
-        $view = View::make('page_templates.' . $this->page->template)->render();
+        $view = View::make('parkcms-views::pages.' . $this->page->template)->render();
 
         Parser::setSource($view);
 

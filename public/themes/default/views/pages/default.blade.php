@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('parkcms-views::layout')
 
 @section('body')
 <h1>Default</h1>

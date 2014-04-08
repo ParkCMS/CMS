@@ -23,13 +23,11 @@ class Pay extends Step {
 
     public function perform() {
 
-        $ids = file(__DIR__ . '/../' . $this->workshop->identifier . '.paypal');
+        $client_id = $this->program->config->paypal->client_id;
+        $secret = $this->program->config->paypal->secret;
+        $endpoint = $this->program->config->paypal->endpoint;
 
-        if(!empty($ids[2])) {
-            $paypal = new PayPal($ids[0], $ids[1], $ids[2]);
-        } else {
-            $paypal = new PayPal($ids[0], $ids[1]);
-        }
+        $paypal = new PayPal($client_id, $secret, $endpoint);
 
         try {
             $payment = $paypal->pay(array(

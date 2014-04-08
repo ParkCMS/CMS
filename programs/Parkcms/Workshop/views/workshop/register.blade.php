@@ -64,10 +64,10 @@
         <div class="form-group">
             <label for="inputPhone" class="col-sm-3 control-label">{{ Lang::get('parkcms-workshop::fields.phone') }}</label>
             <div class="col-sm-5 @if($errors->first('phone')) has-error @endif">
-                <input type="phone" class="form-control" id="inputPhone" placeholder="{{ Lang::get('parkcms-workshop::fields.phone') }}" name="phone" value="{{ $p->step()->get('phone') }}" data-toggle="tooltip" data-placement="bottom" title="{{ $errors->first('phone') }}" />
+                <input type="tel" class="form-control" id="inputPhone" placeholder="{{ Lang::get('parkcms-workshop::fields.phone') }}" name="phone" value="{{ $p->step()->get('phone') }}" data-toggle="tooltip" data-placement="bottom" title="{{ $errors->first('phone') }}" />
             </div>
             <div class="col-sm-4 @if($errors->first('fax')) has-error @endif">
-                <input type="fax" class="form-control" id="inputFax" placeholder="{{ Lang::get('parkcms-workshop::fields.fax') }}" name="fax" value="{{ $p->step()->get('fax') }}" data-toggle="tooltip" data-placement="bottom" title="{{ $errors->first('fax') }}" />
+                <input type="tel" class="form-control" id="inputFax" placeholder="{{ Lang::get('parkcms-workshop::fields.fax') }}" name="fax" value="{{ $p->step()->get('fax') }}" data-toggle="tooltip" data-placement="bottom" title="{{ $errors->first('fax') }}" />
             </div>
         </div>
     </div>
