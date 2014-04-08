@@ -17,7 +17,14 @@
         </div>
         <div class="form-group">
             <label for="template">{{ trans('admin_pages.page_template') }}</label>
-            <input type="text" class="form-control" required ng-model="new.template" id="template" ng-model="from.template" />
+            <div class="row">
+              <div class="col-xs-10">
+                <template-selector ng-model="new.template" class="form-control" description="Please choose a template!"></template-selector>
+              </div>
+              <div class="col-xs-2">
+                <button class="btn btn-default">Preview</button>
+              </div>
+            </div>
         </div>
         <div class="form-group">
             <label for="type">{{ trans('admin_pages.page_type') }}</label>

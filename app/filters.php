@@ -45,7 +45,7 @@ Route::filter('auth.basic', function()
 
 Route::filter('pcms_auth', function()
 {
-    if (Request::ajax() && !Sentry::check()) App::abort(401);
+    if (Request::ajax() && !Sentry::check()) return Response::make('ParkCMS Unauthorized', 401);
     if (!Sentry::check()) return Redirect::guest('login');
 });
 

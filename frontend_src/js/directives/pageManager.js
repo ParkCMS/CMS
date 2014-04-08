@@ -27,11 +27,15 @@ parkAdmin.directive("pageManager", ['$window', 'PagesService', function($window,
                 scope.status.showCreatePage = true;
                 scope.create.page = page;
                 scope.create.position = position;
-            }
+            };
 
-            PagesService.getPageTree().success(function(data) {
-                scope.trees = data;
-            });
+            scope.reload = function() {
+                PagesService.getPageTree().success(function(data) {
+                    scope.trees = data;
+                });
+            };
+
+            scope.reload();
         }
     };
 }]);

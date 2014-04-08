@@ -1,4 +1,4 @@
-parkAdmin.directive("pageCreate", ['PagesService', function(PagesService) {
+parkAdmin.directive("pageCreate", ['PagesService', '$dialogs', function(PagesService) {
     return {
         restrict: 'E',
         templateUrl: 'admin/partials/pagecreate',
@@ -6,7 +6,8 @@ parkAdmin.directive("pageCreate", ['PagesService', function(PagesService) {
             page: '=',
             from: '=',
             position: '=',
-            visible: '='
+            visible: '=',
+            onSuccess: '&'
         },
         link: function(scope, element, attributes) {
             scope.new = {};
@@ -20,11 +21,14 @@ parkAdmin.directive("pageCreate", ['PagesService', function(PagesService) {
                 } else {
                     scope.new.unpublished = 2;
                 }
-                console.log(scope.new);
             });
 
             scope.createPage = function() {
-                PagesService.createPage(scope.new, scope.position, scope.from);
+                PagesService.createPage(scope.new, scope.position, scope.from.id).success(function(data) {
+                    scope.onSuccess(data);
+                }).error(function(data) {
+
+                });
             };
 
             scope.cancelCreate = function(event) {
