@@ -2,19 +2,23 @@
 
 namespace Parkcms\Programs\Admin\Fields;
 
-class Text extends FormField
+class SelectChange extends FormField
 {
     protected $properties = array(
         'name'  => '',
-        'value' => '',
+        'values' => array(),
+        'value' => null,
         'label' => false,
         'type'  => 'text'
     );
 
-    protected $template = "text";
+    protected $template = "selectchange";
+
+    /*
+     * Interface Methods
+     */
 
     public function create(array $properties) {
         $this->properties = $properties + $this->properties;
-        $this->setAttribute('class', 'form-control');
     }
 }

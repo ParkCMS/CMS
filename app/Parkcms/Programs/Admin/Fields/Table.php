@@ -79,10 +79,6 @@ class Table implements Field
         $this->properties = $properties + $this->properties;
     }
 
-    public function value() {
-
-    }
-
     public function render() {
         $attributes = $this->html->attributes($this->attributes);
         return $this->view->make('fields::table', $this->properties + array(
