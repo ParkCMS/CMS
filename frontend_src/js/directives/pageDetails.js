@@ -6,7 +6,8 @@ parkAdmin.directive("pageDetails", ['$window', 'PagesService', function($window,
             page: '=',
             hideDetails: '=',
             onNavigate: '&',
-            onCreate: '&'
+            onCreate: '&',
+            onDelete: '&'
         },
         link: function(scope, element, attributes) {
 
@@ -19,7 +20,13 @@ parkAdmin.directive("pageDetails", ['$window', 'PagesService', function($window,
             scope.showCreate = function (page, type, event) {
                 scope.onCreate({page: page, position: type});
                 event.preventDefault();
-            }
+            };
+
+            scope.deletePage = function (page) {
+                scope.onDelete({page: page});
+
+                event.preventDefault();
+            };
         }
     };
 }]);

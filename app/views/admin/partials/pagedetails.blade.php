@@ -36,7 +36,7 @@
                     <a href="#" class="btn btn-default" ng-click="showCreate(page, 'child', $event)">{{ trans('admin_pages.create_child_btn') }}</a>
                     <a href="#" class="btn btn-default" ng-click="showCreate(page, 'before', $event)">{{ trans('admin_pages.create_before_btn') }}</a>
                     <a href="#" class="btn btn-default" ng-click="showCreate(page, 'after', $event)">{{ trans('admin_pages.create_after_btn') }}</a>
-                    <a href="#" class="btn btn-danger">{{ trans('admin_pages.delete_page_btn') }}</a>
+                    <a href="#" class="btn btn-danger" ng-click="deletePage(page)">{{ trans('admin_pages.delete_page_btn') }}</a>
                 </div>
                 <div class="row" ng-show="page.type == 'lang'">
                     <a href="#" class="btn btn-danger">{{ trans('admin_pages.delete_lang_btn') }}</a>

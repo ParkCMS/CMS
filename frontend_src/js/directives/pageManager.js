@@ -22,6 +22,10 @@ parkAdmin.directive("pageManager", ['$window', 'PagesService', function($window,
                 scope.create.position = position;
             };
 
+            scope.deletePage = function (page) {
+                console.log('Delete ' + page.title);
+            }
+
             scope.reload = function() {
                 scope.page = false;
 
