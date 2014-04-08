@@ -27,5 +27,14 @@ return array(
     'breadcrumb_root'	=> 'Path',
     'delete_file_text'  => 'Do you really want to delete <code>{0}</code> irrevocably?',
     'delete_directory_text' => 'Do you really want to delete <code>{0}</code> and all it\'s contents?',
-    'are_you_sure'      => 'Are you sure?'
+    'are_you_sure'      => 'Are you sure?',
+    'create_folder'     => 'Create folder',
+    'create_folder_desc'=> 'Create a folder in <code>{{ cwd }}</code> called:',
+    'folder_name_placeholder' => 'Folder Name',
+    'ok'                => 'OK',
+    'cancel'            => 'Cancel',
+    'submit'            => 'Save',
+    'rename_file'       => 'Rename file <code>{{ file.src }}</code>',
+    'new_name'          => 'New Name',
+    'rename_help'       => 'Insert the new file name'
 );
