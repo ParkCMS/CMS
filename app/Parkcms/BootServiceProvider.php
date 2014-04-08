@@ -23,7 +23,7 @@ class BootServiceProvider extends ServiceProvider {
     public function register()
     {
         if(!isset($theme) || is_null($theme)) {
-            $theme = 'default';
+            $theme = 'park';
         }
 
         $this->app['current_theme'] = public_path('themes/' . $theme . '/views/');

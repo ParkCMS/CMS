@@ -16,19 +16,6 @@
                         <span class="caret"></span>
                     </a>
                     <div class="main-navigation" role="navigation" pcms-program="nav" pcms-nav="menu" pcms-nav-class="menu nav"></div>
-                    <!--
-                    <div class="main-navigation" role="navigation">
-                        <div class="col-md-4">
-                            adsf
-                        </div>
-                        <div class="col-md-4">
-                            qwer
-                        </div>
-                        <div class="col-md-4">
-                            yxcv
-                        </div>
-                    </div>
-                    -->
                 </div>
         		@section('body')
         		  <h1>Body</h1>
