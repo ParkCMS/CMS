@@ -94,8 +94,6 @@ class Workshop extends ProgramAbstract {
             $step->setWorkshop($this->workshop);
         }
 
-        Asset::script('data-async', 'themes/default/js/data-async.js', array('jquery', 'bootstrap'));
-
         return true;
     }
 
