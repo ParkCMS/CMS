@@ -23,7 +23,6 @@
     border: 1px solid @gray-lighter;
     border-top: none;
     min-height: 500px;
-    height: 100%;
 }
 
 .nav-tabs a {
@@ -32,4 +31,33 @@
 
 .empty-table {
 	text-align: center;
+}
+
+.site-tree {
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.site-tree ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+.site-tree li {
+    i {
+        float: left;
+        background: #fff;
+        padding-right: 5px;
+        display: block;
+    }
+    a {
+        display: block;
+        &.selected {
+            background: @brand-primary;
+            color: #fff;
+        }
+    }
 }

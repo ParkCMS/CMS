@@ -16,7 +16,7 @@ parkAdmin.config(['$routeProvider', '$httpProvider', 'flowFactoryProvider', func
     })
     .otherwise({redirectTo: '/'});
 
-    $httpProvider.interceptors.push(['$q', '$rootScope', '$location', 'UserService', 'TempStorage', 'BASE_URL', function($q, $rootScope, $location, User, store, BASE_URL) {
+    $httpProvider.interceptors.push(['$q', '$rootScope', '$location', 'BASE_URL', function($q, $rootScope, $location, BASE_URL) {
         return {
             'request': function(config) {
                 $rootScope.$broadcast('loading-started');
@@ -31,10 +31,8 @@ parkAdmin.config(['$routeProvider', '$httpProvider', 'flowFactoryProvider', func
             'responseError': function(rejection) {
                 var status = rejection.status;
                 $rootScope.$broadcast('loading-complete');
-                if (status == 401) {
-                    User.reset();
+                if (status == 401 && rejection.data === 'ParkCMS Unauthorized') {
                     $rootScope.$broadcast('auth-error');
-                    store.set('preLoginRoute', $location.path());
                     window.location.href = BASE_URL + "/login";
                     return;
                 }

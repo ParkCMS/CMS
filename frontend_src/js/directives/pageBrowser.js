@@ -2,11 +2,14 @@ parkAdmin.directive("pageBrowser", ['$window', function($window) {
     return {
         restrict: 'E',
         templateUrl: 'admin/partials/pageBrowser',
+        scope: {
+            src: '='
+        },
         link: function(scope, element, attributes) {
             var frame = element.find('iframe');
 
             scope.$emit('browser-load-start');
-            scope.browserUrl = attributes.src;
+            scope.browserUrl = scope.src;
 
             frame.on('load', function(ev) {
                 var frameURL = frame[0].contentWindow.location.href;
@@ -34,6 +37,13 @@ parkAdmin.directive("pageBrowser", ['$window', function($window) {
                 scope.$emit('browser-load-start');
                 element.find('iframe')[0].contentWindow.location.reload(true);
             });
+
+            scope.$on('browser-relocate', function(ev, url) {
+                scope.$emit('browser-load-start');
+                element.find('iframe')[0].contentWindow.location.href = url;
+
+                ev.preventDefault();
+            })
         }
     };
 }]);
