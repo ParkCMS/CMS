@@ -6,13 +6,6 @@ parkAdmin.directive("pageManager", ['$window', 'PagesService', function($window,
             onNavigate: '&'
         },
         link: function(scope, element, attributes) {
-            scope.page = false;
-
-            scope.create = {};
-
-            scope.status = {};
-
-            scope.status.showCreatePage = false;
 
             scope.select = function(page) {
                 scope.page = page;
@@ -30,6 +23,14 @@ parkAdmin.directive("pageManager", ['$window', 'PagesService', function($window,
             };
 
             scope.reload = function() {
+                scope.page = false;
+
+                scope.create = {};
+
+                scope.status = {};
+
+                scope.status.showCreatePage = false;
+                
                 PagesService.getPageTree().success(function(data) {
                     scope.trees = data;
                 });

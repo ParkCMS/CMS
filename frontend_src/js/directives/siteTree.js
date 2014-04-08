@@ -25,7 +25,12 @@ parkAdmin.directive("siteTree", ['$window', 'PagesService', function($window, Pa
 
             scope.toggleSubtree = function(id) {
                 scope.expanded[id] = !scope.expanded[id];
-            }
+            };
+
+            scope.$watch('trees', function() {
+                scope.selected = 0;
+                scope.expanded = [];
+            });
         }
     };
 }]);

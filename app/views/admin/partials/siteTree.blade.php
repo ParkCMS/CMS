@@ -5,7 +5,7 @@
         <i class="page" ng-show="!data.children">P</i>
         <a ng-class="{'selected': data.id == selected}" href="#" ng-click="clickedPage(data, $event)">@{{data.title}} (@{{data.lang}})</a>
         <ul ng-show="data.children && expanded[data.id]" ng-init="tmp_lang = data.lang">
-            <li ng-init="data.lang = tmp_lang" ng-repeat="data in data.children" ng-include="'tree_item_renderer.html'"></li>
+            <li ng-init="data.lang = tmp_lang" ng-repeat="data in data.children | orderObjectBy:'lft'" ng-include="'tree_item_renderer.html'"></li>
         </ul>
     </script>
     <ul ng-repeat="tree in trees">

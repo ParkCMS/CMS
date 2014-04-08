@@ -8,6 +8,6 @@ class Page extends Node {
     
     protected $table = 'pages';
 
-    protected $hidden = array('lft', 'rgt', 'depth');
+    protected $hidden = array('rgt', 'depth');
     
 }
