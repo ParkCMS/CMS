@@ -28,9 +28,9 @@
                         </div>
                         <div class="col-sm-4">
                             <ul class="links">
-                                <li>Park-Klinik Birkenwerder</li>
-                                <li>Berlin Mitte Praxis</li>
-                                <li></li>
+                                <li>St #1</li>
+                                <li>St #2</li>
+                                <li>St #3</li>
                             </ul>
                         </div>
                     </div>

@@ -14,6 +14,8 @@ class Editor extends BaseEditor {
 
         $this->addEndpoint('settings', 'settings', 'get');
         $this->addEndpoint('updateSettings', 'updateSettings', 'put');
+
+        $this->addEndpoint('changeWorkshop', 'changeWorkshop', 'get');
     }
 
     public function index($properties)
@@ -57,6 +59,13 @@ class Editor extends BaseEditor {
         $form->setMethod('put');
 
         $form->addFields(function($form) use ($workshop) {
+            $title = $form->addField('SelectChange', array(
+                'name'  => 'selected_workshop',
+                'values' => $this->getWorkshopTitles($workshop->identifier),
+                'value' => $workshop->id,
+                'label' => 'Workshop:'
+            ));
+
             $title = $form->addField('Text', array(
                 'name'  => 'title',
                 'value' => '',
@@ -136,6 +145,24 @@ class Editor extends BaseEditor {
         } else {
             return array('message' => 'The settings could not be saved!', 'type' => 'error', 'redirect' => 'index');
         }
+    }
+
+    public function changeWorkshop($properties)
+    {
+        if (Model::find($properties['id']) === null) {
+            return Response::json(array('error' => array('title' => 'Workshop Editor Error', 'message' => 'The given item with ID #' . $properties['id'] . ' was not found in the database!')), 404);
+        }
+
+        foreach($this->getWorkshops($properties) as $workshop) {
+            if($workshop->id == $properties['id']) {
+                $workshop->active = 1;
+            } else {
+                $workshop->active = 0;
+            }
+            $workshop->save();
+        }
+
+        return array('message' => 'Workshop successfully activated', 'type' => 'success', 'redirect' => 'settings');
     }
 
     public function create()
@@ -220,9 +247,34 @@ class Editor extends BaseEditor {
         }
     }
 
-    private function getWorkshop($properties)
+    private function getWorkshop($identifier)
     {
-        return Model::with('parts')->where('identifier', $properties['identifier'])->where('active', 1)->first();
+        if(is_array($identifier)) {
+            $identifier = $identifier['identifier'];
+        }
+
+        return Model::with('parts')->where('identifier', $identifier)->where('active', 1)->first();
+    }
+
+    private function getWorkshops($identifier)
+    {
+        if(is_array($identifier)) {
+            $identifier = $identifier['identifier'];
+        }
+
+        return Model::where('identifier', $identifier)->get();
+    }
+
+    private function getWorkshopTitles($identifier)
+    {
+        $workshops = $this->getWorkshops($identifier);
+
+        $data = array();
+        foreach($workshops as $workshop) {
+            $data[$workshop->id] = $workshop->title;
+        }
+
+        return $data;
     }
 
     private function generateItemForm($action, $method, $item = null)
