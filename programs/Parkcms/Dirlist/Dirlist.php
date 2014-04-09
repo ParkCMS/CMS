@@ -7,6 +7,7 @@ use Parkcms\Programs\ProgramAbstract;
 
 use Programs\Parkcms\Dirlist\Models\Dirlist as Model;
 
+use URL;
 use View;
 
 class Dirlist extends ProgramAbstract {
@@ -49,16 +50,27 @@ class Dirlist extends ProgramAbstract {
     }
     
     public function render($inlineTemplate = null) {
-        foreach(glob($this->folder() . '/' . $this->dirlist->filter) as $file) {
-            echo $file;
+        $files = array();
+        foreach(glob($this->folder() . $this->dirlist->filter) as $file) {
+            $obj = new \stdClass;
+
+            $obj->path = $file;
+            $obj->name = basename($file);
+            $obj->url = $this->urlToFile($file);
+
+            $files[] = $obj;
         }
 
         return View::make('parkcms-dirlist::dirlist', array(
-            'files' => $this->dirlist,
+            'files' => $files,
         ))->render();
     }
 
     public function folder() {
-        return realpath(public_path('uploads') . '/' . $this->dirlist->folder);
+        return realpath(public_path('uploads') . DIRECTORY_SEPARATOR . $this->dirlist->folder) . DIRECTORY_SEPARATOR;
+    }
+
+    public function urlToFile($file) {
+        return URL::to('files/' . $this->dirlist->folder . '/' . str_replace($this->folder(), '', $file));
     }
 }
