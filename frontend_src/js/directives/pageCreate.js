@@ -1,4 +1,4 @@
-parkAdmin.directive("pageCreate", ['PagesService', '$dialogs', function(PagesService) {
+parkAdmin.directive("pageCreate", ['PagesService', '$dialogs', 'BASE_URL', function(PagesService, $dialogs, BASE_URL) {
     return {
         restrict: 'E',
         templateUrl: 'admin/partials/pagecreate',
@@ -38,7 +38,24 @@ parkAdmin.directive("pageCreate", ['PagesService', '$dialogs', function(PagesSer
                 scope.visible = false;
 
                 event.preventDefault();
-            }
+            };
+
+            scope.preview = function(template, event) {
+                if (typeof template !== 'undefined') {
+                    $dialogs.create(BASE_URL + '/admin/partials/preview','previewController',{'template': template.id},{key: false});
+                }
+                event.preventDefault();
+            };
         }
+    };
+}]).controller('previewController', ['$scope', '$modalInstance', 'data', 'BASE_URL', function($scope,$modalInstance,data, BASE_URL) {
+    console.log($modalInstance);
+
+    $scope.getIframeSrc = function() {
+        return BASE_URL + '/admin/preview/template/' + data.template;
+    };
+
+    $scope.ok = function() {
+        $modalInstance.dismiss('Closed');
     };
 }]);

@@ -33,6 +33,8 @@ Route::group(array('prefix' => 'admin', 'before' => 'pcms_auth'), function() {
     Route::get('pages/templates', 'Parkcms\Admin\Pages\Controller\Pages@availableTemplates');
 
     Route::post('pages/create', 'Parkcms\Admin\Pages\Controller\Pages@create');
+
+    Route::get('preview/template/{template}', 'Parkcms\Admin\Pages\Controller\Preview@previewTemplate');
 });
 
 Route::get('login', array('as' => 'login', 'uses' => 'Parkcms\Auth\LoginController@loginForm'));

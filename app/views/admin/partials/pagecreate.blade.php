@@ -22,7 +22,7 @@
                 <template-selector ng-model="new.template" class="form-control" description="Please choose a template!"></template-selector>
               </div>
               <div class="col-xs-2">
-                <button class="btn btn-default">Preview</button>
+                <button class="btn btn-default" type="button" ng-click="preview(new.template, $event)">Preview</button>
               </div>
             </div>
         </div>

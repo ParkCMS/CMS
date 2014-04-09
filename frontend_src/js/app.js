@@ -1,4 +1,4 @@
-var parkAdmin = angular.module('parkAdmin', ['ngRoute', 'ngAnimate','ui.bootstrap', 'dialogs', 'flow', 'ngDragDrop']);
+var parkAdmin = angular.module('parkAdmin', ['ngRoute', 'ngAnimate','ui.bootstrap', 'dialogs', 'flow', 'ngDragDrop','ui.tinymce']);
 
 parkAdmin.config(['$routeProvider', '$httpProvider', 'flowFactoryProvider', function($routeProvider, $httpProvider, flowFactoryProvider) {
 

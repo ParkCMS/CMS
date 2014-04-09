@@ -9,10 +9,16 @@ class Model extends Eloquent {
 
     public function scopeByContext($query, $lang, $page, $identifier)
     {
+        return $query->where('identifier', $this->createIdentifier($lang, $page, $identifier));
+    }
+
+    public function createIdentifier($lang, $page, $identifier)
+    {
         if (!$page) {
             // Global
-            return $query->where('identifier', $lang . '-' . $identifier);
+            return $lang . '-' . $identifier;
         }
-        return $query->where('identifier', $lang . '-' . $page . '-' . $identifier);
+
+        return $lang . '-' . $page . '-' . $identifier;
     }
 }
