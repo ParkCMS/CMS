@@ -16,7 +16,7 @@ class DirlistSeeder extends Seeder {
         Dirlist::create(array(
             'identifier'  => 'de-global-flyer',
             'title'  => 'Flyer',
-            'folder' => 'flyer',
+            'folder' => '/flyer',
             'filter' => '*.pdf'
         ));
     }

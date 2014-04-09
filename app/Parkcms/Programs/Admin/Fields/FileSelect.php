@@ -13,7 +13,8 @@ class FileSelect extends FormField
     protected $html;
 
     protected $properties = array(
-        'name' => '',
+        'name'      => '',
+        'select'    => 'files' // Possible values: files (only files), directories (only directories) or both
     );
 
     protected $template = "fileselect";
@@ -24,9 +25,5 @@ class FileSelect extends FormField
 
     public function create(array $properties) {
         $this->properties = $properties + $this->properties;
-    }
-
-    public function value() {
-
     }
 }

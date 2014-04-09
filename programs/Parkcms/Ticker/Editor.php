@@ -14,6 +14,8 @@ class Editor extends BaseEditor
     public function register()
     {
         $this->addResourceEndpoint('', $this);
+        $this->addEndpoint('settings', 'settings', 'get');
+        $this->addEndpoint('settings_save', 'saveSettings', 'post');
     }
 
     public function index($properties)
@@ -21,6 +23,7 @@ class Editor extends BaseEditor
         $ticker = $this->getTicker($properties);
         $toolbar = $this->makeField('Toolbar');
         $toolbar->addButton('New Item', 'file', array('load-action' => 'create'));
+        $toolbar->addButton('Settings', 'cog', array('load-action' => 'settings'));
 
         $table = $this->makeField('Table');
 
@@ -43,6 +46,54 @@ class Editor extends BaseEditor
         $table->setRows($ticker->items);
 
         return $toolbar->render() . $table->render();
+    }
+
+    public function settings($properties)
+    {
+        $ticker = $this->getTicker($properties);
+
+        $form = $this->makeField('Form');
+
+        $form->setAction('settings_save');
+        $form->setMethod('post');
+
+        $form->addFields(function($form) use ($ticker) {
+            $form->addField('Text', array(
+                'name'  => 'title',
+                'value' => $ticker->title,
+                'label' => 'Title:'
+            ));
+
+            $form->addField('Content', array(
+                'name'  => 'description',
+                'value' => $ticker->description,
+                'label' => 'Description:'
+            ));
+        });
+
+        $form->addSubmit('Save');
+
+        return $form;
+    }
+
+    public function saveSettings($properties)
+    {
+        $ticker = $this->getTicker($properties);
+
+        if ($ticker === null) {
+            return Response::json(array('error' => array('title' => 'Ticker Editor Error', 'message' => 'The given ticker was not found!')), 404);
+        }
+
+        $form = $properties['form'];
+
+        $ticker->title = $form['title'];
+        $ticker->description = $form['description'];
+
+        if ($ticker->save()) {
+            return array('message' => 'Ticker updated successfully', 'type' => 'success', 'redirect' => 'index');
+        } else {
+            return array('message' => 'The given ticker could not be saved!', 'type' => 'error', 'redirect' => 'index');
+        }
     }
 
     public function create()

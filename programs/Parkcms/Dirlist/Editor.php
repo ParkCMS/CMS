@@ -33,9 +33,10 @@ class Editor extends BaseEditor
                 'label' => 'Title:'
             ));
 
-            $folder = $f->addField('Text', array(
+            $folder = $f->addField('FileSelect', array(
                 'name' => 'folder',
                 'value' =>  $model->folder,
+                'select'=> 'directories',
                 'label' => 'Folder:'
             ));
 

@@ -39,6 +39,7 @@
             </div>
         </div>
     </nav>
+    <div class="loading" loading-indicator>{{ trans('admin_default.loading') }}</div>
     <div class="container main-view" ng-view>
         @section('name')
         <h1>ParkCMS</h1>
