@@ -30,7 +30,7 @@ class PageController extends Controller {
 
         // @TODO: get user language
         if(is_null($lang)) {
-            $lang = 'de';
+            $lang = Config::get('parkcms.lang');
         }
 
         $root = $this->lookupRoot($lang);

@@ -1,5 +1,6 @@
 <?php
 
 return array(
-    'theme' => 'park'
+    'theme' => 'park',
+    'lang'  => 'de'
 );
