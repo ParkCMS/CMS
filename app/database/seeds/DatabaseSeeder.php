@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder {
 		$this->call('TickerSeeder');
 		$this->call('FaqSeeder');
 		$this->call('EkomiSeeder');
+		$this->call('DirlistSeeder');
 		
 	}
 
