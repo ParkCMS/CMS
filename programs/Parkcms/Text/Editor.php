@@ -69,11 +69,6 @@ class Editor extends BaseEditor
         return $form;
     }
 
-    public function create()
-    {
-        return 'Create';
-    }
-
     public function update($properties)
     {
         $form = $properties['form'];
