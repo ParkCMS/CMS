@@ -1,8 +1,6 @@
 parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL) {
     var serviceBackend = BASE_URL + '/admin/files';
 
-    console.log(serviceBackend);
-
     var currentPath = [''];
 
     /**
