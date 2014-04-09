@@ -36,5 +36,6 @@ return array(
     'submit'            => 'Save',
     'rename_file'       => 'Rename file <code>{{ file.src }}</code>',
     'new_name'          => 'New Name',
-    'rename_help'       => 'Insert the new file name'
+    'rename_help'       => 'Insert the new file name',
+    'loading'           => 'Loading...'
 );

@@ -71,6 +71,6 @@ class Dirlist extends ProgramAbstract {
     }
 
     public function urlToFile($file) {
-        return URL::to('files/' . $this->dirlist->folder . '/' . str_replace($this->folder(), '', $file));
+        return URL::to('files' . $this->dirlist->folder . '/' . str_replace($this->folder(), '', $file));
     }
 }

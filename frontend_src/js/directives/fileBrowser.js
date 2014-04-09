@@ -5,11 +5,15 @@ parkAdmin.directive("fileBrowser", ['FileBrowser', '$dialogs', function(BrowserS
         scope: {
             onSelect: '&',
             selectDirectories: '=',
+            selectFiles: '=?',
             enableDragDrop: '=',
             toggle: '='
         },
         templateUrl: 'admin/partials/filebrowser',
         link: function(scope, element, attributes, ngModelController) {
+            if (typeof scope.selectFiles === 'undefined') {
+                scope.selectFiles = true;
+            }
             scope.files = [];
             ngModelController.$render = function() {
                 // ngModelController.$viewValue === path
@@ -36,7 +40,7 @@ parkAdmin.directive("fileBrowser", ['FileBrowser', '$dialogs', function(BrowserS
             };
 
             scope.preview = function(file, $event) {
-                if (file.isFile || (file.isDir && scope.selectDirectories)) {
+                if ((file.isFile && scope.selectFiles) || (file.isDir && scope.selectDirectories)) {
                     scope.onSelect(file);
                     ngModelController.$setViewValue(file.path);
                 }
