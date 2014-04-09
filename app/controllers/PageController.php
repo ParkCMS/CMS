@@ -60,7 +60,12 @@ class PageController extends Controller {
         $root = $this->lookupRoot($lang);
 
         // look up
-        $this->page = $root->descendants()->where('unpublished', '<=', 1)->where('alias', $route)->first();
+        $q = $root->descendants();
+
+        if (!Sentry::check()) {
+            $q = $q->where('unpublished', '<=', 1);
+        }
+        $this->page = $q->where('alias', $route)->first();
 
         // if $this->page is null, page doesn't exists in database
         if($this->page === null) {
