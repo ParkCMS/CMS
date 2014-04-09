@@ -23,5 +23,7 @@ return array(
 	'create_before_btn'	=> 'Create Page Before',
 	'create_after_btn'	=> 'Create Page After',
 	'delete_page_btn'	=> 'Delete Page',
-	'delete_lang_btn'	=> 'Delete Language'
+	'delete_lang_btn'	=> 'Delete Language',
+	'preview_template'	=> 'Preview Template',
+	'enlarge'			=> 'Enlarge'
 );

@@ -45,6 +45,7 @@
         @show
     </div>
     <!-- Scripts -->
+    <script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
     <script src="admin_assets/js/admin.js"></script>
     <script>
     angular.module('parkAdmin').constant('BASE_URL', '{{ url() }}');

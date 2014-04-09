@@ -19,6 +19,15 @@ class Editor extends BaseEditor
 
         $model = Model::byContext($properties['lang'], $page, $properties['identifier'])->first();
 
+        if ($model === null) {
+            // Install
+            $model = new Model;
+            $model->identifier = $model->createIdentifier($properties['lang'], $page, $properties['identifier']);
+            $model->text = "";
+
+            $model->save();
+        }
+
         $form = $this->makeField('Form');
 
         $form->setAction('update');

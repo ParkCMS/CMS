@@ -12,7 +12,8 @@
     "angular-sanitize": "~1.2.15",
     "angular-dragdrop-ganarajpr": "~1.0.1",
     "angular-animate": "~1.2.15",
-    "angular-tree-control": "~0.1.4"
+    "angular-tree-control": "~0.1.4",
+    "angular-ui-tinymce": "~0.0.4"
   },
   "resolutions": {
     "bootstrap": "3.1.*"

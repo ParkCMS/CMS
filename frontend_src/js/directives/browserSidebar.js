@@ -1,4 +1,4 @@
-parkAdmin.directive("browserSidebar", ['FileBrowser', '$rootScope', '$dialogs', function(browser, $root, $dialogs) {
+parkAdmin.directive("browserSidebar", ['FileBrowser', '$rootScope', '$dialogs', 'BASE_URL', function(browser, $root, $dialogs, BASE_URL) {
     return {
         restrict: "A",
         templateUrl: 'admin/partials/browserSidebar',
@@ -25,7 +25,7 @@ parkAdmin.directive("browserSidebar", ['FileBrowser', '$rootScope', '$dialogs', 
             };
 
             scope.rename = function($event, file) {
-                var dlg = $dialogs.create('/admin/partials/rename','renameFileController',{'src': file.path, 'name': file.filename},{key: false});
+                var dlg = $dialogs.create(BASE_URL + '/admin/partials/rename','renameFileController',{'src': file.path, 'name': file.filename},{key: false});
                 dlg.result.then(function(dest) {
                     browser.rename(file.path, dest).success(function() {
                         scope.$emit('browser-needs-refresh');
@@ -49,7 +49,7 @@ parkAdmin.directive("browserSidebar", ['FileBrowser', '$rootScope', '$dialogs', 
             });
         }
     };
-}]).controller('renameFileController',function($scope,$modalInstance,data){
+}]).controller('renameFileController', ['$scope', '$modalInstance', 'data', function($scope,$modalInstance,data){
   $scope.file = {'src' : data.src, 'dest': data.name};
 
   $scope.cancel = function(){
@@ -68,4 +68,4 @@ parkAdmin.directive("browserSidebar", ['FileBrowser', '$rootScope', '$dialogs', 
     if(angular.equals(evt.keyCode,13) && !(angular.equals($scope.name,null) || angular.equals($scope.name,'')))
                 $scope.save();
   }; // end hitEnter
-});
+}]);

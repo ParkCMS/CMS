@@ -37,6 +37,7 @@ var third_party = [
     'frontend_src/bower_components/ng-flow/dist/ng-flow-standalone.min.js',
     'frontend_src/bower_components/angular-dialog-service/dialogs.min.js',
     'frontend_src/bower_components/angular-dragdrop-ganarajpr/draganddrop.js',
+    'frontend_src/bower_components/angular-ui-tinymce/src/tinymce.js'
 ]
 
 gulp.task('js', function() {

@@ -1,4 +1,4 @@
-parkAdmin.directive("editor", ['EditorService', '$dialogs', '$compile', function(EditorService, $dialogs, $compile) {
+parkAdmin.directive("editor", ['EditorService', '$dialogs', '$compile', '$rootScope', function(EditorService, $dialogs, $compile, $rootScope) {
     return {
         restrict: 'E',
         scope: {
@@ -36,7 +36,7 @@ parkAdmin.directive("editor", ['EditorService', '$dialogs', '$compile', function
                     if (typeof data['redirect'] !== 'undefined') {
                         scope.$emit('load-action', {action: data['redirect']});
                     }
-                    scope.$emit('update-page-browser');
+                    $rootScope.$broadcast('update-page-browser');
                 }
             });
 
@@ -79,7 +79,7 @@ parkAdmin.directive("editor", ['EditorService', '$dialogs', '$compile', function
                         if (typeof data['redirect'] !== 'undefined') {
                             scope.$emit('load-action', {action: data['redirect']});
                         }
-                        scope.$emit('update-page-browser');
+                        $rootScope.$broadcast('update-page-browser');
                     }
                 }).error(function(data) {
                     $dialogs.error(data.error.title, data.error.message);
