@@ -47,8 +47,6 @@ abstract class FormField implements Field
 
     abstract public function create(array $properties);
 
-    abstract public function value();
-
     public function render() {
         $attributes = $this->html->attributes($this->attributes);
         return $this->view->make('fields::' . $this->template, $this->properties + array('attributes' => $attributes));

@@ -10,7 +10,7 @@
 
 @if($workshop->seats >= 0)
     <p>
-        {{ count($workshop->registrations()) }} von {{ $workshop->seats }} Plätzen vergeben
+        {{ $workshop->occupiedSeats() }} von {{ $workshop->seats }} Plätzen vergeben
     </p>
 @endif
 

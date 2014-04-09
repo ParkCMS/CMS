@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFormTables extends Migration {
+class CreateDirlistTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,17 +12,14 @@ class CreateFormTables extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('forms', function(Blueprint $table)
+		Schema::create('dirlist', function(Blueprint $table)
 		{
 			$table->increments('id');
 
 			$table->string('identifier')->unique();
-			$table->string('email');
-			$table->string('subject');
-
-			$table->text('rules');
-
-			$table->text('attributes');
+			$table->string('title');
+			$table->string('folder');
+			$table->string('filter')->default('*');
 
 			$table->timestamps();
 		});
@@ -35,7 +32,7 @@ class CreateFormTables extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('forms');
+		Schema::drop('dirlist');
 	}
 
 }

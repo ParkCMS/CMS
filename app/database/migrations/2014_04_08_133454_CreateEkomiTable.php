@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFormTables extends Migration {
+class CreateEkomiTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,17 +12,17 @@ class CreateFormTables extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('forms', function(Blueprint $table)
+		Schema::create('ekomi', function(Blueprint $table)
 		{
 			$table->increments('id');
 
 			$table->string('identifier')->unique();
-			$table->string('email');
-			$table->string('subject');
 
-			$table->text('rules');
-
-			$table->text('attributes');
+			$table->string('source');
+			$table->string('name');
+			$table->string('link');
+			$table->float('rating');
+			$table->integer('count');
 
 			$table->timestamps();
 		});
@@ -35,7 +35,7 @@ class CreateFormTables extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('forms');
+		Schema::drop('ekomi');
 	}
 
 }

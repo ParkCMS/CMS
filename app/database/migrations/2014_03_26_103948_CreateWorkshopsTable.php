@@ -16,7 +16,7 @@ class CreateWorkshopsTable extends Migration {
 		{
 			$table->increments('id');
 
-			$table->string('identifier');
+			$table->string('identifier')->index();
 
 			$table->string('title');
 			$table->text('content');

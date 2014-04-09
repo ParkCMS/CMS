@@ -4,6 +4,9 @@ namespace Parkcms;
 
 use Illuminate\Support\ServiceProvider;
 
+use Asset;
+use Config;
+
 class BootServiceProvider extends ServiceProvider {
 
     /**
@@ -20,9 +23,9 @@ class BootServiceProvider extends ServiceProvider {
      */
     public function register()
     {
-        if(!isset($theme) || is_null($theme)) {
-            $theme = 'default';
-        }
+        $theme = Config::get('parkcms.theme');
+
+        $this->app['current_theme_name'] = $theme;
 
         $this->app['current_theme'] = public_path('themes/' . $theme . '/views/');
         $this->app['default_theme'] = public_path('themes/default/views/');
@@ -31,6 +34,11 @@ class BootServiceProvider extends ServiceProvider {
             'parkcms-views',
             array($this->app['current_theme'], $this->app['default_theme'])
         );
+
+        Asset::add('main', 'themes/' . $theme . '/css/main.css');
+
+        Asset::add('jquery', 'themes/default/js/jquery.min.js');
+        Asset::add('bootstrap', 'themes/default/js/bootstrap.min.js', array('jquery'));
     }
 
     /**

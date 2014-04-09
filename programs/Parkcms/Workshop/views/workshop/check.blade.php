@@ -26,9 +26,6 @@
                 <td width="50%">{{ $part->title }}</td>
                 <td>{{ round($part->price, 2) * $p->step()->prev->get($part->id) }}&euro;</td>
             </tr>
-            <tr>
-                <td colspan="2">{{ $part->description }}</td>
-            </tr>
 @endif
 @endforeach
             <tr><td colspan="2">&nbsp;</td></tr>

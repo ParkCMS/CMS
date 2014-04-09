@@ -24,12 +24,13 @@
                             <option value="{{ $item }}" @if($p->step()->get($part->id) == $item) selected="selected"@endif>{{ $item }}</option>
                         @endforeach
                     </select>
+                    ({{ round($part->price, 2) }} &euro;)
                 </label>
             </div>
         @else
             <div class="checkbox">
                 <label>
-                    <span data-toggle="tooltip" data-position="bottom" title="{{ $part->description }}">{{ $part->title }}</span>
+                    <span data-toggle="tooltip" data-position="bottom" title="{{ $part->description }}">{{ $part->title }} ({{ round($part->price, 2) }} &euro;)</span>
                     <input type="checkbox" name="parts[{{ $part->id }}]" value="1" @if($p->step()->get($part->id)) checked="checked"@endif />
                 </label>
             </div>

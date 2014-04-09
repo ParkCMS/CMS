@@ -89,7 +89,7 @@ parkAdmin.directive("editor", ['EditorService', '$dialogs', '$compile', '$rootSc
                         scope.$emit('load-action', {'action': 'index'});
                     }
                 });
-                event.preventDefault();
+                // event.preventDefault();
             });
         }
     };
@@ -103,6 +103,20 @@ parkAdmin.directive("editor", ['EditorService', '$dialogs', '$compile', '$rootSc
             element.attr('href', '#');
             element.bind('click', function(event) {
                 scope.$emit('load-action', {'action': attributes.loadAction, 'params': scope.loadParams});
+                event.preventDefault();
+            });
+        }
+    }
+}]).directive('callAction', [function() {
+    return {
+        restrict: 'A',
+        scope: {
+            loadParams: '='
+        },
+        link: function (scope, element, attributes) {
+            element.attr('href', '#');
+            element.bind('click', function(event) {
+                scope.$emit('call-action', {'action': attributes.callAction, 'params': scope.loadParams});
                 event.preventDefault();
             });
         }

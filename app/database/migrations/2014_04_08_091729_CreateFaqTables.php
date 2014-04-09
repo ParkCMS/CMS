@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFormTables extends Migration {
+class CreateFaqTables extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,17 +12,22 @@ class CreateFormTables extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('forms', function(Blueprint $table)
+		Schema::create('faq', function(Blueprint $table)
 		{
 			$table->increments('id');
 
 			$table->string('identifier')->unique();
-			$table->string('email');
-			$table->string('subject');
 
-			$table->text('rules');
+			$table->timestamps();
+		});
 
-			$table->text('attributes');
+		Schema::create('faq_questions', function(Blueprint $table) {
+			$table->increments('id');
+
+			$table->integer('faq_id')->index();
+
+			$table->string('question');
+			$table->text('answer');
 
 			$table->timestamps();
 		});
@@ -35,7 +40,8 @@ class CreateFormTables extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('forms');
+		Schema::drop('faq');
+		Schema::drop('faq_questions');
 	}
 
 }
