@@ -32,5 +32,6 @@
         </footer>
 
         <pcms-scripts />
+        <script type="text/javascript" src="{{ theme_path('js/main.js') }}"></script>
 	</body>
 </html>
