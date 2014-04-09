@@ -10,7 +10,8 @@ parkAdmin.directive("pageBrowser", ['$window', function($window) {
 
             scope.$emit('browser-load-start');
             scope.browserUrl = scope.src;
-
+            frame[0].contentWindow.location.href = scope.src;
+            
             frame.on('load', function(ev) {
                 var frameURL = frame[0].contentWindow.location.href;
                 var frameContent = angular.element(frame[0].contentWindow.document);
