@@ -8,6 +8,7 @@ class Content extends FormField
         'name' => '',
         'class' => '',
         'value' => '',
+        'wysiwyg'   => 'true',
         'label' => false
     );
 
