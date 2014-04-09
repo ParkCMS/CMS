@@ -13,7 +13,7 @@ class EkomiSeeder extends Seeder {
     {
         Eloquent::unguard();
 
-        Ekomi::create(array(
+        /*Ekomi::create(array(
             'identifier'  => 'global-ekomi',
             'link'  => '',
             'name' => 'Example',
@@ -22,6 +22,6 @@ class EkomiSeeder extends Seeder {
             'count' => 0,
             'created_at' => new \DateTime('-1 month'),
             'updated_at' => new \DateTime('-1 month'),
-        ));
+        ));*/
     }
 }
