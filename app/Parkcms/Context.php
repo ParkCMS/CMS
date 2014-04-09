@@ -4,6 +4,7 @@ namespace Parkcms;
 
 use Parkcms\Models\Page;
 
+use Config;
 use Request;
 
 class Context {
@@ -59,7 +60,7 @@ class Context {
 
     public function theme()
     {
-        return 'default';
+        return Config::get('parkcms.theme');
     }
     
 }
