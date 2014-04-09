@@ -28,7 +28,10 @@
 		"psr-4": {
 			"Parkcms\\": "app/Parkcms",
 			"Programs\\": "programs"
-		}
+		},
+		"files": [
+			"app/Parkcms/helpers.php"
+		]
 	},
 	"scripts": {
 		"post-install-cmd": [

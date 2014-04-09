@@ -26,6 +26,8 @@ class BootServiceProvider extends ServiceProvider {
             $theme = 'park';
         }
 
+        $this->app['current_theme_name'] = $theme;
+
         $this->app['current_theme'] = public_path('themes/' . $theme . '/views/');
         $this->app['default_theme'] = public_path('themes/default/views/');
 
@@ -38,8 +40,6 @@ class BootServiceProvider extends ServiceProvider {
 
         Asset::add('jquery', 'themes/default/js/jquery.min.js');
         Asset::add('bootstrap', 'themes/default/js/bootstrap.min.js', array('jquery'));
-
-        Asset::add('main', 'themes/default/js/main.js', array('bootstrap'));
     }
 
     /**
