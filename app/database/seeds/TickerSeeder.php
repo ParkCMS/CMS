@@ -15,7 +15,7 @@ class TickerSeeder extends Seeder {
         Eloquent::unguard();
 
         $en = Ticker::create(array(
-            'identifier'  => 'de-home-ticker',
+            'identifier'  => 'en-home-ticker',
             'title'       => 'Ticker',
             'description' => 'A cool ticker!',
         ));

@@ -16,7 +16,7 @@ class CreateFormTables extends Migration {
 		{
 			$table->increments('id');
 
-			$table->string('identifier');
+			$table->string('identifier')->unique();
 			$table->string('email');
 			$table->string('subject');
 

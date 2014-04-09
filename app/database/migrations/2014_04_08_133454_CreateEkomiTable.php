@@ -16,7 +16,7 @@ class CreateEkomiTable extends Migration {
 		{
 			$table->increments('id');
 
-			$table->string('identifier');
+			$table->string('identifier')->unique();
 
 			$table->string('source');
 			$table->string('name');

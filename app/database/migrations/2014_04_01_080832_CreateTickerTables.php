@@ -16,7 +16,7 @@ class CreateTickerTables extends Migration {
 		{
 			$table->increments('id');
 
-			$table->string('identifier');
+			$table->string('identifier')->unique();
 
 			$table->string('title');
 			$table->text('description');

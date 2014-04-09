@@ -16,7 +16,7 @@ class CreateFaqTables extends Migration {
 		{
 			$table->increments('id');
 
-			$table->string('identifier');
+			$table->string('identifier')->unique();
 
 			$table->timestamps();
 		});
