@@ -5,6 +5,7 @@ namespace Parkcms;
 use Illuminate\Support\ServiceProvider;
 
 use Asset;
+use Config;
 
 class BootServiceProvider extends ServiceProvider {
 
@@ -22,9 +23,7 @@ class BootServiceProvider extends ServiceProvider {
      */
     public function register()
     {
-        if(!isset($theme) || is_null($theme)) {
-            $theme = 'park';
-        }
+        $theme = Config::get('parkcms.theme');
 
         $this->app['current_theme_name'] = $theme;
 
