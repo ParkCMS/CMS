@@ -4,6 +4,7 @@ return array(
     'dashboard' => 'Dashboard',
     'pages'     => 'Pages',
     'files'     => 'Files',
+    'users'     => 'Users',
     'toggleNav' => 'Toggle navigation',
     'logout'    => 'Logout',
     'account_settings' => 'Account settings',

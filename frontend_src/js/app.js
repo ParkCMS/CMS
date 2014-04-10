@@ -14,6 +14,10 @@ parkAdmin.config(['$routeProvider', '$httpProvider', 'flowFactoryProvider', func
         controller: 'filesController',
         templateUrl: 'admin/partials/files'
     })
+    .when('/users', {
+        controller: 'usersController',
+        templateUrl: 'admin/partials/users'
+    })
     .otherwise({redirectTo: '/'});
 
     $httpProvider.interceptors.push(['$q', '$rootScope', '$location', 'BASE_URL', function($q, $rootScope, $location, BASE_URL) {
