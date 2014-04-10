@@ -7,6 +7,8 @@ use Parkcms\Programs\Manager;
 
 use Illuminate\Http\RedirectResponse;
 
+use Lang;
+
 class PageController extends Controller {
 
     protected $manager;
@@ -22,6 +24,8 @@ class PageController extends Controller {
      */
     public function __construct(Manager $manager) {
         $this->manager = $manager;
+
+        Lang::addNamespace('theme', public_path('themes/' . App::make('current_theme_name') . '/lang/'));
 
         Parser::setPrefix('pcms-');
     }

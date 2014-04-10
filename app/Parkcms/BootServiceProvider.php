@@ -36,8 +36,6 @@ class BootServiceProvider extends ServiceProvider {
             array($this->app['current_theme'], $this->app['default_theme'])
         );
 
-        Lang::addNamespace('theme', public_path('themes/' . $theme . '/lang/'));
-
         Asset::add('main', 'themes/' . $theme . '/css/main.css');
 
         Asset::add('jquery', 'themes/default/js/jquery.min.js');
