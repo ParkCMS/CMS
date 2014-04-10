@@ -78,9 +78,9 @@ class Editor extends BaseEditor
 
             $model->save();
 
-            return array('message' => 'Form updated successfully', 'type' => 'success', 'redirect' => 'index');
+            return array('success' => array('message' => 'Form updated successfully'), 'redirect' => 'index');
         } else {
-            return \Response::json(array('error' => array('message' => 'Validation failed', 'errors' => json_encode($validator->messages()))), 400);
+            return array('error' => array('message' => 'Validation failed', 'errors' => json_encode($validator->messages()->all())));
         }
     }
 }

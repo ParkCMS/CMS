@@ -1,17 +1,13 @@
-parkAdmin.directive("editor", ['EditorService', '$dialogs', '$compile', '$rootScope', function(EditorService, $dialogs, $compile, $rootScope) {
+parkAdmin.directive("editor", ['EditorService', '$dialogs', '$compile', '$rootScope', 'growlNotifications', function(EditorService, $dialogs, $compile, $rootScope, growl) {
     return {
         restrict: 'E',
         scope: {
             data: '='
         },
         transclude: true,
-        template: '<div class="editor-messages"><alert ng-if="message.message" type="message.type" close="message.close()">{{ message.message }}</alert></div><div class="editor-content" ng-transclude>Loading...</div>',
+        template: '<div class="editor-messages" growl-notifications></div><div class="editor-content" ng-transclude>Loading...</div>',
         link: function(scope, element, attributes) {
             scope.form = {};
-            scope.message = {};
-            scope.message.close = function() {
-                scope.message.message = null;
-            };
 
             var _loadSuccess = function(data, status, headers) {
                 var header = headers();
@@ -30,6 +26,14 @@ parkAdmin.directive("editor", ['EditorService', '$dialogs', '$compile', '$rootSc
                 element.find('.editor-content').html( compiled(scope) );
             }
 
+            var _showNotification = function(data) {
+                if (typeof data['error'] !== 'undefined') {
+                    growl.add(data.error.message, 'danger', 3000);
+                } else if (typeof data['success'] !== 'undefined') {
+                    growl.add(data.success.message, 'success', 3000);
+                }
+            }
+
             EditorService.loadAction(
                 scope.data.type,
                 scope.data.identifier,
@@ -42,13 +46,12 @@ parkAdmin.directive("editor", ['EditorService', '$dialogs', '$compile', '$rootSc
             });
 
             scope.$on('updated-editor', function(ev, data) {
-                if (typeof data['message'] !== 'undefined') {
-                    scope.message.type = data['type'];
-                    scope.message.message = data['message'];
+                _showNotification(data);
 
-                    if (typeof data['redirect'] !== 'undefined') {
-                        scope.$emit('load-action', {action: data['redirect']});
-                    }
+                if (typeof data['redirect'] !== 'undefined') {
+                    scope.$emit('load-action', {action: data['redirect']});
+                }
+                if (!data['error']) {
                     $rootScope.$broadcast('update-page-browser');
                 }
             });
@@ -81,13 +84,11 @@ parkAdmin.directive("editor", ['EditorService', '$dialogs', '$compile', '$rootSc
                     action.action,
                     action.params
                 ).success(function(data) {
-                    if (typeof data['message'] !== 'undefined') {
-                        scope.message.type = data['type'];
-                        scope.message.message = data['message'];
-
-                        if (typeof data['redirect'] !== 'undefined') {
-                            scope.$emit('load-action', {action: data['redirect']});
-                        }
+                    _showNotification(data);
+                    if (typeof data['redirect'] !== 'undefined') {
+                        scope.$emit('load-action', {action: data['redirect']});
+                    }
+                    if (!data['error']) {
                         $rootScope.$broadcast('update-page-browser');
                     }
                 }).error(function(data) {

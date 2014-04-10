@@ -14,7 +14,7 @@ class Editor extends BaseEditor
 
     public function index($properties)
     {
-        
+
         $page = (isset($properties['global']) && $properties['global'] === 'global') ? false : $properties['page'];
 
         $model = Model::byContext($properties['lang'], $page, $properties['identifier'])->first();
@@ -81,6 +81,6 @@ class Editor extends BaseEditor
 
         $model->save();
 
-        return array('message' => 'Field updated successfully', 'type' => 'success', 'redirect' => 'index');
+        return array('success' => array('message' => 'Field updated successfully'), 'redirect' => 'index');
     }
 }

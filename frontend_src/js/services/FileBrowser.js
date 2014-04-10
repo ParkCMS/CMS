@@ -119,7 +119,9 @@ parkAdmin.service("FileBrowser", ['$http', 'BASE_URL', function($http, BASE_URL)
         //        http: //kevin.vanzonneveld.net
         // original by: Ozh
         // improved by: XoraX (http://www.xorax.info)
-
+        if (!path) {
+            return '/';
+        }
         return path.replace(/\\/g, '/').replace(/\/[^\/]*\/?$/, '');
     }
 
