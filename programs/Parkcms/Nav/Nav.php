@@ -71,7 +71,7 @@ class Nav extends ProgramAbstract {
 
     protected function closeLIUL(&$depth, $targetDepth = 0) {
         while($depth > $targetDepth) {
-            $this->content.= '</ul></li>';
+            $this->content.= '</li></ul>';
             $depth--;
         }
     }
