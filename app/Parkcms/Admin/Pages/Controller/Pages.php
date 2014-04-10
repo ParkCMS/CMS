@@ -29,7 +29,7 @@ class Pages extends BaseController
                 $templates = $that->fetchTemplates();
 
                 foreach ($templates as $template) {
-                    if ($value['id'] === $template['id']) {
+                    if ($value === $template['id']) {
                         return true;
                     }
                 }
@@ -62,6 +62,48 @@ class Pages extends BaseController
         return Response::json($templates);
     }
 
+    public function update()
+    {
+        $page = Input::get('page');
+        $rules = array(
+            'id'            => 'exists:pages',
+            'title'         => 'required',
+            'alias'         => array('required', 'regex:/^([A-Za-z0-9-_.])+$/'),
+            'template'      => 'required|valid_template',
+            'unpublished'   => 'required|min:0|max:2'
+        );
+
+        $validator = Validator::make($page, $rules);
+        if ($validator->fails()) {
+            return Response::json(array('error' => array('message' => 'Validation failed!', 'errors' => json_encode($validator->messages()))), 400);
+        } else {
+            $model = Page::find($page['id']);
+            $model->title = $page['title'];
+            $model->template = $page['template'];
+            $model->type = 'page';
+            $model->unpublished = $page['unpublished'];
+
+            if ($model->save()) {
+                return Response::json(array('type' => 'success', 'message' => 'Page created successfully!'));
+            } else {
+                return Response::json(array('error' => array('message' => 'Unable to save entry!')), 400);
+            }
+        }
+    }
+
+    public function delete()
+    {
+        $page = Input::get('page');
+
+        $model = Page::find($page);
+        if ($model === null) {
+            return Response::json(array('error' => array('message' => 'Page not found!')), 400);
+        } else {
+            $model->delete();
+            return Response::json(array('type' => 'success', 'message' => 'Page was deleted!'));
+        }
+    }
+
     public function create()
     {
         if (!(Input::has('page') && Input::has('position') && Input::has('relativeId'))) {
@@ -85,12 +127,12 @@ class Pages extends BaseController
 
         $validator = Validator::make($page, $rules);
         if ($validator->fails()) {
-            return Response::json(array('error' => array('message' => 'Validation failed!', 'errors' => $validator->messages())), 400);
+            return Response::json(array('error' => array('message' => 'Validation failed!', 'errors' => json_encode($validator->messages()))), 400);
         } else {
             $model = new Page;
             $model->title = $page['title'];
             $model->alias = $page['alias'];
-            $model->template = $page['template']['id'];
+            $model->template = $page['template'];
             $model->type = 'page';
             $model->unpublished = $page['unpublished'];
 
@@ -109,7 +151,6 @@ class Pages extends BaseController
                 
                 case 'after':
                     $model->makeChildOf($relativeModel->parent()->first());
-                    //dd('here');
                     $model->moveToRightOf($relativeModel);
                     break;
                 case 'before':

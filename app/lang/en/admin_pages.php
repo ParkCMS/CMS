@@ -25,5 +25,6 @@ return array(
 	'delete_page_btn'	=> 'Delete Page',
 	'delete_lang_btn'	=> 'Delete Language',
 	'preview_template'	=> 'Preview Template',
-	'enlarge'			=> 'Enlarge'
+	'enlarge'			=> 'Enlarge',
+	'update_page'		=> 'Update Page'
 );

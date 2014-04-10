@@ -1,4 +1,4 @@
-parkAdmin.directive("pageDetails", ['$window', 'PagesService', function($window, PagesService) {
+parkAdmin.directive("pageDetails", ['PagesService', '$dialogs', 'BASE_URL', function(PagesService, $dialogs, BASE_URL) {
     return {
         restrict: 'E',
         templateUrl: 'admin/partials/pagedetails',
@@ -7,7 +7,8 @@ parkAdmin.directive("pageDetails", ['$window', 'PagesService', function($window,
             hideDetails: '=',
             onNavigate: '&',
             onCreate: '&',
-            onDelete: '&'
+            onDelete: '&',
+            onUpdate: '&'
         },
         link: function(scope, element, attributes) {
 
@@ -27,6 +28,17 @@ parkAdmin.directive("pageDetails", ['$window', 'PagesService', function($window,
 
                 event.preventDefault();
             };
+
+            scope.preview = function(template, event) {
+                if (typeof template !== 'undefined') {
+                    $dialogs.create(BASE_URL + '/admin/partials/preview','previewController',{'template': template},{key: false});
+                }
+                event.preventDefault();
+            };
+
+            scope.updatePage = function() {
+                scope.onUpdate({page: scope.page});
+            }
         }
     };
 }]);

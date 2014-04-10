@@ -33,6 +33,8 @@ Route::group(array('prefix' => 'admin', 'before' => 'pcms_auth'), function() {
     Route::get('pages/templates', 'Parkcms\Admin\Pages\Controller\Pages@availableTemplates');
 
     Route::post('pages/create', 'Parkcms\Admin\Pages\Controller\Pages@create');
+    Route::post('pages/update', 'Parkcms\Admin\Pages\Controller\Pages@update');
+    Route::delete('pages/delete', 'Parkcms\Admin\Pages\Controller\Pages@delete');
 
     Route::get('preview/template/{template}', 'Parkcms\Admin\Pages\Controller\Preview@previewTemplate');
 });
