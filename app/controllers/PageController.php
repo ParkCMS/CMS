@@ -7,8 +7,6 @@ use Parkcms\Programs\Manager;
 
 use Illuminate\Http\RedirectResponse;
 
-use Lang;
-
 class PageController extends Controller {
 
     protected $manager;
