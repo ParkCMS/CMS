@@ -52,5 +52,7 @@
     <script>
     angular.module('parkAdmin').constant('BASE_URL', '{{ url() }}');
     </script>
+    <!-- Partials -->
+    @include('admin.compiled')
 </body>
 </html>
