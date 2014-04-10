@@ -24,6 +24,8 @@ class Form extends ProgramAbstract {
     protected $identifier;
     protected $validator;
 
+    protected $view = "";
+
     public function __construct(Context $context, Validator $validator) {
         $this->context = $context;
         $this->validator = $validator;
@@ -48,8 +50,13 @@ class Form extends ProgramAbstract {
             return false;
         }
 
+        if (View::exists('parkcms-form::'.$this->form->identifier)) {
+            $this->view = 'parkcms-form::'.$this->form->identifier;
+        } else {
+            $this->view = 'parkcms-form::default';
+        }
         try {
-            View::getFinder()->find('parkcms-form::' . $this->form->identifier);
+            View::getFinder()->find($this->view);
 
             Asset::script('data-async', 'themes/default/js/data-async.js', array('jquery', 'bootstrap'));
 
@@ -85,7 +92,7 @@ class Form extends ProgramAbstract {
             }
         }
 
-        return View::make('parkcms-form::' . $this->form->identifier, array(
+        return View::make($this->view, array(
             'action' => $url,
             'method' => 'post',
             'form' => $this->form,
