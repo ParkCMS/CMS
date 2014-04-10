@@ -7,7 +7,8 @@ parkAdmin.directive("fileBrowser", ['FileBrowser', '$dialogs', function(BrowserS
             selectDirectories: '=',
             selectFiles: '=?',
             enableDragDrop: '=',
-            toggle: '='
+            toggle: '=',
+            types: '=?'
         },
         templateUrl: 'admin/partials/filebrowser',
         link: function(scope, element, attributes, ngModelController) {
@@ -52,4 +53,17 @@ parkAdmin.directive("fileBrowser", ['FileBrowser', '$dialogs', function(BrowserS
             };
         }
     };
-}]);
+}]).filter('bytype', function() {
+    return function(files, types) {
+        if (angular.isArray(types)) {
+            var out = [];
+            for (var i = 0; i < files.length; i++) {
+                if (files[i].isDir || types.indexOf(files[i].type) !== -1) {
+                    out.push(files[i]);
+                }
+            };
+            return out;
+        }
+        return files;
+    }
+});

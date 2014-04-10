@@ -205,7 +205,8 @@ class Editor extends BaseEditor
             $file = $form->addField('FileSelect', array(
                 'name'  => 'fileselect',
                 'label' => 'Select Image or Media Preview:',
-                'value' => ''
+                'value' => '',
+                'types' => array('image/jpeg', 'image/png', 'image/gif')
             ));
 
             $link = $form->addField('Text', array(
