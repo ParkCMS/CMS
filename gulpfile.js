@@ -44,12 +44,14 @@ var third_party = [
 gulp.task('js', function() {
     return gulp.src(third_party.concat(['frontend_src/js/**/*.js']))
             .pipe(concat('admin.js'))
+            .pipe(uglify())
             .pipe(gulp.dest('public/admin_assets/js'))
             .pipe(notify({"message": "JavaScript compiled!"}));
 });
 
 gulp.task('frontjs', function() {
     return gulp.src('frontend_src/frontend/frontend.js')
+            .pipe(uglify())
             .pipe(gulp.dest('public/admin_assets/js'))
             .pipe(notify({"message": "Frontend JS compiled!"}));
 });
