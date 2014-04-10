@@ -18,4 +18,4 @@
         </div>
     </div>
 </div>
-<file-browser select-files="{{ ($select === 'files' || $select === 'both') ? 'true' : 'false' }}" select-directories="{{ ($select === 'directories' || $select === 'both') ? 'true' : 'false' }}" enable-drag-drop="false" toggle="{{$name}}_toggle" ng-model="form.{{ $name }}" ng-init="form.{{ $name }}='{{ $value }}'"></file-browser>
+<file-browser select-files="{{ ($select === 'files' || $select === 'both') ? 'true' : 'false' }}" select-directories="{{ ($select === 'directories' || $select === 'both') ? 'true' : 'false' }}" enable-drag-drop="false" toggle="{{$name}}_toggle" ng-model="form.{{ $name }}"></file-browser>

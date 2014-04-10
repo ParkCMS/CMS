@@ -6,10 +6,11 @@ use Illuminate\Foundation\Application as App;
 use Illuminate\Http\Request as Input;
 use Illuminate\View\Environment as View;
 use Illuminate\Html\HtmlBuilder as Html;
+use Illuminate\Support\Contracts\JsonableInterface;
 
 use Parkcms\Programs\Admin\Field;
 
-class Form implements Field
+class Form implements Field, JsonableInterface
 {
     private $input;
     private $view;
@@ -100,15 +101,22 @@ class Form implements Field
         $this->attributes = $attributes + $this->attributes;
     }
 
-    public function value() {
-
-    }
-
-    public function render() {
+    public function render()
+    {
         $attributes = $this->html->attributes($this->attributes);
         return $this->view->make('fields::form', array(
             'fields' => $this->fields,
             'attributes' => $attributes
         ));
+    }
+
+    public function toJson($options = 0)
+    {
+        $template = $this->render()->render();
+        $data = array();
+        foreach ($this->fields as $field) {
+            $data[$field->getName()] = $field->getValue();
+        }
+        return json_encode(array('data' => $data, 'template' => $template), $options);
     }
 }

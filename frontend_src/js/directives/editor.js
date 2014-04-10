@@ -7,6 +7,28 @@ parkAdmin.directive("editor", ['EditorService', '$dialogs', '$compile', '$rootSc
         transclude: true,
         template: '<div class="editor-messages"><alert ng-if="message.message" type="message.type" close="message.close()">{{ message.message }}</alert></div><div class="editor-content" ng-transclude>Loading...</div>',
         link: function(scope, element, attributes) {
+            scope.form = {};
+            scope.message = {};
+            scope.message.close = function() {
+                scope.message.message = null;
+            };
+
+            var _loadSuccess = function(data, status, headers) {
+                var header = headers();
+                var template = data;
+                if (header['content-type'].indexOf('json') !== -1) {
+                    template = data.template
+                }
+
+                if (typeof data.data !== 'undefined') {
+                    for (var field in data.data) {
+                        scope.form[field] = data.data[field];
+                    }
+                }
+                var compiled = $compile(template);
+
+                element.find('.editor-content').html( compiled(scope) );
+            }
 
             EditorService.loadAction(
                 scope.data.type,
@@ -14,19 +36,10 @@ parkAdmin.directive("editor", ['EditorService', '$dialogs', '$compile', '$rootSc
                 scope.data.route,
                 scope.data.lang,
                 'index'
-            ).success(function(data) {
-                var compiled = $compile(data);
-
-                element.find('.editor-content').append( compiled(scope) );
-            }).error(function(data) {
+            ).success(_loadSuccess).error(function(data) {
                 $dialogs.error(data.error.title, data.error.message);
                 scope.$emit('close-editor', scope.data.unique);
             });
-
-            scope.message = {};
-            scope.message.close = function() {
-                scope.message.message = null;
-            };
 
             scope.$on('updated-editor', function(ev, data) {
                 if (typeof data['message'] !== 'undefined') {
@@ -48,11 +61,7 @@ parkAdmin.directive("editor", ['EditorService', '$dialogs', '$compile', '$rootSc
                     scope.data.lang,
                     action.action,
                     action.params
-                ).success(function(data) {
-                    var compiled = $compile(data);
-
-                    element.find('.editor-content').html( compiled(scope) );
-                }).error(function(data) {
+                ).success(_loadSuccess).error(function(data) {
                     $dialogs.error(data.error.title, data.error.message);
                     if (action.action === 'index') {
                         scope.$emit('close-editor', scope.data.unique);
