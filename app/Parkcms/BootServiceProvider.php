@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 
 use Asset;
 use Config;
+use Lang;
 
 class BootServiceProvider extends ServiceProvider {
 
@@ -34,6 +35,8 @@ class BootServiceProvider extends ServiceProvider {
             'parkcms-views',
             array($this->app['current_theme'], $this->app['default_theme'])
         );
+
+        Lang::addNamespace('theme', public_path('themes/' . $theme . '/lang/'));
 
         Asset::add('main', 'themes/' . $theme . '/css/main.css');
 
