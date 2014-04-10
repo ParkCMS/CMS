@@ -14,6 +14,7 @@ parkAdmin.directive("pageBrowser", ['$window', function($window) {
             
             frame.on('load', function(ev) {
                 var frameURL = frame[0].contentWindow.location.href;
+                scope.browserUrl = frameURL + " - " + frame[0].contentWindow.document.title;
                 var frameContent = angular.element(frame[0].contentWindow.document);
 
                 var buttons = angular.element(frame[0].contentWindow.document.querySelectorAll('.pcms-edit-button'));
@@ -45,6 +46,27 @@ parkAdmin.directive("pageBrowser", ['$window', function($window) {
 
                 ev.preventDefault();
             })
+
+            scope.refresh = function(event) {
+                scope.$emit('browser-load-start');
+                element.find('iframe')[0].contentWindow.location.reload(true);
+
+                event.preventDefault();
+            };
+
+            scope.back = function(event) {
+                scope.$emit('browser-load-start');
+                element.find('iframe')[0].contentWindow.history.back();
+
+                event.preventDefault();
+            };
+
+            scope.forward = function(event) {
+                scope.$emit('browser-load-start');
+                element.find('iframe')[0].contentWindow.history.forward();
+
+                event.preventDefault();
+            }
         }
     };
 }]);
