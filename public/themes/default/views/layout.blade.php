@@ -5,7 +5,7 @@
 
         <pcms-styles />
 
-    	<title>ParkCMS</title>
+    	<title>ParkCMS &mdash; {{ $page->title }}</title>
 	</head>
 	<body>
         <div class="container">
