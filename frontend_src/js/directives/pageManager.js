@@ -1,4 +1,4 @@
-parkAdmin.directive("pageManager", ['$window', 'PagesService', function($window, PagesService) {
+parkAdmin.directive("pageManager", ['$window', 'PagesService', '$dialogs', function($window, PagesService, $dialogs) {
     return {
         restrict: 'E',
         templateUrl: 'admin/partials/pageManager',
@@ -23,7 +23,16 @@ parkAdmin.directive("pageManager", ['$window', 'PagesService', function($window,
             };
 
             scope.deletePage = function (page) {
-                console.log('Delete ' + page.title);
+                var dlg = $dialogs.confirm(attributes.deletePageTitle, attributes.deletePageDescription);
+                dlg.result.then(function() {
+                    PagesService.deletePage(page).success(function() {
+                        scope.reload();
+                    });
+                });
+            }
+
+            scope.updatePage = function (page) {
+                PagesService.updatePage(page);
             }
 
             scope.reload = function() {

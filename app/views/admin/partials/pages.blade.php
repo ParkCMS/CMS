@@ -12,7 +12,7 @@
 				<tab-heading>
 					{{ trans('admin_pages.page_manager') }}
 				</tab-heading>
-				<page-manager on-navigate="navigateTo(page)"></page-manager>
+				<page-manager on-navigate="navigateTo(page)" delete-page-title="Delete page" delete-page-description="Do you really want to delete the page?"></page-manager>
 			</tab>
 			<tab class="slide" ng-repeat="editor in tabs.editors track by editor.unique" active="editor.active">
 				<tab-heading>
