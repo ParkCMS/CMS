@@ -2,7 +2,7 @@
     @if ($label)
         <label for="form-{{ $name }}">{{ $label }}</label>
     @endif
-    <select class="form-control col-xs-11" ng-model="change.{{ $name }}" ng-init="change.{{ $name }}={{ $value }}" {{ $attributes }}>
+    <select class="form-control col-xs-11" ng-model="change.{{ $name }}" {{ $attributes }}>
         @foreach($values as $key => $val)
             <option value="{{ $key }}">{{ $val }}</option>
         @endforeach

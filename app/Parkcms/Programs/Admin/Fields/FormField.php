@@ -45,6 +45,16 @@ abstract class FormField implements Field
         $this->properties['value'] = $value;
     }
 
+    public function getValue()
+    {
+        return $this->properties['value'];
+    }
+
+    public function getName()
+    {
+        return $this->properties['name'];
+    }
+
     abstract public function create(array $properties);
 
     public function render() {

@@ -7,6 +7,7 @@ use Input;
 use Controller;
 use Response;
 use Request;
+use Illuminate\Support\Contracts\JsonableInterface;
 
 use Parkcms\Programs\Admin\Field;
 
@@ -39,10 +40,12 @@ class EditorController extends Controller
 
         $result = $editor->route($action, Request::method(), Input::except('type', 'action'));
 
-        if ($result instanceof Field) {
+        if ($result instanceof JsonableInterface) {
+            return Response::json($result);
+        } else if ($result instanceof Field) {
             return $result->render();
         } else if(is_array($result)) {
-            return json_encode($result);
+            return Response::json($result);
         } else {
             return $result;
         }
