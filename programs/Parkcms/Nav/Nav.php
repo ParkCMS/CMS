@@ -35,7 +35,7 @@ class Nav extends ProgramAbstract {
             $this->content.= '<a href="' . URL::to($this->context->lang() . '/' . $descendant->alias) . '"';
 
             if($this->hasChildren($descendant)) {
-                $this->content.= ' class="dropdown-toggle" data-toggle="dropdown"';
+                $this->content.= ' class="slide-toggle" data-toggle="slide"';
             }
 
             $this->content.= '>' . $descendant->title;
@@ -47,7 +47,7 @@ class Nav extends ProgramAbstract {
             $this->content.= '</a>';
 
             if($this->hasChildren($descendant)) {
-                $this->content.= '<ul class="dropdown-menu">';
+                $this->content.= '<ul class="slide-menu">';
             } else {
                 $this->content.= '</li>';
             }
