@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ChangeWorkshopTable extends Migration {
+class ChangeWorkshopTable2 extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -14,10 +14,7 @@ class ChangeWorkshopTable extends Migration {
 	{
 		Schema::table('workshops', function(Blueprint $table)
 		{
-			$table->dropColumn('registration_mail');
-
-			$table->string('registration_mail')->after('terms');
-			$table->text('registration_mail_body')->after('registration_mail');
+			$table->integer('blocked_seats')->default(0)->after('seats');
 		});
 	}
 
