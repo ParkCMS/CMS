@@ -43,7 +43,8 @@ In case refusal of registration, workshop cancellation or cancellation by the re
 The organizer preserves the right to cancel the workshop in case of too few participants and/or other important reasons. A cancellation because of too few participants would have to be announced by May 29th,2010. In any case of workshop cancellation, all paid fees will be transferred back in full.
 The organizer does not assume any liability for other costs in connection with a workshop cancellation.
 The registrant has the right to cancel his or her participation.',
-            'registration_mail' => 'Thank you for registration',
+            'registration_mail' => 'friedrich@ueberreiter.com',
+            'registration_mail_body' => 'Thank you for registration',
             'date' => new \DateTime('-1 month'),
             'seats' => '50',
             'active' => '0'
@@ -76,7 +77,8 @@ In case refusal of registration, workshop cancellation or cancellation by the re
 The organizer preserves the right to cancel the workshop in case of too few participants and/or other important reasons. A cancellation because of too few participants would have to be announced by May 29th,2010. In any case of workshop cancellation, all paid fees will be transferred back in full.
 The organizer does not assume any liability for other costs in connection with a workshop cancellation.
 The registrant has the right to cancel his or her participation.',
-            'registration_mail' => 'Thank you for registration',
+            'registration_mail' => 'friedrich@ueberreiter.com',
+            'registration_mail_body' => 'Thank you for registration',
             'date' => new \DateTime('+1 month'),
             'seats' => '50',
             'active' => '1'

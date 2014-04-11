@@ -84,10 +84,16 @@ class Editor extends BaseEditor {
                 'label' => 'Terms:'
             ));
 
-            $registration_mail = $form->addField('Content', array(
+            $registration_mail = $form->addField('Text', array(
                 'name'  => 'registration_mail',
                 'value' => '',
                 'label' => 'Registration Mail:'
+            ));
+
+            $registration_mail_body = $form->addField('Content', array(
+                'name'  => 'registration_mail_body',
+                'value' => '',
+                'label' => 'Registration Mail Body:'
             ));
 
             $date = $form->addField('Text', array(
@@ -110,6 +116,7 @@ class Editor extends BaseEditor {
                 $content->setValue($workshop->content);
                 $terms->setValue($workshop->terms);
                 $registration_mail->setValue($workshop->registration_mail);
+                $registration_mail_body->setValue($workshop->registration_mail_body);
                 $date->setValue($workshop->date->format('Y-m-d'));
                 $seats->setValue($workshop->seats);
 
