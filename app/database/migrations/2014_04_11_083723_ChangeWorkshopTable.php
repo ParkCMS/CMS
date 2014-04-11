@@ -15,7 +15,10 @@ class ChangeWorkshopTable extends Migration {
 		Schema::table('workshops', function(Blueprint $table)
 		{
 			$table->dropColumn('registration_mail');
+		});
 
+		Schema::table('workshops', function(Blueprint $table)
+		{
 			$table->string('registration_mail')->after('terms');
 			$table->text('registration_mail_body')->after('registration_mail');
 		});
