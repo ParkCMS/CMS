@@ -13,6 +13,7 @@ use Illuminate\Filesystem\Filesystem;
 
 use Lang;
 use Input;
+use Mail;
 use Redirect;
 use Session;
 use View;
@@ -122,6 +123,8 @@ class Complete extends Step {
                     $part->registrations()->attach($registration, array('value' => $partValue));
                 }
             }
+
+            $this->sendmail($registration);
         }
 
         return View::make('parkcms-workshop::' . $this->workshop->identifier .  '.' . $this->name(), array(
@@ -161,7 +164,69 @@ class Complete extends Step {
         );
     }
 
-    public function email() {
+    public function sendmail(Registration $registration) {
+        $fullName = '';
+        if ($registration->title != '') {
+            $fullName.= $registration->title . ' '; 
+        } 
+        $fullName .= $registration->first_name . ' ';
+        if ($registration->middle_name != '') {
+            $fullName .= $registration->middle_name . ' ';
+        }
+        $fullName .= $registration->sur_name;
 
+        Mail::send(
+            'parkcms-workshop::mail',
+            array(
+                'fullName' => $fullName,
+                'registration' => $registration,
+                'workshop' => $this->workshop,
+                'fields' => array(
+                    'address',
+                    'institution',
+                    'city',
+                    'zip',
+                    'country',
+                    'email',
+                    'phone',
+                    'fax',
+                )
+            ),
+            function($message) use($registration) {
+                $message->from('info@beauli.de')
+                        ->to($registration->email)
+                        ->subject(
+                            '[www.beauli.de] beauli - Your registration for the workshop "' .
+                            $this->workshop->title . '"'
+                        );
+            }
+        );
+
+        Mail::send(
+            'parkcms-workshop::adminmail',
+            array(
+                'fullName' => $fullName,
+                'registration' => $registration,
+                'workshop' => $this->workshop,
+                'fields' => array(
+                    'address',
+                    'institution',
+                    'city',
+                    'zip',
+                    'country',
+                    'email',
+                    'phone',
+                    'fax',
+                )
+            ),
+            function($message) use($registration) {
+                $message->from('info@beauli.de')
+                        ->to($this->workshop->registration_mail)
+                        ->subject(
+                            '[www.beauli.de] beauli - New registration for the workshop "' .
+                            $this->workshop->title . '"'
+                        );
+            }
+        );
     }
 }
