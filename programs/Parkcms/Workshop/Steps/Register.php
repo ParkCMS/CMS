@@ -28,6 +28,7 @@ class Register extends Step {
                 'zip' => 'required|integer',
                 'country' => 'required|min:5',
                 'email' => 'required|email',
+                'phone' => 'required|min:5'
             )
         );
 
