@@ -21,8 +21,7 @@ class CreateWorkshopsTable extends Migration {
 			$table->string('title');
 			$table->text('content');
 			$table->text('terms');
-			$table->string('registration_mail');
-			$table->text('registration_mail_body');
+			$table->text('registration_mail');
 
 			$table->date('date');
 			$table->integer('seats')->unsigned();
