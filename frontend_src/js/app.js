@@ -1,4 +1,4 @@
-var parkAdmin = angular.module('parkAdmin', ['ngRoute', 'ngAnimate','ui.bootstrap', 'dialogs', 'flow', 'ngDragDrop','ui.tinymce']);
+var parkAdmin = angular.module('parkAdmin', ['ngRoute', 'ngAnimate','ui.bootstrap', 'dialogs', 'flow', 'ngDragDrop','ui.tinymce', 'growlNotifications']);
 
 parkAdmin.config(['$routeProvider', '$httpProvider', 'flowFactoryProvider', function($routeProvider, $httpProvider, flowFactoryProvider) {
 
@@ -13,6 +13,10 @@ parkAdmin.config(['$routeProvider', '$httpProvider', 'flowFactoryProvider', func
     .when('/files', {
         controller: 'filesController',
         templateUrl: 'admin/partials/files'
+    })
+    .when('/users', {
+        controller: 'usersController',
+        templateUrl: 'admin/partials/users'
     })
     .otherwise({redirectTo: '/'});
 

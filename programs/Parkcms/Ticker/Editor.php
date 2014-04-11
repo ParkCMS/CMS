@@ -90,9 +90,9 @@ class Editor extends BaseEditor
         $ticker->description = $form['description'];
 
         if ($ticker->save()) {
-            return array('message' => 'Ticker updated successfully', 'type' => 'success', 'redirect' => 'index');
+            return array('success' => array('message' => 'Ticker updated successfully'), 'redirect' => 'index');
         } else {
-            return array('message' => 'The given ticker could not be saved!', 'type' => 'error', 'redirect' => 'index');
+            return array('error' => array('message' => 'The given ticker could not be saved!'), 'redirect' => 'index');
         }
     }
 
@@ -127,9 +127,9 @@ class Editor extends BaseEditor
         $item->link = $form['link'];
 
         if ($item->save()) {
-            return array('message' => 'Field updated successfully', 'type' => 'success', 'redirect' => 'index');
+            return array('success' => array('message' => 'Field updated successfully'), 'redirect' => 'index');
         } else {
-            return array('message' => 'The given item could not be saved!', 'type' => 'error', 'redirect' => 'index');
+            return array('error' => array('message' => 'The given item could not be saved!'), 'redirect' => 'index');
         }
     }
 
@@ -148,9 +148,9 @@ class Editor extends BaseEditor
         $item->ticker_id = $ticker->id;
 
         if ($item->save()) {
-            return array('message' => 'Field created successfully', 'type' => 'success', 'redirect' => 'index');
+            return array('success' => array('message' => 'Field created successfully'), 'redirect' => 'index');
         } else {
-            return array('message' => 'The given item could not be saved!', 'type' => 'error', 'redirect' => 'index');
+            return array('error' => array('message' => 'The given item could not be saved!'), 'redirect' => 'index');
         }
     }
 
@@ -163,9 +163,9 @@ class Editor extends BaseEditor
         }
 
         if ($item->delete()) {
-            return array('message' => 'Item deleted successfully', 'type' => 'success', 'redirect' => 'index');
+            return array('success' => array('message' => 'Item deleted successfully'), 'redirect' => 'index');
         } else {
-            return array('message' => 'The given item could not be deleted!', 'type' => 'error', 'redirect' => 'index');
+            return array('error' => array('message' => 'The given item could not be deleted!'), 'redirect' => 'index');
         }
     }
 
@@ -205,7 +205,8 @@ class Editor extends BaseEditor
             $file = $form->addField('FileSelect', array(
                 'name'  => 'fileselect',
                 'label' => 'Select Image or Media Preview:',
-                'value' => ''
+                'value' => '',
+                'types' => array('image/jpeg', 'image/png', 'image/gif')
             ));
 
             $link = $form->addField('Text', array(

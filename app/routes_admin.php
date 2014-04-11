@@ -31,10 +31,15 @@ Route::group(array('prefix' => 'admin', 'before' => 'pcms_auth'), function() {
 
     Route::get('pages/tree', 'Parkcms\Admin\Pages\Controller\Pages@pageTree');
     Route::get('pages/templates', 'Parkcms\Admin\Pages\Controller\Pages@availableTemplates');
+    Route::get('pages/list', 'Parkcms\Admin\Pages\Controller\Pages@linkList');
 
     Route::post('pages/create', 'Parkcms\Admin\Pages\Controller\Pages@create');
     Route::post('pages/update', 'Parkcms\Admin\Pages\Controller\Pages@update');
     Route::delete('pages/delete', 'Parkcms\Admin\Pages\Controller\Pages@delete');
+
+    Route::get('users/get', 'Parkcms\Admin\Users\Controller@getUserList');
+    Route::post('users/create', 'Parkcms\Admin\Users\Controller@create');
+    Route::post('users/update', 'Parkcms\Admin\Users\Controller@update');
 
     Route::get('preview/template/{template}', 'Parkcms\Admin\Pages\Controller\Preview@previewTemplate');
 });

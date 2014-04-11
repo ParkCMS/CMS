@@ -37,18 +37,21 @@ var third_party = [
     'frontend_src/bower_components/ng-flow/dist/ng-flow-standalone.min.js',
     'frontend_src/bower_components/angular-dialog-service/dialogs.min.js',
     'frontend_src/bower_components/angular-dragdrop-ganarajpr/draganddrop.js',
-    'frontend_src/bower_components/angular-ui-tinymce/src/tinymce.js'
-]
+    'frontend_src/bower_components/angular-ui-tinymce/src/tinymce.js',
+    'frontend_src/bower_components/angular-growl-notifications/dist/growl-notifications.min.js'
+];
 
 gulp.task('js', function() {
     return gulp.src(third_party.concat(['frontend_src/js/**/*.js']))
             .pipe(concat('admin.js'))
+            .pipe(uglify())
             .pipe(gulp.dest('public/admin_assets/js'))
             .pipe(notify({"message": "JavaScript compiled!"}));
 });
 
 gulp.task('frontjs', function() {
     return gulp.src('frontend_src/frontend/frontend.js')
+            .pipe(uglify())
             .pipe(gulp.dest('public/admin_assets/js'))
             .pipe(notify({"message": "Frontend JS compiled!"}));
 });

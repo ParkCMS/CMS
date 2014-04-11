@@ -10,6 +10,7 @@ use Symfony\Component\Finder\Finder;
 use Response;
 use Input;
 use Validator;
+use URL;
 
 class Pages extends BaseController
 {
@@ -53,6 +54,22 @@ class Pages extends BaseController
         $response->header('Content-Type', 'application/json');
 
         return $response;
+    }
+
+    public function linkList()
+    {
+        $trees = Page::roots()->get();
+
+        $linklist = array();
+
+        foreach ($trees as $tree) {
+            $nodes = $tree->descendants()->where('unpublished', '<=', 1)->get();
+            foreach ($nodes as $node) {
+                $linklist[] = array('title' => $node->title . '(' . $tree->title . ')', 'value' => URL::to($tree->title . '/' . $node->alias));
+            }
+        }
+
+        return Response::json($linklist);
     }
 
     public function availableTemplates()

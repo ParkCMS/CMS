@@ -16,7 +16,7 @@ class Editor extends BaseEditor
 
     public function index($properties)
     {
-        
+
         $page = (isset($properties['global']) && $properties['global'] === 'global') ? false : $properties['page'];
 
         $model = $this->getModel($properties);
@@ -52,11 +52,6 @@ class Editor extends BaseEditor
         return $form;
     }
 
-    public function create()
-    {
-        return 'Create';
-    }
-
     public function update($properties)
     {
         $form = $properties['form'];
@@ -69,7 +64,7 @@ class Editor extends BaseEditor
 
         $model->save();
 
-        return array('message' => 'Field updated successfully', 'type' => 'success', 'redirect' => 'index');
+        return array('success' => array('message' => 'Field updated successfully'), 'redirect' => 'index');
     }
 
     public function getModel($properties) {

@@ -6,7 +6,7 @@
         <div class="col-md-12" style="margin-bottom: 15px;">
     <div class="filelist">
         <div class="row">
-            <div class="col-sm-6 col-md-2 file" ng-repeat="file in files">
+            <div class="col-sm-6 col-md-2 file" ng-repeat="file in files |bytype:types">
                 <div ui-draggable="enableDragDrop" drag="file" ui-on-drop="move($data, file)" class="thumbnail" ng-class="{'selected': selected == file.path}" ng-if="file.isDir" ng-click="preview(file)" ng-dblclick="cd(file.path)">
                     <p>
                         <i style="font-size: 300%" class="glyphicon glyphicon-folder-open"></i>

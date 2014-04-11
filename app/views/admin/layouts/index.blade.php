@@ -25,6 +25,7 @@
                     <li highlight-active="(.*)\/$"><a href="#">{{ trans('admin_default.dashboard') }}</a></li>
                     <li highlight-active="(.*)\/pages$"><a href="#/pages">{{ trans('admin_default.pages') }}</a></li>
                     <li highlight-active="(.*)\/files$"><a href="#/files">{{ trans('admin_default.files') }}</a></li>
+                    <li highlight-active="(.*)\/users$"><a href="#/users">{{ trans('admin_default.users') }}</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
@@ -51,5 +52,7 @@
     <script>
     angular.module('parkAdmin').constant('BASE_URL', '{{ url() }}');
     </script>
+    <!-- Partials -->
+    @include('admin.compiled')
 </body>
 </html>

@@ -96,7 +96,7 @@ class Editor extends BaseEditor {
                 'value' => '',
                 'label' => 'Date:'
             ));
-            
+
             $seats = $form->addField('Text', array(
                 'name'  => 'seats',
                 'type'  => 'number',
@@ -141,9 +141,9 @@ class Editor extends BaseEditor {
         $workshop->seats = $form['seats'];
 
         if ($workshop->save()) {
-            return array('message' => 'Workshop updated successfully', 'type' => 'success', 'redirect' => 'index');
+            return array('success' => array('message' => 'Workshop updated successfully'), 'redirect' => 'index');
         } else {
-            return array('message' => 'The settings could not be saved!', 'type' => 'error', 'redirect' => 'index');
+            return array('error' => array('message' => 'The settings could not be saved!'), 'redirect' => 'index');
         }
     }
 
@@ -162,7 +162,7 @@ class Editor extends BaseEditor {
             $workshop->save();
         }
 
-        return array('message' => 'Workshop successfully activated', 'type' => 'success', 'redirect' => 'settings');
+        return array('success' => array('message' => 'Workshop successfully activated'), 'redirect' => 'settings');
     }
 
     public function create()
@@ -199,9 +199,9 @@ class Editor extends BaseEditor {
         $item->order = $form['order'];
 
         if ($item->save()) {
-            return array('message' => 'Field updated successfully', 'type' => 'success', 'redirect' => 'index');
+            return array('success' => array('message' => 'Field updated successfully'), 'redirect' => 'index');
         } else {
-            return array('message' => 'The given item could not be saved!', 'type' => 'error', 'redirect' => 'index');
+            return array('error' => array('message' => 'The given item could not be saved!'), 'redirect' => 'index');
         }
     }
 
@@ -224,9 +224,9 @@ class Editor extends BaseEditor {
         $item->workshop_id = $workshop->id;
 
         if ($item->save()) {
-            return array('message' => 'Field created successfully', 'type' => 'success', 'redirect' => 'index');
+            return array('success' => array('message' => 'Field created successfully'), 'redirect' => 'index');
         } else {
-            return array('message' => 'The given item could not be saved!', 'type' => 'error', 'redirect' => 'index');
+            return array('error' => array('message' => 'The given item could not be saved!'), 'redirect' => 'index');
         }
     }
 
@@ -241,9 +241,9 @@ class Editor extends BaseEditor {
         $item->registrations()->detach();
 
         if ($item->delete()) {
-            return array('message' => 'Part deleted successfully', 'type' => 'success', 'redirect' => 'index');
+            return array('success' => array('message' => 'Part deleted successfully'), 'redirect' => 'index');
         } else {
-            return array('message' => 'The given item could not be deleted!', 'type' => 'error', 'redirect' => 'index');
+            return array('error' => array('message' => 'The given item could not be deleted!'), 'redirect' => 'index');
         }
     }
 

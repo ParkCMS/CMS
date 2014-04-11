@@ -14,7 +14,8 @@ class FileSelect extends FormField
 
     protected $properties = array(
         'name'      => '',
-        'select'    => 'files' // Possible values: files (only files), directories (only directories) or both
+        'select'    => 'files', // Possible values: files (only files), directories (only directories) or both
+        'types'     => array() // Specify an array of MIME Types to filter by
     );
 
     protected $template = "fileselect";
