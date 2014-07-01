@@ -64,7 +64,7 @@ class Pay extends Step {
     public function render() {
         if(!empty($this->errors)) {
             return Redirect::to(
-                $this->program->url(array('step' => $this->next->name()))
+                $this->program->url(array('step' => $this->prev->name()))
             )->withErrors($this->errors);
         }
 
