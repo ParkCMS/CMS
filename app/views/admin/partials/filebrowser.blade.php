@@ -20,7 +20,7 @@
                     <p>@{{ file.filename }}</p>
                 </div>
             </div>
-            <div class="no-files" ng-if="files.length === 0">
+            <div class="no-files" ng-if="(files|bytype:types).length === 0">
                 <h3>{{ trans('admin_default.no_files') }}</h3>
                 <p>{{ trans('admin_default.no_files_desc') }}</p>
             </div>
